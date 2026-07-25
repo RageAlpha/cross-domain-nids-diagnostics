@@ -37,3 +37,6 @@ retrained or separately deposited predictions.
 
 The package supports manuscript-number verification immediately. Full
 retraining additionally requires provider data and suitable hardware.
+
+The dependency files pin direct dependencies only. They do not constitute a
+complete transitive, CUDA-runtime, driver, or platform lock.

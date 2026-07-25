@@ -135,9 +135,9 @@ class TorchMLPClassifier(BaseEstimator, ClassifierMixin):
 
     def fit(self, X, y, validation_data=None):
         torch = self._check_torch()
-        torch.manual_seed(self.random_state)
-        if torch.cuda.is_available():
-            torch.cuda.manual_seed_all(self.random_state)
+        from cross_domain_nids.determinism import configure_determinism
+
+        configure_determinism(self.random_state, torch_module=torch)
 
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.device_ = str(device)

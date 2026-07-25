@@ -25,9 +25,9 @@ def set_seed(seed=SEED):
 REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 DATA_DIR = REPOSITORY_ROOT / "data" / "raw"
 UNSW_PATH = DATA_DIR / "NF-UNSW-NB15-v3.csv"            # main training set, 2.37M rows
-CICIDS_PATH = DATA_DIR / "NF-CICIDS2018-v3.csv"         # Stress B target domain, 20.1M rows
-BOTIOT_PATH = DATA_DIR / "NF-BoT-IoT-v3.csv"            # Stress B second target domain (optional)
-TONIOT_PATH = DATA_DIR / "NF-ToN-IoT-v3.csv"            # Stress B third target domain (optional)
+CICIDS_PATH = DATA_DIR / "NF-CICIDS2018-v3.csv"         # target domain, 20.1M rows
+BOTIOT_PATH = DATA_DIR / "NF-BoT-IoT-v3.csv"            # second target domain
+TONIOT_PATH = DATA_DIR / "NF-ToN-IoT-v3.csv"            # third target domain
 
 # ==================== Preprocessing Parameters ====================
 TEST_SIZE = 0.2
@@ -122,7 +122,7 @@ FEATURE_DROPOUT_COUNTS = [2, 4, 6]            # drop by feature importance rank
 SIGNIFICANCE_RUNS = 5                         # number of repetitions for statistical significance
 SIGNIFICANCE_SEEDS = [42, 123, 456, 789, 1111]
 
-# Stress B uses full CICIDS target-domain evaluation with chunked reading.
+# Full target-domain evaluation uses chunked reading.
 #
 # The project now evaluates four end-to-end Pipeline baselines one model at a
 # time. A 1M-row chunk was already used successfully for the heavier Strategy 2

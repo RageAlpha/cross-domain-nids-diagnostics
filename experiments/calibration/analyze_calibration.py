@@ -1,4 +1,4 @@
-"""Step 5 E1-E4 calibration and ECE analysis.
+"""Inference-only E1-E4 calibration and ECE analysis.
 
 This script is inference-only. It loads saved Pipeline artifacts, uses their
 fitted preprocessors and classifiers as-is, and never calls fit on either the
@@ -865,7 +865,7 @@ def write_mean_std_summary(all_metrics: pd.DataFrame, output_dir: Path) -> Path:
 
 def parse_args():
     parser = argparse.ArgumentParser(
-        description="Inference-only Step 5 E1-E4 calibration/ECE analysis."
+        description="Inference-only E1-E4 calibration/ECE analysis."
     )
     parser.add_argument(
         "--mode",
@@ -893,7 +893,7 @@ def parse_args():
         action="store_true",
         help=(
             "Exclude UNSW held-out rows from the selected combinations. "
-            "Useful when focusing Step 5 on cross-domain target calibration."
+            "Useful when focusing on cross-domain target calibration."
         ),
     )
     parser.add_argument(

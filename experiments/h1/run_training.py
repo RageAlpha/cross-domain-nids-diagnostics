@@ -11,9 +11,7 @@ import argparse
 import gc
 import hashlib
 import json
-import os
 import platform
-import random
 import sys
 import time
 from datetime import datetime, timezone
@@ -25,7 +23,7 @@ SRC_ROOT = REPOSITORY_ROOT / "src"
 POLICY_PATH = REPOSITORY_ROOT / "protocols" / "h1" / "training_policy.json"
 MODEL_PARAMETERS_PATH = REPOSITORY_ROOT / "data" / "model_hyperparameters.json"
 H1_SPLIT_ROOT = REPOSITORY_ROOT / "data" / "splits" / "h1"
-EXPECTED_POLICY_SHA = "9d73ea94237dd093b491e8313ee6dec6d8ca877ed9525eb71d611324f52fb055"
+EXPECTED_POLICY_SHA = "2e269b92b37f765ae45840c569da0642162898522d22dde77238ba5527d81f48"
 EXPECTED_PROTOCOL_ID = "NIDS-H1-CORRECTED-SPLIT-SENS-20260717-v1.1"
 
 
@@ -77,19 +75,9 @@ def load_split(policy: dict, seed: int):
 
 
 def set_all_seeds(seed: int) -> None:
-    import numpy as np
-    import torch
+    from cross_domain_nids.determinism import configure_determinism
 
-    os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
-    random.seed(seed)
-    np.random.seed(seed)
-    torch.manual_seed(seed)
-    if torch.cuda.is_available():
-        torch.cuda.manual_seed_all(seed)
-    torch.use_deterministic_algorithms(True, warn_only=True)
-    if hasattr(torch.backends, "cudnn"):
-        torch.backends.cudnn.deterministic = True
-        torch.backends.cudnn.benchmark = False
+    configure_determinism(seed)
 
 
 def construct_released_estimator(

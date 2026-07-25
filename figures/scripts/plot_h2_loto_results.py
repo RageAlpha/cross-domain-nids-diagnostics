@@ -1,8 +1,8 @@
 """Generate the publication-ready Figure 2 feature-family JSD heatmap.
 
-This script follows the local scientific-figure-making skill conventions:
-headless Matplotlib, explicit publication style, validated matrix inputs, and
-stable vector/high-DPI outputs. It does not modify the manuscript LaTeX.
+It uses headless Matplotlib, explicit publication styling, validated matrix
+inputs, and stable vector/high-DPI outputs. It does not modify the manuscript
+LaTeX.
 """
 
 from __future__ import annotations

@@ -23,9 +23,11 @@ jobs:
         run: |
           pytest -q
           python verify_results.py
+          python verify_results.py --check-git-inventory
       - name: Run CPU-safe entry points
         run: |
           python run_h1.py
+          python run_h1.py finalize --help
           python run_h2.py plan
           python run_h3.py plan
           python run_oracle.py dry-run

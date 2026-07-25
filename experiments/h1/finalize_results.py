@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
 from datetime import datetime, timezone
@@ -15,7 +16,7 @@ ROOT = Path(__file__).resolve().parent
 REPOSITORY_ROOT = ROOT.parents[1]
 RUN = REPOSITORY_ROOT / "results" / "generated" / "h1"
 PROTOCOL_ID = "NIDS-H1-CORRECTED-SPLIT-SENS-20260717-v1.1"
-POLICY_SHA = "9d73ea94237dd093b491e8313ee6dec6d8ca877ed9525eb71d611324f52fb055"
+POLICY_SHA = "2e269b92b37f765ae45840c569da0642162898522d22dde77238ba5527d81f48"
 SEEDS = [42, 123, 2024]
 MODELS = ["RandomForest", "XGBoost", "MLP"]
 TARGETS = ["CICIDS2018", "BoT-IoT", "ToN-IoT"]
@@ -89,7 +90,50 @@ def add_check(checks: list[dict[str, object]], category: str, check: str, passed
     checks.append({"category": category, "check": check, "status": "Pass" if passed else "Blocker", "detail": detail})
 
 
+def finalizer_release_sources() -> list[Path]:
+    return [
+        REPOSITORY_ROOT / "protocols" / "h1" / "training_policy.json",
+        REPOSITORY_ROOT / "data" / "model_hyperparameters.json",
+        REPOSITORY_ROOT
+        / "data"
+        / "reference_inputs"
+        / "h1_historical_results.csv",
+        ROOT / "run_training.py",
+        Path(__file__).resolve(),
+    ]
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--output-dir",
+        type=Path,
+        default=REPOSITORY_ROOT / "results" / "generated" / "h1",
+        help="Completed H1 run directory and finalizer output destination.",
+    )
+    parser.add_argument(
+        "--historical-results",
+        type=Path,
+        default=HISTORICAL_PATH,
+        help="Frozen compact historical H1 metric table.",
+    )
+    parser.add_argument(
+        "--execute",
+        action="store_true",
+        help="Authorize validation and generated-table writes.",
+    )
+    return parser.parse_args()
+
+
 def main() -> int:
+    args = parse_args()
+    if not args.execute:
+        raise SystemExit("finalization requires --execute")
+    from cross_domain_nids.release_paths import require_generated_output
+
+    global RUN, HISTORICAL_PATH
+    RUN = require_generated_output(args.output_dir, "results")
+    HISTORICAL_PATH = args.historical_results.resolve()
     checks: list[dict[str, object]] = []
     result_frames = []
     validation_frames = []
@@ -163,8 +207,8 @@ def main() -> int:
         checks,
         "artifacts",
         "portable_runner_present",
-        (ROOT / "train.py").is_file(),
-        sha256_file(ROOT / "train.py"),
+        (ROOT / "run_training.py").is_file(),
+        sha256_file(ROOT / "run_training.py"),
     )
     add_check(
         checks,
@@ -295,16 +339,11 @@ def main() -> int:
     (RUN / "H1_CORRECTED_SPLIT_SENSITIVITY_FINAL_REPORT.md").write_text("\n".join(lines), encoding="utf-8")
 
     manifest_rows = []
-    manifest_roots = [
-        REPOSITORY_ROOT / "protocols" / "h1" / "training_policy.json",
-        ROOT / "experiment_plan.md",
-        ROOT / "protocol_amendment.md",
-        ROOT / "train.py",
-        Path(__file__).resolve(),
-    ]
+    manifest_roots = finalizer_release_sources()
     manifest_roots.extend(path for path in RUN.rglob("*") if path.is_file() and path.name != "release_manifest_sha256.csv")
     for path in sorted(set(manifest_roots), key=lambda item: str(item).lower()):
-        manifest_rows.append({"relative_path": str(path.relative_to(ROOT)), "bytes": path.stat().st_size, "sha256": sha256_file(path)})
+        relative_path = path.relative_to(REPOSITORY_ROOT).as_posix()
+        manifest_rows.append({"relative_path": relative_path, "bytes": path.stat().st_size, "sha256": sha256_file(path)})
     pd.DataFrame(manifest_rows).to_csv(RUN / "release_manifest_sha256.csv", index=False)
     print(json.dumps(verdict, sort_keys=True))
     return 0 if artifact_validation_passed else 1

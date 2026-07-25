@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Render a compact journal version of the audited H3 dissociation figure.
 
-Panel (d) uses chance proximity, 0.5 - |domain AUROC - 0.5|, because the
-requested 0--0.006 display range is not the range of distance from chance.
+Panel (d) uses chance proximity, 0.5 - |domain AUROC - 0.5|, matching the
+audited 0--0.006 display range.
 """
 
 from __future__ import annotations

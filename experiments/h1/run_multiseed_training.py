@@ -6,15 +6,14 @@ Protocol implemented here:
     verified seed 42 rows.
   - E3/E4: rerun seeds 42, 123, and 2024 under target-specific Scheme A.
 
-The old combined-target E3/E4 seed 42 output is intentionally not read by this
-script. All E3/E4 rows produced here use the same target-specific filtering
-protocol across all three seeds.
+Combined-target E3/E4 seed-42 results are intentionally excluded. All E3/E4
+rows produced here use the same target-specific filtering protocol across all
+three seeds.
 """
 
 import argparse
 import gc
 import json
-import random
 import sys
 import time
 from pathlib import Path
@@ -133,15 +132,9 @@ def print_flush(message):
 
 
 def set_all_seeds(seed):
-    random.seed(seed)
-    np.random.seed(seed)
-    try:
-        import torch
-    except ImportError:
-        return
-    torch.manual_seed(seed)
-    if torch.cuda.is_available():
-        torch.cuda.manual_seed_all(seed)
+    from cross_domain_nids.determinism import configure_determinism
+
+    configure_determinism(seed)
 
 
 def feature_columns_from_frame(df):
@@ -1463,7 +1456,7 @@ def run_all(args):
 
 def parse_args():
     parser = argparse.ArgumentParser(
-        description="Run Gap 1 E1-E4 multi-seed experiments without mixing E3/E4 protocols."
+        description="Run H1 E1-E4 multi-seed experiments without mixing E3/E4 protocols."
     )
     parser.add_argument(
         "--output-dir",

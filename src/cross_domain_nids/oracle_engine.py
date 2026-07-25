@@ -1,5 +1,5 @@
 """
-Gap 2: target-only oracle baselines using full target datasets.
+Target-only oracle baselines using full target datasets.
 
 This runner trains supervised reference-ceiling models separately inside each
 target dataset. It never reads UNSW, never runs adaptation, and reports metrics
@@ -10,7 +10,6 @@ import argparse
 import gc
 import json
 import os
-import random
 import sys
 import time
 from pathlib import Path
@@ -72,15 +71,9 @@ def print_flush(message):
 
 
 def set_all_seeds(seed):
-    random.seed(seed)
-    np.random.seed(seed)
-    try:
-        import torch
-    except ImportError:
-        return
-    torch.manual_seed(seed)
-    if torch.cuda.is_available():
-        torch.cuda.manual_seed_all(seed)
+    from cross_domain_nids.determinism import configure_determinism
+
+    configure_determinism(seed)
 
 
 def feature_columns_from_frame(df):
@@ -996,7 +989,7 @@ def write_report(long_df, validation_report, output_dir, long_path, summary_path
 
 def parse_args():
     parser = argparse.ArgumentParser(
-        description="Run Gap 2 target-only oracle baselines on full target datasets."
+        description="Run target-only oracle baselines on full target datasets."
     )
     parser.add_argument("--output-dir", default="results/generated/oracle")
     parser.add_argument("--artifact-dir", default="artifacts/oracle")

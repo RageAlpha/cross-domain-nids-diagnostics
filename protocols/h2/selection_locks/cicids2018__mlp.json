@@ -25,6 +25,8 @@
     ],
     "model_parameters_sha256": "bb84f0e5921d0bda796cb2096e891184b4fec4b389e2f3feaccf99f16fdc709c",
     "model_factory_sha256": "0301479b5ec16882100cd3d82f1f90225905ee4a05113f1dcc81bb83cc11bc5a",
+    "pipeline_models_sha256": "88e4aa43d6134590182653f14158c92d343f0d05145eee513dc69bcf1424c016",
+    "determinism_sha256": "8b16ec00df3ad84d8d51b6012b879ec6d51d9ca1ac1a971e6f1ebee8b57b0a4c",
     "min_mean_mcc_delta": 0.0,
     "min_mean_binary_f1_delta": 0.0,
     "max_mean_fnr_delta": 0.01,
@@ -40,7 +42,7 @@
     ],
     "verdict_rule": "shift_guided_repair requires mean MCC and Binary-F1 deltas >= 0, mean FNR increase <= 0.01, and MCC/Binary-F1 improvements in all 3 seeds versus both E2 and the within-seed median of exactly 20 matched random masks"
   },
-  "policy_hash": "8a14d941760e996bc12012801a1117568852d4bf6839e9698a7e4aa71a2090fc",
+  "policy_hash": "0fd03d85269cd0205535542bd8957807f9c61d4d843f0c8ab34c621579c4922f",
   "development_deltas": [
     {
       "filtering_strategy": "none",

@@ -265,6 +265,7 @@ def read_policy(path: Path) -> dict[str, Any]:
         "development_required_positive_seed_fraction", "random_replicates_per_seed",
         "final_required_positive_seeds", "final_required_seed_count", "tie_break",
         "model_parameters_sha256", "model_factory_sha256",
+        "pipeline_models_sha256", "determinism_sha256",
     }
     missing = sorted(required - set(policy))
     if missing:
@@ -290,6 +291,14 @@ def validate_released_model_inputs(args: argparse.Namespace) -> None:
     factory = ROOT / "src" / "cross_domain_nids" / "model_factory.py"
     if hash_file(factory) != policy["model_factory_sha256"]:
         raise ProtocolError("Released model factory hash mismatch")
+    pipeline_models = (
+        ROOT / "src" / "cross_domain_nids" / "models" / "pipeline_models.py"
+    )
+    if hash_file(pipeline_models) != policy["pipeline_models_sha256"]:
+        raise ProtocolError("Released pipeline-model implementation hash mismatch")
+    determinism = ROOT / "src" / "cross_domain_nids" / "determinism.py"
+    if hash_file(determinism) != policy["determinism_sha256"]:
+        raise ProtocolError("Released determinism implementation hash mismatch")
 
 
 def validate_development_cartesian(

@@ -22,6 +22,7 @@ python -m pip install -r requirements.txt
 python verify_results.py
 pytest -q
 python run_h1.py
+python run_h1.py finalize --help
 python run_h2.py plan
 python run_h3.py plan
 python run_oracle.py dry-run
@@ -43,6 +44,10 @@ python cross-domain-nids-diagnostics/run_h1.py
 
 `verify_results.py` is evidence verification only. A successful verification
 must not be described as a complete experimental rerun.
+Untracked raw data, caches, and files below `results/generated/` or
+`figures/generated/` are ignored by this runtime verification. CI separately
+checks that every Git-tracked release file is represented in the release
+manifest.
 
 ## Full experiment reproduction
 
@@ -50,7 +55,7 @@ The commands in this section read the raw provider CSVs and regenerate fitted
 models and experiment outputs under `results/generated/`. They never overwrite
 the committed `results/reference/` tree.
 
-Create the pinned environment with either:
+Create an environment with the pinned direct dependencies using either:
 
 ```powershell
 conda env create -f environment.yml
@@ -79,7 +84,7 @@ python run_h1.py
 python run_h1.py --execute --seed 42
 python run_h1.py --execute --seed 123
 python run_h1.py --execute --seed 2024
-python run_h1.py finalize
+python run_h1.py finalize --execute
 ```
 
 ### H3 paired domain loss
@@ -187,6 +192,12 @@ tables during the inference-only calibration command.
 Random seeds and deterministic execution settings are fixed where supported.
 Cross-hardware and cross-environment bitwise identity is not claimed.
 
+`requirements.txt` and `environment.yml` pin the direct dependencies used by
+the project. They are not complete transitive lockfiles and do not lock a GPU
+driver, CUDA runtime, or platform-specific PyTorch build. Use a generated
+`requirements-lock.txt` or `conda-lock` file if deployment requires a fully
+resolved platform-specific environment.
+
 ## Data and model construction
 
 Raw datasets are not redistributed. The expected inputs are
@@ -240,3 +251,16 @@ See `docs/CODE_AVAILABILITY_TEMPLATE.md`.
 
 See `docs/REPRODUCIBILITY_LIMITS.md` and `THIRD_PARTY_NOTICES.md` before making
 claims about complete retraining, redistribution, or third-party licensing.
+
+## Clean source archive
+
+Distribute a Git archive rather than zipping the working directory:
+
+```powershell
+git archive --format=zip `
+  --output cross-domain-nids-diagnostics-v1.0.0-manuscript.zip `
+  v1.0.0-manuscript
+```
+
+This includes only tracked files from the fixed tag and excludes `.git/`,
+caches, untracked raw data, generated outputs, and obsolete empty directories.

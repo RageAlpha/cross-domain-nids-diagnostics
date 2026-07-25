@@ -6,6 +6,8 @@ import csv
 import hashlib
 import json
 import math
+import argparse
+import subprocess
 import sys
 from pathlib import Path
 
@@ -282,30 +284,53 @@ def check_h2_selection_locks() -> None:
         "model_factory_sha256"
     ]:
         raise AssertionError("H2 model-factory hash mismatch")
+    if sha256(
+        ROOT / "src" / "cross_domain_nids" / "models" / "pipeline_models.py"
+    ) != policy["pipeline_models_sha256"]:
+        raise AssertionError("H2 pipeline-model hash mismatch")
+    if sha256(ROOT / "src" / "cross_domain_nids" / "determinism.py") != policy[
+        "determinism_sha256"
+    ]:
+        raise AssertionError("H2 determinism hash mismatch")
 
 
 def check_release_manifest() -> None:
     manifest = table("release_manifest_sha256.csv")
-    expected_paths = {
-        path.relative_to(ROOT).as_posix()
-        for path in ROOT.rglob("*")
-        if path.is_file()
-        and ".git" not in path.parts
-        and path.name != "release_manifest_sha256.csv"
-        and "__pycache__" not in path.parts
-        and ".pytest_cache" not in path.parts
-    }
-    recorded_paths = {row["path"] for row in manifest}
-    if recorded_paths != expected_paths:
-        missing = sorted(expected_paths - recorded_paths)
-        extra = sorted(recorded_paths - expected_paths)
-        raise AssertionError(
-            f"Release manifest inventory mismatch; missing={missing}, extra={extra}"
-        )
+    recorded_paths = [row["path"] for row in manifest]
+    if len(recorded_paths) != len(set(recorded_paths)):
+        raise AssertionError("Release manifest contains duplicate paths")
     for row in manifest:
-        path = ROOT / row["path"]
+        relative = Path(row["path"])
+        if relative.is_absolute() or ".." in relative.parts:
+            raise AssertionError(f"Unsafe release manifest path: {row['path']}")
+        path = ROOT / relative
+        if not path.is_file():
+            raise AssertionError(f"Release manifest file is missing: {row['path']}")
         if int(row["bytes"]) != path.stat().st_size or row["sha256"] != sha256(path):
             raise AssertionError(f"Release manifest hash mismatch: {row['path']}")
+
+
+def check_git_inventory() -> None:
+    """CI-only check that every tracked release file is represented."""
+    result = subprocess.run(
+        ["git", "ls-files", "-z"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+    )
+    tracked = {
+        item.decode("utf-8")
+        for item in result.stdout.split(b"\0")
+        if item
+    }
+    manifest_paths = {row["path"] for row in table("release_manifest_sha256.csv")}
+    expected = tracked - {"release_manifest_sha256.csv"}
+    if manifest_paths != expected:
+        missing = sorted(expected - manifest_paths)
+        extra = sorted(manifest_paths - expected)
+        raise AssertionError(
+            f"Git/release manifest mismatch; missing={missing}, extra={extra}"
+        )
 
 
 def check_h1() -> None:
@@ -366,7 +391,18 @@ def check_calibration() -> None:
     close(row["brier_score_mean"], 0.4007)
 
 
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--check-git-inventory",
+        action="store_true",
+        help="CI-only: compare the manifest inventory with git ls-files.",
+    )
+    return parser.parse_args()
+
+
 def main() -> int:
+    args = parse_args()
     checks = {
         "inventory": check_inventory,
         "split hashes": check_split_hashes,
@@ -382,6 +418,9 @@ def main() -> int:
     for name, check in checks.items():
         check()
         print(f"PASS {name}")
+    if args.check_git_inventory:
+        check_git_inventory()
+        print("PASS Git tracked-file inventory")
     print("PASS minimal reproducibility package")
     return 0
 

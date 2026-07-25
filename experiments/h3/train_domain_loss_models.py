@@ -1,4 +1,4 @@
-"""Corrected Frozen-BN H3 DANN representation adaptation for Stress B.
+"""Frozen-BN H3 DANN representation-adaptation experiments.
 
 This script re-runs the H3 DANN variants with target-forward BatchNorm
 running-stat updates disabled. The original H3 DANN results are retained for
@@ -19,8 +19,6 @@ from contextlib import contextmanager
 import gc
 import json
 import math
-import os
-import random
 import sys
 import time
 from dataclasses import asdict, dataclass
@@ -231,21 +229,9 @@ def parse_optional_sample_cap(value):
 
 
 def set_all_seeds(seed):
-    os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
-    random.seed(seed)
-    np.random.seed(seed)
-    try:
-        import torch
+    from cross_domain_nids.determinism import configure_determinism
 
-        torch.manual_seed(seed)
-        if torch.cuda.is_available():
-            torch.cuda.manual_seed_all(seed)
-        torch.use_deterministic_algorithms(True, warn_only=True)
-        if hasattr(torch.backends, "cudnn"):
-            torch.backends.cudnn.deterministic = True
-            torch.backends.cudnn.benchmark = False
-    except ImportError:
-        pass
+    configure_determinism(seed)
 
 
 def binary_metrics_from_counts(tp, tn, fp, fn):

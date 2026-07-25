@@ -34,6 +34,7 @@ def test_safe_entry_points_from_foreign_directory(tmp_path: Path) -> None:
     commands = [
         [sys.executable, str(ROOT / "verify_results.py")],
         [sys.executable, str(ROOT / "run_h1.py")],
+        [sys.executable, str(ROOT / "run_h1.py"), "finalize", "--help"],
         [sys.executable, str(ROOT / "run_h2.py"), "plan"],
         [sys.executable, str(ROOT / "run_h3.py"), "plan"],
         [sys.executable, str(ROOT / "run_oracle.py"), "dry-run"],
