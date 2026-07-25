@@ -1,5 +1,5 @@
 """
-Gap 1 multi-seed runner for E1-E4.
+H1 multi-seed runner for E1-E4.
 
 Protocol implemented here:
   - E1/E2: train and evaluate only seeds 123 and 2024, then merge existing
@@ -14,13 +14,15 @@ protocol across all three seeds.
 import argparse
 import gc
 import json
-import os
 import random
 import sys
 import time
 from pathlib import Path
 
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
+for import_root in (REPOSITORY_ROOT / "src", REPOSITORY_ROOT):
+    if str(import_root) not in sys.path:
+        sys.path.insert(0, str(import_root))
 
 import joblib
 import numpy as np
@@ -1412,7 +1414,10 @@ def validate_outputs(all_long, removed_features, corr_threshold=CORR_THRESHOLD):
 
 
 def run_all(args):
-    output_dir = Path(args.output_dir)
+    from cross_domain_nids.release_paths import require_generated_output
+
+    output_dir = require_generated_output(args.output_dir, "results")
+    args.output_dir = str(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
     e12_new_frames = []
@@ -1460,7 +1465,10 @@ def parse_args():
     parser = argparse.ArgumentParser(
         description="Run Gap 1 E1-E4 multi-seed experiments without mixing E3/E4 protocols."
     )
-    parser.add_argument("--output-dir", default="results/generated/h1/multiseed")
+    parser.add_argument(
+        "--output-dir",
+        default=REPOSITORY_ROOT / "results" / "generated" / "h1" / "multiseed",
+    )
     parser.add_argument("--chunk-size", type=int, default=STRESS_B_CHUNK_SIZE)
     parser.add_argument("--source-sample-rows", type=int, default=300_000)
     parser.add_argument("--target-sample-rows", type=int, default=200_000)

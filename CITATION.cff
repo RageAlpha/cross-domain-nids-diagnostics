@@ -4,6 +4,7 @@ title: "Cross-domain NIDS diagnostics"
 type: software
 version: "1.0.0-manuscript"
 date-released: 2026-07-26
+license: MIT
 authors:
   - family-names: "Anonymous"
     given-names: "Authors"

@@ -225,6 +225,9 @@ def main() -> None:
     args = parse_args()
     if not args.execute:
         raise SystemExit("finalization requires --execute")
+    from cross_domain_nids.release_paths import require_generated_output
+
+    args.output_dir = require_generated_output(args.output_dir, "results")
     finalize(args)
 
 

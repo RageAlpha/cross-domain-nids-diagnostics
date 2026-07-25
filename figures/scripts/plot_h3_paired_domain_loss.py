@@ -8,6 +8,7 @@ requested 0--0.006 display range is not the range of distance from chance.
 from __future__ import annotations
 
 import argparse
+import sys
 from pathlib import Path
 
 import matplotlib
@@ -235,9 +236,17 @@ def create_figure(data, means) -> plt.Figure:
 
 def main() -> None:
     args = parse_args()
+    repository_root = Path(__file__).resolve().parents[2]
+    src_root = repository_root / "src"
+    if str(src_root) not in sys.path:
+        sys.path.insert(0, str(src_root))
+    from cross_domain_nids.release_paths import require_generated_output
+
     csv_path = args.input.resolve()
     audit_path = args.audit.resolve()
-    output_dir = args.output_dir.resolve()
+    output_dir = require_generated_output(
+        args.output_dir, "figures", repository_root=repository_root
+    )
     output_dir.mkdir(parents=True, exist_ok=True)
 
     data, means = source.load_and_validate(csv_path, audit_path)

@@ -414,6 +414,9 @@ def main() -> None:
         return
     if not args.execute:
         raise SystemExit("run requires --execute")
+    from cross_domain_nids.release_paths import require_generated_output
+
+    args.output_dir = require_generated_output(args.output_dir, "results")
     args.output_dir.mkdir(parents=True, exist_ok=True)
     run(args)
 

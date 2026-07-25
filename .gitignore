@@ -15,11 +15,11 @@ env/
 !.env.example
 
 # Provider datasets and large generated artifacts
-data/raw/
-artifacts/
-checkpoints/
-predictions/
-external/
+/data/raw/**
+/artifacts/**
+/checkpoints/**
+/predictions/**
+/external/**
 *.joblib
 *.pkl
 *.pickle
@@ -29,10 +29,10 @@ external/
 *.onnx
 
 # Fresh experiment outputs; compact reference results remain tracked
-results/generated/*
-!results/generated/.gitkeep
-figures/generated/*
-!figures/generated/.gitkeep
+/results/generated/**
+!/results/generated/.gitkeep
+/figures/generated/**
+!/figures/generated/.gitkeep
 
 # Runtime and editor noise
 logs/

@@ -77,7 +77,8 @@
     "src/cross_domain_nids/config.py": "792edaa4400e56954673dc80491245d045bea0df52f5b9cbb94721da822bc678",
     "src/cross_domain_nids/preprocessing/netflow.py": "b0c524e5e9ee85dbeadb7ed2dc2e188d49993686bb669df0f1bb800c880cd8ce",
     "src/cross_domain_nids/models/pipeline_models.py": "cf60015673fb76f1978432af37252f49a856437913b8e8f952c52d611dee3dc4",
-    "experiments/h1/run_multiseed_training.py": "cf6664e0480c1351fc41ff5950204f39ee1e0d51ce4601f80f3e391930b6af0f",
+    "experiments/h1/run_multiseed_training.py": "270d25b204cedfa77e747752c490b18e18380ceee310a74f46935f4f3538a6e1",
+    "src/cross_domain_nids/release_paths.py": "1c92fa5edff49526689403577a329a3b96a7ccbb334338747e19fcdc897bf177",
     "src/cross_domain_nids/model_factory.py": "0301479b5ec16882100cd3d82f1f90225905ee4a05113f1dcc81bb83cc11bc5a",
     "data/model_hyperparameters.json": "bb84f0e5921d0bda796cb2096e891184b4fec4b389e2f3feaccf99f16fdc709c"
   },

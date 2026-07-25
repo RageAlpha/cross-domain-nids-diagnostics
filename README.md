@@ -1,39 +1,56 @@
 # Cross-domain NIDS diagnostics
 
 This repository contains the finalized code, frozen protocols, fixed data
-partitions, compact reference results, and figure inputs required to reproduce
-or verify the experiments reported in the current manuscript.
+partitions, compact reference results, and figure inputs associated with the
+current manuscript. It is a minimal reproducibility package, not a copy of the
+authors' workstation.
 
-Historical drafts, duplicate run trees, checkpoints, predictions, internal
-review records, and raw provider datasets are intentionally excluded.
+Raw NetFlow datasets must be downloaded by the user from the University of
+Queensland NIDS dataset page:
+https://staff.itee.uq.edu.au/marius/NIDS_datasets/
 
 ## Quick verification
 
-Install the dependencies and verify the released evidence:
+The commands in this section verify the committed reference tables, split
+maps, protocol locks, model-construction parameters, and release hashes. They
+do **not** retrain the models or rerun the full experiments.
+
+From a fresh clone:
 
 ```powershell
 python -m pip install -r requirements.txt
 python verify_results.py
+pytest -q
+python run_h1.py
+python run_h2.py plan
+python run_h3.py plan
+python run_oracle.py dry-run
+python run_calibration.py --help
+python experiments/h2/compute_feature_shift.py --help
 ```
 
-The stable root-level entry points are:
+The safe entry points require neither raw data nor a GPU and perform no model
+fitting. They do not depend on `PYTHONPATH`, an IDE working directory,
+uncommitted configuration files, Conda-specific environment variables, or
+directories on the authors' computers.
 
-| Manuscript block | Safe command | Immutable reference results |
-|---|---|---|
-| H1 formulation sensitivity | `python run_h1.py` | `results/reference/h1/` |
-| H2 LOTO filtering | `python run_h2.py plan` | `results/reference/h2/` |
-| H3 paired domain loss | `python run_h3.py plan` | `results/reference/h3/` |
-| Target-oracle ceiling | `python run_oracle.py dry-run` | `results/reference/oracle/` |
-| Calibration analysis | `python run_calibration.py --help` | `results/reference/calibration/` |
+The root entry points are also relocatable. For example, from the parent of a
+fresh clone:
 
-The default H1 invocation, H2/H3 `plan`, and Oracle `dry-run` perform no model
-fitting. New executions write only below `results/generated/`; they do not
-overwrite the manuscript reference tables.
+```powershell
+python cross-domain-nids-diagnostics/run_h1.py
+```
 
-## Full reproduction
+`verify_results.py` is evidence verification only. A successful verification
+must not be described as a complete experimental rerun.
 
-Run all commands from the repository root. Create the verified environment
-with either:
+## Full experiment reproduction
+
+The commands in this section read the raw provider CSVs and regenerate fitted
+models and experiment outputs under `results/generated/`. They never overwrite
+the committed `results/reference/` tree.
+
+Create the pinned environment with either:
 
 ```powershell
 conda env create -f environment.yml
@@ -46,10 +63,16 @@ or:
 python -m pip install -r requirements.txt
 ```
 
-Place the four provider CSV files under `data/raw/` and verify their SHA-256
-values against `data/dataset_checksums.csv`.
+Download the four datasets from
+https://staff.itee.uq.edu.au/marius/NIDS_datasets/, place the expected CSV
+files under `data/raw/`, and verify their SHA-256 values against
+`data/dataset_checksums.csv`. The exact name mapping is documented in
+`data/README.md`.
 
-### H1
+### H1 formulation sensitivity
+
+The three `--execute` commands retrain E1 and E2. `finalize` validates their
+outputs and generates compact tables; it does not fit another model.
 
 ```powershell
 python run_h1.py
@@ -61,7 +84,8 @@ python run_h1.py finalize
 
 ### H3 paired domain loss
 
-H3 is completed before H2 because both use the same frozen protocol root:
+`init` creates frozen execution state. `pair` and `s0` train models. `analyze`
+generates the H3 statistical summaries from the completed runs.
 
 ```powershell
 python run_h3.py init --execute
@@ -78,7 +102,14 @@ foreach ($seed in $seeds) {
 python run_h3.py analyze --execute
 ```
 
+Pass `--cpu` to H3 execution commands only when GPU execution is unavailable;
+CPU training is supported but substantially slower.
+
 ### H2 LOTO filtering
+
+`shift`, `candidates`, and each `random-batch` command compute features or train
+models. `select` creates the immutable held-out-target selection locks from
+development-target results. `analyze` generates the final H2 tables.
 
 ```powershell
 python run_h2.py shift --execute
@@ -101,7 +132,13 @@ foreach ($target in $targets) {
 python run_h2.py analyze --execute
 ```
 
+H3 is completed before H2 because both use the same frozen H2/H3 protocol
+root.
+
 ### Target-oracle ceiling
+
+`run` retrains 27 target-only units. `finalize` verifies their coverage and
+generates compact result tables.
 
 ```powershell
 python run_oracle.py dry-run
@@ -111,72 +148,95 @@ python run_oracle.py finalize --execute
 
 ### Calibration
 
-Calibration consumes the fitted H1 pipelines:
+Calibration is inference-only: it consumes the fitted H1 pipelines and raw
+target CSVs, then writes calibration tables and plots. It does not fit models
+or preprocessing objects.
 
 ```powershell
 python run_calibration.py --mode full --strict
 ```
 
-Formal H1 execution requires a CUDA-capable GPU because the released H1 model
-set includes the Torch MLP. H3 supports `--cpu`, although a CUDA-capable GPU is
-strongly recommended for full training. Dry-runs, plans, tests, split
-verification, and manuscript-number verification remain available without
-CUDA. Full execution reads tens of millions of rows and may require many hours
-and tens of gigabytes of working storage. Run stages sequentially unless
-output isolation and available resources have been checked.
+## Figure and table regeneration
 
-## Repository layout
-
-```text
-src/cross_domain_nids/   Reusable models, preprocessing, and protocol utilities
-experiments/             H1, H2, H3, Oracle, and calibration experiment runners
-protocols/               Frozen policies and H2 selection locks
-data/splits/             Released H1 and Oracle partition maps
-data/reference_inputs/   Compact metric inputs required by finalizers
-results/reference/       Immutable compact results reported in the manuscript
-results/generated/       Ignored output location for new executions
-figures/scripts/         Semantic figure-generation entry points
-figures/data/            Compact figure inputs and validation notes
-figures/reference/       Reference PDFs used to check the manuscript figures
-tests/                   Protocol, split, and release-inventory tests
-docs/                    Reproducibility boundaries
-```
-
-All public file and directory names are stable and date-free. Historical
-protocol identifiers remain inside metadata values to preserve the scientific
-identity of archived results.
-
-## Data and model construction
-
-Raw NetFlow CSVs are not redistributed. Obtain the four files identified in
-`data/dataset_checksums.csv`, place them under `data/raw/`, and verify their
-SHA-256 values before training.
-
-H1 and H2 instantiate estimators directly from
-`data/model_hyperparameters.json`. Historical `.joblib` templates are not
-required. Newly fitted models may still be serialized under
-`results/generated/`.
-
-The compact historical metric tables required by the H1 and Oracle finalizers
-are included under `data/reference_inputs/`; they contain no model binaries or
-row-level predictions.
-
-Dataset labels use manuscript spelling (`CICIDS2018`, `BoT-IoT`, `ToN-IoT`);
-file names use stable lowercase slugs (`cicids2018`, `bot_iot`, `ton_iot`).
-
-## Figures
+The following commands use only the committed compact figure inputs. They do
+not require raw datasets or a GPU and write only to `figures/generated/`:
 
 ```powershell
 python figures/scripts/plot_h2_loto_results.py
 python figures/scripts/plot_h3_paired_domain_loss.py
 ```
 
-Generated figures are written to `figures/generated/`. The immutable manuscript
-references are `figures/reference/figure_2.pdf` and
-`figures/reference/figure_3.pdf`.
+The immutable comparison PDFs remain under `figures/reference/`. Experiment
+tables are regenerated by the H1/Oracle finalizers and the H2/H3 `analyze`
+commands after their prerequisite runs have completed. Calibration writes its
+tables during the inference-only calibration command.
 
-## Scope
+## Hardware requirements
 
-This is a minimal reproducibility repository, not a bitwise archive of the
-author's workstation. See `docs/REPRODUCIBILITY_LIMITS.md` before claiming
-one-command full retraining.
+- Quick verification, tests, plans, dry-runs, and figure regeneration are
+  CPU-safe.
+- Formal H1 execution requires a CUDA-capable GPU because the released H1
+  model set includes the Torch MLP.
+- H3 supports `--cpu`; a CUDA-capable GPU is strongly recommended.
+- H2 and Oracle contain CPU estimators and Torch models and should be run on a
+  machine with sufficient RAM, storage, and GPU capacity for the selected
+  units.
+- Full execution reads tens of millions of rows and may require many hours and
+  tens of gigabytes of working storage.
+
+Random seeds and deterministic execution settings are fixed where supported.
+Cross-hardware and cross-environment bitwise identity is not claimed.
+
+## Data and model construction
+
+Raw datasets are not redistributed. The expected inputs are
+`NF-UNSW-NB15-v3.csv`, `NF-CICIDS2018-v3.csv`, `NF-BoT-IoT-v3.csv`, and
+`NF-ToN-IoT-v3.csv`. Dataset labels use manuscript spelling
+(`CICIDS2018`, `BoT-IoT`, `ToN-IoT`), while lock and split filenames use
+lowercase slugs (`cicids2018`, `bot_iot`, `ton_iot`).
+
+H1 and H2 instantiate estimators directly from
+`data/model_hyperparameters.json`. Historical `.joblib` templates are not
+required. The compact historical metric tables required by the H1 and Oracle
+finalizers are included under `data/reference_inputs/`.
+
+## Repository layout
+
+```text
+src/cross_domain_nids/   Models, preprocessing, output guards, protocol tools
+experiments/             H1, H2, H3, Oracle, and calibration runners
+protocols/               Frozen policies and six H2 selection locks
+data/splits/             Released H1 and Oracle partition maps
+data/reference_inputs/   Compact metric inputs required by finalizers
+results/reference/       Immutable manuscript reference results
+results/generated/       Ignored destination for new experiment executions
+figures/scripts/         Figure-generation entry points
+figures/data/            Compact figure inputs and validation notes
+figures/reference/       Immutable manuscript comparison PDFs
+figures/generated/       Ignored destination for regenerated figures
+tests/                   Protocol, CLI, portability, and hygiene tests
+docs/                    Reproducibility and release guidance
+```
+
+All public filenames are stable and date-free. Historical protocol identifiers
+remain inside metadata values to preserve the identity of archived results.
+Every execution-capable public path rejects output destinations inside
+`results/reference/` or `figures/reference/`.
+
+## Release and anonymity
+
+The fixed local release identifier is `v1.0.0-manuscript`. Obtain its commit
+with:
+
+```powershell
+git rev-parse v1.0.0-manuscript^{commit}
+```
+
+For strict double-anonymous review, do not publish this repository from an
+account that can be linked to the authors. Use an anonymous review service or
+an independent anonymous account. Add a repository URL to `CITATION.cff` and
+the manuscript only after that anonymous URL has been chosen and verified.
+See `docs/CODE_AVAILABILITY_TEMPLATE.md`.
+
+See `docs/REPRODUCIBILITY_LIMITS.md` and `THIRD_PARTY_NOTICES.md` before making
+claims about complete retraining, redistribution, or third-party licensing.

@@ -16,14 +16,16 @@ import argparse
 import gc
 import json
 import math
-import os
 import re
 import sys
 import time
 from dataclasses import dataclass
 from pathlib import Path
 
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
+for import_root in (REPOSITORY_ROOT / "src", REPOSITORY_ROOT):
+    if str(import_root) not in sys.path:
+        sys.path.insert(0, str(import_root))
 
 import joblib
 import numpy as np
@@ -919,6 +921,11 @@ def main() -> None:
     args = parse_args()
     repo_root = Path(__file__).resolve().parents[2]
     output_dir = as_repo_path(args.output_dir, repo_root)
+    from cross_domain_nids.release_paths import require_generated_output
+
+    output_dir = require_generated_output(
+        output_dir, "results", repository_root=repo_root
+    )
     output_dir.mkdir(parents=True, exist_ok=True)
     bin_dir = output_dir / "bin_level"
     plot_dir = output_dir / "reliability_plots"

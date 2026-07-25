@@ -163,11 +163,32 @@ def check_h2_selection_locks() -> None:
         "ToN-IoT": "ton_iot",
     }
     model_slugs = {"MLP": "mlp", "RandomForest": "random_forest"}
+    strategy_order = [
+        "none",
+        "remove_shift_top3",
+        "remove_shift_top5",
+        "remove_shift_top10",
+        "remove_shift_top15",
+        "remove_exact_duplicates",
+        "remove_corr_gt_0.98",
+        "remove_shift_top5_plus_corr_gt_0.98",
+    ]
+    strategies = set(strategy_order)
     paths = sorted((policy_path.parent / "selection_locks").glob("*.json"))
     if len(paths) != 6:
         raise AssertionError(f"Expected six H2 selection locks, found {len(paths)}")
+    expected_combinations = {
+        (target, model)
+        for target in policy["targets"]
+        for model in policy["models"]
+    }
+    actual_combinations: set[tuple[str, str]] = set()
     for path in paths:
         lock = json.loads(path.read_text(encoding="utf-8"))
+        combination = (lock.get("held_out_target"), lock.get("model"))
+        if combination not in expected_combinations or combination in actual_combinations:
+            raise AssertionError(f"Duplicate or unknown H2 lock identity: {path.name}")
+        actual_combinations.add(combination)
         expected_name = (
             f"{target_slugs[lock['held_out_target']]}__"
             f"{model_slugs[lock['model']]}.json"
@@ -176,6 +197,91 @@ def check_h2_selection_locks() -> None:
             raise AssertionError(f"Unexpected H2 lock name: {path.name}")
         if lock.get("policy_hash") != policy_hash or lock.get("policy") != policy:
             raise AssertionError(f"H2 lock policy mismatch: {path.name}")
+        development_targets = lock.get("development_targets")
+        expected_development = [
+            target for target in policy["targets"]
+            if target != lock["held_out_target"]
+        ]
+        if development_targets != expected_development:
+            raise AssertionError(f"H2 development-target mismatch: {path.name}")
+        if (
+            lock["held_out_target"] in development_targets
+            or set(lock.get("development_input_hashes", {})) != set(development_targets)
+            or lock.get("held_out_metrics_loaded") is not False
+        ):
+            raise AssertionError(f"H2 held-out leakage invariant failed: {path.name}")
+        deltas = lock.get("development_deltas")
+        if not isinstance(deltas, list) or len(deltas) != len(strategies):
+            raise AssertionError(f"H2 candidate coverage mismatch: {path.name}")
+        candidate_names = [row.get("filtering_strategy") for row in deltas]
+        if set(candidate_names) != strategies or len(candidate_names) != len(set(candidate_names)):
+            raise AssertionError(f"H2 duplicate or missing candidate: {path.name}")
+        required_positive = math.ceil(
+            len(policy["seeds"])
+            * policy["development_required_positive_seed_fraction"]
+        )
+        eligible_rows = []
+        for row in deltas:
+            expected_eligible = (
+                row["filtering_strategy"] != "none"
+                and row["mean_mcc_delta"] >= policy["min_mean_mcc_delta"]
+                and row["mean_binary_f1_delta"]
+                >= policy["min_mean_binary_f1_delta"]
+                and row["mean_fnr_delta"] <= policy["max_mean_fnr_delta"]
+                and row["positive_mcc_seeds"] >= required_positive
+                and row["positive_binary_f1_seeds"] >= required_positive
+                and row["seed_count"] == len(policy["seeds"])
+            )
+            if row.get("eligible") is not expected_eligible:
+                raise AssertionError(f"H2 candidate eligibility mismatch: {path.name}")
+            if expected_eligible:
+                eligible_rows.append(row)
+        selected = lock.get("selected_strategy")
+        if not eligible_rows:
+            if selected != "none":
+                raise AssertionError(f"H2 abstention mismatch: {path.name}")
+        else:
+            order = {name: index for index, name in enumerate(strategy_order)}
+            for row in eligible_rows:
+                row["strategy_order"] = order[row["filtering_strategy"]]
+            ascending = [
+                key in {"mean_fnr_delta", "strategy_order"}
+                for key in policy["tie_break"]
+            ]
+            ranked = sorted(
+                eligible_rows,
+                key=lambda row: tuple(
+                    row[key] if asc else -row[key]
+                    for key, asc in zip(policy["tie_break"], ascending)
+                ),
+            )
+            if selected != ranked[0]["filtering_strategy"]:
+                raise AssertionError(f"H2 selected candidate mismatch: {path.name}")
+        seed_keys = {str(seed) for seed in policy["seeds"]}
+        masks = lock.get("held_out_removed_features_by_seed", {})
+        mask_hashes = lock.get("mask_hashes_by_seed", {})
+        if set(masks) != seed_keys or set(mask_hashes) != seed_keys:
+            raise AssertionError(f"H2 seed-mask coverage mismatch: {path.name}")
+        sys.path.insert(0, str(ROOT / "src"))
+        from cross_domain_nids.protocol_utils import hash_json
+
+        for seed in seed_keys:
+            if mask_hashes[seed] != hash_json(masks[seed]):
+                raise AssertionError(f"H2 mask hash mismatch: {path.name}/seed{seed}")
+            if selected == "none" and masks[seed] != []:
+                raise AssertionError(f"H2 abstention mask is non-empty: {path.name}")
+    if actual_combinations != expected_combinations:
+        raise AssertionError("H2 target-model lock coverage is incomplete")
+    if policy["random_replicates_per_seed"] != 20:
+        raise AssertionError("H2 random-control replicate count is not frozen at 20")
+    if sha256(ROOT / "data" / "model_hyperparameters.json") != policy[
+        "model_parameters_sha256"
+    ]:
+        raise AssertionError("H2 model-parameter hash mismatch")
+    if sha256(ROOT / "src" / "cross_domain_nids" / "model_factory.py") != policy[
+        "model_factory_sha256"
+    ]:
+        raise AssertionError("H2 model-factory hash mismatch")
 
 
 def check_release_manifest() -> None:

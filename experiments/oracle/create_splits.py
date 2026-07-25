@@ -468,6 +468,9 @@ def main() -> None:
         return
     if not args.execute:
         raise SystemExit("lock/generate require --execute")
+    from cross_domain_nids.release_paths import require_generated_output
+
+    args.output_dir = require_generated_output(args.output_dir, "results")
     args.output_dir.mkdir(parents=True, exist_ok=True)
     log("training_calls=0; split generation only")
     if args.command in ("lock", "all"):

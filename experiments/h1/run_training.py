@@ -25,7 +25,7 @@ SRC_ROOT = REPOSITORY_ROOT / "src"
 POLICY_PATH = REPOSITORY_ROOT / "protocols" / "h1" / "training_policy.json"
 MODEL_PARAMETERS_PATH = REPOSITORY_ROOT / "data" / "model_hyperparameters.json"
 H1_SPLIT_ROOT = REPOSITORY_ROOT / "data" / "splits" / "h1"
-EXPECTED_POLICY_SHA = "2c02b0b7abff49cb0c157ff1befe2269691970a5cea3176b6f3c424a694cb7ee"
+EXPECTED_POLICY_SHA = "9d73ea94237dd093b491e8313ee6dec6d8ca877ed9525eb71d611324f52fb055"
 EXPECTED_PROTOCOL_ID = "NIDS-H1-CORRECTED-SPLIT-SENS-20260717-v1.1"
 
 
@@ -523,6 +523,9 @@ def main() -> int:
             )
         )
         return 0
+    from cross_domain_nids.release_paths import require_generated_output
+
+    args.output_dir = require_generated_output(args.output_dir, "results")
     if args.seed is None:
         raise SystemExit("--execute requires exactly one frozen --seed")
     if args.chunk_size != 1_000_000:

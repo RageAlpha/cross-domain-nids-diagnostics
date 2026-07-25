@@ -402,7 +402,7 @@ def load_source_train_profile(seed: int, unsw_path: Path, feature_columns: Seque
     if list(data["feature_cols"]) != list(feature_columns):
         raise ValueError(
             "Feature-shift order differs from the H1 source split feature order: "
-            f"gap3={list(feature_columns)}, gap1={list(data['feature_cols'])}"
+            f"feature_shift={list(feature_columns)}, source={list(data['feature_cols'])}"
         )
 
     clean_train, audit = minimal_clean_features(data["X_train"], feature_columns)
@@ -1414,7 +1414,9 @@ def run_feature_shift(args: argparse.Namespace) -> None:
     if args.target_mode != "full":
         raise ValueError("Formal Feature shift currently supports only --target-mode full.")
 
-    output_dir = Path(args.output_dir)
+    from cross_domain_nids.release_paths import require_generated_output
+
+    output_dir = require_generated_output(args.output_dir, "results")
     output_dir.mkdir(parents=True, exist_ok=True)
     feature_columns = feature_shift_feature_columns()
     target_path_map = target_paths(args)

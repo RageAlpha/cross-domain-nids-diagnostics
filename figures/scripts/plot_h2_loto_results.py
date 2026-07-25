@@ -8,6 +8,7 @@ stable vector/high-DPI outputs. It does not modify the manuscript LaTeX.
 from __future__ import annotations
 
 import argparse
+import sys
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -247,6 +248,15 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
+    repository_root = Path(__file__).resolve().parents[2]
+    src_root = repository_root / "src"
+    if str(src_root) not in sys.path:
+        sys.path.insert(0, str(src_root))
+    from cross_domain_nids.release_paths import require_generated_output
+
+    args.output = require_generated_output(
+        args.output, "figures", repository_root=repository_root
+    )
     matrix, x_labels, y_labels, source = load_heatmap_data(args.data)
 
     apply_publication_style(FigureStyle())

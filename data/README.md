@@ -1,5 +1,21 @@
 # Data inputs
 
+Download the raw NetFlow datasets from the University of Queensland NIDS
+dataset page:
+https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+
+Place the files under `data/raw/` using the exact case-sensitive names below.
+
+| Manuscript/provider dataset name | Filename expected by the code |
+|---|---|
+| NF-UNSW-NB15-v3 | `NF-UNSW-NB15-v3.csv` |
+| NF-CSE-CIC-IDS2018-v3 | `NF-CICIDS2018-v3.csv` |
+| NF-BoT-IoT-v3 | `NF-BoT-IoT-v3.csv` |
+| NF-ToN-IoT-v3 | `NF-ToN-IoT-v3.csv` |
+
+After downloading, compare each file against `dataset_checksums.csv`. Raw
+datasets are governed by the provider's terms and are not redistributed here.
+
 - `dataset_checksums.csv`: provider identifiers and SHA-256 checksums for the
   four raw NetFlow CSVs. Raw datasets are not included.
 - `feature_schema.csv`: the 49-feature schema used by the manuscript.
