@@ -1,0 +1,6 @@
+gate,status,detail
+XGBoost_positive::BoT-IoT,Pass,"{""mean_delta_binary_f1"": 0.7127064474381576, ""mean_delta_binary_f1_gt_0"": true, ""mean_delta_fnr"": -0.7456196317865195, ""mean_delta_fnr_lt_0"": true, ""mean_delta_mcc"": 0.12009227017665618, ""mean_delta_mcc_gt_0"": true, ""positive_seed_count_ge_2"": true, ""positive_seeds"": 3}"
+XGBoost_positive::ToN-IoT,Pass,"{""mean_delta_binary_f1"": 0.5149058841182437, ""mean_delta_binary_f1_gt_0"": true, ""mean_delta_fnr"": -0.5134865504243116, ""mean_delta_fnr_lt_0"": true, ""mean_delta_mcc"": 0.4415691067394352, ""mean_delta_mcc_gt_0"": true, ""positive_seed_count_ge_2"": true, ""positive_seeds"": 3}"
+RandomForest_reverse::all_targets,Fail,"{""BoT-IoT"": {""lt_0"": true, ""mean_delta_binary_f1"": -0.22398968890043922}, ""CICIDS2018"": {""lt_0"": true, ""mean_delta_binary_f1"": -0.028711236906215454}, ""ToN-IoT"": {""lt_0"": false, ""mean_delta_binary_f1"": 0.0144390563701197}}"
+target_model_heterogeneity,Pass,positive_strata=6; negative_strata=3
+no_major_historical_sign_reversal,Pass,major_reversals=0

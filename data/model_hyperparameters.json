@@ -1,0 +1,141 @@
+{
+  "schema_version": "1.0",
+  "generated_from": "archived H1 training manifests summarized in results/reference/h1/seed_metrics.csv",
+  "note": "Audited parameters recovered from the historical seed-42 templates. H1 and H2 now instantiate the released model classes directly; random_state is replaced by each run seed.",
+  "templates": [
+    {
+      "experiment": "E1",
+      "task": "multiclass",
+      "model": "MLP",
+      "source_template_sha256": "fdd639428453050a9a41db07076500306ef9861007b323dd962faaa52357f536",
+      "parameters": {
+        "alpha": 0.001,
+        "batch_size": 4096,
+        "hidden_layer_sizes": [
+          128,
+          64
+        ],
+        "learning_rate": 0.001,
+        "max_epochs": 30,
+        "patience": 5,
+        "random_state": 42,
+        "require_gpu": true,
+        "validation_fraction": 0.1,
+        "verbose": true
+      }
+    },
+    {
+      "experiment": "E1",
+      "task": "multiclass",
+      "model": "RandomForest",
+      "source_template_sha256": "b8cecc23edfdb9ceeecf9aaea18270a5544e8db89078d9c0e52b502c959c3f07",
+      "parameters": {
+        "bootstrap": true,
+        "ccp_alpha": 0.0,
+        "class_weight": "balanced",
+        "criterion": "gini",
+        "max_depth": null,
+        "max_features": "sqrt",
+        "max_leaf_nodes": null,
+        "max_samples": null,
+        "min_impurity_decrease": 0.0,
+        "min_samples_leaf": 2,
+        "min_samples_split": 2,
+        "min_weight_fraction_leaf": 0.0,
+        "monotonic_cst": null,
+        "n_estimators": 100,
+        "n_jobs": -1,
+        "oob_score": false,
+        "random_state": 42,
+        "verbose": 0,
+        "warm_start": false
+      }
+    },
+    {
+      "experiment": "E1",
+      "task": "multiclass",
+      "model": "XGBoost",
+      "source_template_sha256": "cd9da8682544a07f6dc0a106283242c4502220f4f72c59ce8cea4e18f3fc54d8",
+      "parameters": {
+        "colsample_bytree": 0.8,
+        "device": "cuda",
+        "eval_metric": "mlogloss",
+        "learning_rate": 0.1,
+        "max_depth": 10,
+        "n_estimators": 200,
+        "n_jobs": -1,
+        "objective": "multi:softprob",
+        "random_state": 42,
+        "subsample": 1.0,
+        "tree_method": "hist"
+      }
+    },
+    {
+      "experiment": "E2",
+      "task": "binary",
+      "model": "MLP",
+      "source_template_sha256": "a26ef9de81c1b45f13b54fac81f4bac2b063aadc4c8dfd03ff085c53bf8fcf21",
+      "parameters": {
+        "alpha": 0.001,
+        "batch_size": 4096,
+        "hidden_layer_sizes": [
+          128,
+          64
+        ],
+        "learning_rate": 0.001,
+        "max_epochs": 30,
+        "patience": 5,
+        "random_state": 42,
+        "require_gpu": true,
+        "validation_fraction": 0.1,
+        "verbose": true
+      }
+    },
+    {
+      "experiment": "E2",
+      "task": "binary",
+      "model": "RandomForest",
+      "source_template_sha256": "251e93b5ba89dfa513fef50074d66f6c0c353293600f9954e0887ee88ab2b6d9",
+      "parameters": {
+        "bootstrap": true,
+        "ccp_alpha": 0.0,
+        "class_weight": "balanced",
+        "criterion": "gini",
+        "max_depth": 10,
+        "max_features": "sqrt",
+        "max_leaf_nodes": null,
+        "max_samples": null,
+        "min_impurity_decrease": 0.0,
+        "min_samples_leaf": 1,
+        "min_samples_split": 2,
+        "min_weight_fraction_leaf": 0.0,
+        "monotonic_cst": null,
+        "n_estimators": 200,
+        "n_jobs": -1,
+        "oob_score": false,
+        "random_state": 42,
+        "verbose": 0,
+        "warm_start": false
+      }
+    },
+    {
+      "experiment": "E2",
+      "task": "binary",
+      "model": "XGBoost",
+      "source_template_sha256": "75abdfacc7755de2db30dc81d5438ad9fe3b830868c9a0f407efbc85d01ef3d9",
+      "parameters": {
+        "colsample_bytree": 0.8,
+        "device": "cuda",
+        "eval_metric": "logloss",
+        "learning_rate": 0.1,
+        "max_depth": 10,
+        "n_estimators": 200,
+        "n_jobs": -1,
+        "objective": "binary:logistic",
+        "random_state": 42,
+        "subsample": 0.8,
+        "tree_method": "hist"
+      }
+    }
+  ]
+}

@@ -1,0 +1,3 @@
+# Preserve the exact released bytes on every platform.  The repository-level
+# SHA-256 manifest therefore remains valid after Windows or Linux checkout.
+* -text

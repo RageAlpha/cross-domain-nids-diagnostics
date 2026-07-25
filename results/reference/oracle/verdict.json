@@ -1,0 +1,11 @@
+{
+  "clean_target_domain_ceiling": true,
+  "decision": "clean_target_domain_ceiling_established",
+  "generated_utc": "2026-07-17T14:06:20.734041+00:00",
+  "historical_values_replaced": true,
+  "protocol_id": "NIDS-TARGET-ORACLE-CORRECTED-CEILING-20260717-v1",
+  "split_maps": 9,
+  "training_runs": 27,
+  "validation_checks": 355,
+  "validation_failures": 0
+}

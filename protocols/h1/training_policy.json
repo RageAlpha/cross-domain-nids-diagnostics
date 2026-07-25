@@ -1,0 +1,118 @@
+{
+  "protocol_id": "NIDS-H1-CORRECTED-SPLIT-SENS-20260717-v1.1",
+  "frozen_before_training": true,
+  "purpose": "Retrain E1 multiclass and E2 binary on identical corrected NF-UNSW memberships and test whether the reported qualitative H1 formulation-sensitivity verdict survives.",
+  "claim_boundary": {
+    "allowed": "Corrected-split sensitivity of the reported target- and model-dependent source-label formulation result.",
+    "forbidden": [
+      "Unique causal identification of label semantics.",
+      "Universal benefit of binary reformulation.",
+      "Model-agnostic or source-agnostic generalization.",
+      "Selection of whichever historical or corrected result is more favorable."
+    ]
+  },
+  "seeds": [42, 123, 2024],
+  "experiments": {
+    "E1": {
+      "source_label": "Attack",
+      "training_protocol": "pure_transfer_multiclass",
+      "target_prediction_mapping": "Benign->0; all_non_Benign_attack_classes->1"
+    },
+    "E2": {
+      "source_label": "Label",
+      "training_protocol": "binary_source_training",
+      "target_prediction_mapping": "binary_label_0_Benign_1_Attack"
+    }
+  },
+  "models": ["RandomForest", "XGBoost", "MLP"],
+  "corrected_splits": {
+    "protocol_id": "NIDS-H1-CORRECTED-SPLIT-PREFLIGHT-20260717-v1",
+    "common_membership_required_for_E1_and_E2": true,
+    "files": {
+      "42": {
+        "path": "data/splits/h1/split_seed_42.npz",
+        "file_sha256": "eb36fd67cc1d482dde69191ea44d56fbbc618b4695d39f452bab3bfdfe84041c",
+        "assignment_sha256": "1aaff7885a1c4bf3fc10cdb70a8c261d9a5479ffc336c609ad2f52d190faed9e"
+      },
+      "123": {
+        "path": "data/splits/h1/split_seed_123.npz",
+        "file_sha256": "20e8adb47f209fafdbfe3f64cb52ef05acf29d19fb4dc9d047e4249323350738",
+        "assignment_sha256": "568a6e66c7d586c528b6a013e909858e8e34461681388785d0e94f16901c5acd"
+      },
+      "2024": {
+        "path": "data/splits/h1/split_seed_2024.npz",
+        "file_sha256": "28e1c2a3c7fe603b305e339eedc9b4fc5f68b7d96750bd139821370bc67c2154",
+        "assignment_sha256": "3846d76a60482c78ffd809d1ac1c621317e0259bd713da54979eb48b3227c7b2"
+      }
+    },
+    "retained_original_index_sha256": "f35d802430f07355ead7abee8ea5f0f7a45cffcc3ca1c45f16907bf9c1819a47",
+    "partition_codes": {"train": 0, "validation": 1, "test": 2}
+  },
+  "inputs": {
+    "source": {
+      "path": "data/raw/NF-UNSW-NB15-v3.csv",
+      "sha256": "4ebb97bd74412d566137d95a6fc3ffd8f374f1cf8cfe204d007848e7a668f9b5"
+    },
+    "targets": {
+      "CICIDS2018": {
+        "path": "data/raw/NF-CICIDS2018-v3.csv",
+        "sha256": "242a6971cc801eae621b1fc4d966db2cd0af9cc866805f36a6fc5d0058dfbb74"
+      },
+      "BoT-IoT": {
+        "path": "data/raw/NF-BoT-IoT-v3.csv",
+        "sha256": "8bde1f6f1c8bc59dcb49828fb5b9d65c0b63e06d92b2b9f15b37159e923009ea"
+      },
+      "ToN-IoT": {
+        "path": "data/raw/NF-ToN-IoT-v3.csv",
+        "sha256": "53ec8f468a43ede9b1536fabc0390af2fa33ab4312b23ce4d864f186a4651f78"
+      }
+    },
+    "historical_results": {
+      "path": "data/reference_inputs/h1_historical_results.csv",
+      "sha256": "d69852b5eee9971360c9949ded76a5aec0b28c5e6308dd3974d496a8a6768c93"
+    }
+  },
+  "implementation_dependencies": {
+    "project_root": ".",
+    "src/cross_domain_nids/config.py": "792edaa4400e56954673dc80491245d045bea0df52f5b9cbb94721da822bc678",
+    "src/cross_domain_nids/preprocessing/netflow.py": "b0c524e5e9ee85dbeadb7ed2dc2e188d49993686bb669df0f1bb800c880cd8ce",
+    "src/cross_domain_nids/models/pipeline_models.py": "cf60015673fb76f1978432af37252f49a856437913b8e8f952c52d611dee3dc4",
+    "experiments/h1/run_multiseed_training.py": "cf6664e0480c1351fc41ff5950204f39ee1e0d51ce4601f80f3e391930b6af0f",
+    "src/cross_domain_nids/model_factory.py": "0301479b5ec16882100cd3d82f1f90225905ee4a05113f1dcc81bb83cc11bc5a",
+    "data/model_hyperparameters.json": "bb84f0e5921d0bda796cb2096e891184b4fec4b389e2f3feaccf99f16fdc709c"
+  },
+  "estimator_parameters": {
+    "path": "data/model_hyperparameters.json",
+    "sha256": "bb84f0e5921d0bda796cb2096e891184b4fec4b389e2f3feaccf99f16fdc709c",
+    "construction": "instantiate released estimator classes directly; replace random_state with the run seed; set verbose=false",
+    "historical_template_hashes_preserved_in_parameter_records": true
+  },
+  "training": {
+    "source_preprocessing": "original build_preprocessor; fit separately within each pipeline on corrected source train rows only",
+    "hyperparameter_search": "none",
+    "estimator_parameters": "construct the corresponding E1 or E2 estimator from data/model_hyperparameters.json and replace random_state with the run seed",
+    "corrected_validation_role": "reported source diagnostic only; no hyperparameter tuning or checkpoint selection",
+    "MLP_internal_validation": "the frozen estimator retains its deterministic internal validation_fraction using the common corrected training rows",
+    "target_labels_during_training": "forbidden"
+  },
+  "evaluation": {
+    "source": "corrected source test rows",
+    "targets": "complete target files, streamed with chunk size 1000000",
+    "metrics": ["MCC", "Binary-F1", "FPR", "FNR", "weighted-F1", "confusion counts"],
+    "target_label_usage": "final metric computation only",
+    "expected_training_runs": 18,
+    "expected_target_result_rows": 54,
+    "expected_total_result_rows_including_source_test": 72
+  },
+  "verdict_policy": {
+    "delta_definition": "E2 minus E1 for the same seed, model, target, and corrected membership",
+    "xgb_primary_positive_targets": ["BoT-IoT", "ToN-IoT"],
+    "xgb_primary_gate": "For each named target: mean delta Binary-F1 > 0, at least two of three seed deltas Binary-F1 > 0, mean delta MCC > 0, and mean delta FNR < 0.",
+    "rf_reverse_gate": "Mean delta Binary-F1 < 0 on each of CICIDS2018, BoT-IoT, and ToN-IoT.",
+    "heterogeneity_gate": "Across the nine target-model strata, corrected mean delta Binary-F1 includes at least one positive and one negative value.",
+    "major_sign_reversal": "A stratum is a major new counterexample when historical and corrected mean delta Binary-F1 have opposite signs and both absolute values are at least 0.10.",
+    "qualitative_verdict_unchanged": "Both XGB primary gates pass, the RF reverse gate passes, the heterogeneity gate passes, and no major sign reversal occurs.",
+    "failure_disposition": "If any required gate fails, update H1 and the manuscript rather than selecting the more favorable run.",
+    "exact_metric_reproduction_required": false
+  }
+}

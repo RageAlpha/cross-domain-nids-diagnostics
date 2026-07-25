@@ -1,0 +1,21 @@
+{
+  "protocol_id": "NIDS-H1-CORRECTED-SPLIT-SENS-20260717-v1.1",
+  "generated_utc": "2026-07-17T04:17:54.955566+00:00",
+  "artifact_validation_passed": true,
+  "validation_checks": 42,
+  "validation_passes": 42,
+  "validation_blockers": 0,
+  "training_runs": 18,
+  "full_target_result_rows": 54,
+  "source_test_result_rows": 18,
+  "qualitative_h1_verdict_unchanged": false,
+  "disposition": "update H1; do not select the more favorable historical or corrected run",
+  "gate_results": {
+    "XGBoost_positive::BoT-IoT": "Pass",
+    "XGBoost_positive::ToN-IoT": "Pass",
+    "RandomForest_reverse::all_targets": "Fail",
+    "target_model_heterogeneity": "Pass",
+    "no_major_historical_sign_reversal": "Pass"
+  },
+  "major_sign_reversal_strata": []
+}

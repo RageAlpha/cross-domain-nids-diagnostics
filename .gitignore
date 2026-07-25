@@ -1,0 +1,44 @@
+# Python and tooling caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Local environments and secrets
+.venv/
+venv/
+env/
+.env
+.env.*
+!.env.example
+
+# Provider datasets and large generated artifacts
+data/raw/
+artifacts/
+checkpoints/
+predictions/
+external/
+*.joblib
+*.pkl
+*.pickle
+*.pt
+*.pth
+*.ckpt
+*.onnx
+
+# Fresh experiment outputs; compact reference results remain tracked
+results/generated/*
+!results/generated/.gitkeep
+figures/generated/*
+!figures/generated/.gitkeep
+
+# Runtime and editor noise
+logs/
+*.log
+*.tmp
+*.bak
+.DS_Store
+Thumbs.db
+desktop.ini

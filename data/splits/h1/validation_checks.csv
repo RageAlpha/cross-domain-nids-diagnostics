@@ -1,0 +1,52 @@
+check,passed,detail
+artifact_hash::run_h1_corrected_split_preflight.py,True,0a5203056898191e166d4d8f05527ab050e9f794dbe869b5b048b65881494331
+artifact_hash::h1_corrected_split_preflight_policy.json,True,4e246d3afaeba8127a22b2b239023c770120adafbdd7f6dfe0be47ae3212c7d8
+artifact_hash::results\duplicate_summary.csv,True,eb41b63fb66aefecee3564de4036807d95f84287212e741c6dfc824ee59548b2
+artifact_hash::results\session_group_summary.csv,True,57f475617be8d4b010dd3db4d0bbaeeffa1cabe42d2f6d1ea62b3d2fdb733b95
+artifact_hash::results\split_size_comparison.csv,True,e6a8a31a0c68d23a01947021ba2908d216d142ea7f33688dc97c962d7dc90b31
+artifact_hash::results\membership_comparison.csv,True,bfc07aefbfc24121329a068511bea3cfd5eed7694f2640a56f831850647d93b6
+artifact_hash::results\movement_matrix.csv,True,7d815d100f3ca07d83f5345b2cb162eaa2335e89d8e79c1653a11b6f757e4ba4
+artifact_hash::results\corrected_split_integrity.csv,True,1088b6a312c13daa776f3868669a4e66006fdd8011265b36eef09cd64e7353b4
+artifact_hash::results\class_distribution_comparison.csv,True,a3a0907704ab1139a14f57e0638e0f3c1ae153d38f07be7a2e2282e33e1c3fce
+artifact_hash::results\corrected_split_manifest.csv,True,ba8879b97bc35eb528b64c9b263ec47e808403c5a3c4855561c50431df0092b5
+artifact_hash::results\preflight_verdict.json,True,dec1d501c3acb051a49d07b4b0312a20e062afcae6a00f3fb5d712258f166b24
+artifact_hash::results\H1_CORRECTED_SPLIT_PREFLIGHT_REPORT.md,True,d041fcd00cf94c9c2145814d643e902f312fac907c9563175047584a111cac8d
+artifact_hash::results\audit_command_log.txt,True,b69c78857f7c5be287497f5d636461aca473a102b6335bae5f36f35756126b26
+artifact_hash::split_seed_42.npz,True,eb36fd67cc1d482dde69191ea44d56fbbc618b4695d39f452bab3bfdfe84041c
+artifact_hash::split_seed_123.npz,True,20e8adb47f209fafdbfe3f64cb52ef05acf29d19fb4dc9d047e4249323350738
+artifact_hash::split_seed_2024.npz,True,28e1c2a3c7fe603b305e339eedc9b4fc5f68b7d96750bd139821370bc67c2154
+seed42::retained_sorted,True,2350609
+seed42::assignment_codes,True,"[0, 1, 2]"
+seed42::retained_hash,True,f35d802430f07355ead7abee8ea5f0f7a45cffcc3ca1c45f16907bf9c1819a47
+seed42::assignment_hash,True,1aaff7885a1c4bf3fc10cdb70a8c261d9a5479ffc336c609ad2f52d190faed9e
+seed42::train_count,True,1645447
+seed42::train_member_hash,True,a8a03850668b382419009087e7a65dca8c3537c4b9999822907b4c6f5fe6f183
+seed42::validation_count,True,235099
+seed42::validation_member_hash,True,93ba64fe38dcde3418a4a56ef9e5a4fe2042c630f845fb1c227fd21fb10dab32
+seed42::test_count,True,470063
+seed42::test_member_hash,True,0cbc2e1346014d3434fb8f0eb0c43d80ec31f3b72b1f3965866ea0274808e428
+seed123::retained_sorted,True,2350609
+seed123::assignment_codes,True,"[0, 1, 2]"
+seed123::retained_hash,True,f35d802430f07355ead7abee8ea5f0f7a45cffcc3ca1c45f16907bf9c1819a47
+seed123::assignment_hash,True,568a6e66c7d586c528b6a013e909858e8e34461681388785d0e94f16901c5acd
+seed123::common_retained_rows,True,2350609
+seed123::train_count,True,1645317
+seed123::train_member_hash,True,ce3102ca3c9f00aef0e6886da763d0413672207a361e99cdcc9999217b5616f7
+seed123::validation_count,True,235098
+seed123::validation_member_hash,True,3a77ecc5ce237c7b44ff364930ff546f5116731439e818083d83340bdb686d05
+seed123::test_count,True,470194
+seed123::test_member_hash,True,47f26b8bbf22a60460d961dc4583740e9397917949220e934bf47e206a4710b4
+seed2024::retained_sorted,True,2350609
+seed2024::assignment_codes,True,"[0, 1, 2]"
+seed2024::retained_hash,True,f35d802430f07355ead7abee8ea5f0f7a45cffcc3ca1c45f16907bf9c1819a47
+seed2024::assignment_hash,True,3846d76a60482c78ffd809d1ac1c621317e0259bd713da54979eb48b3227c7b2
+seed2024::common_retained_rows,True,2350609
+seed2024::train_count,True,1645370
+seed2024::train_member_hash,True,ffcde85ae792fac11ee30f2f234c260d402adfa0ff7289a96e6b374e2260cdcd
+seed2024::validation_count,True,235090
+seed2024::validation_member_hash,True,d6bd8723b274124b322b392f8983b5499a4172e8f4c2a5a3df9b20635c7d9ff8
+seed2024::test_count,True,470149
+seed2024::test_member_hash,True,8281cfd4e3c9fb2600ac39049cfa0c293cc9de992779c48cdc3d8ab1dc253b00
+verdict::maximum_moved_fraction,True,0.2258325395674057
+verdict::minimum_train_jaccard,True,0.7297912021252998
+verdict::materiality_high,True,"{""every_multiclass_label_present_in_train"":true,""h1_corrected_training_verdict"":""not_established"",""integrity_status"":""Pass"",""interpretation"":""The corrected partitions differ substantially from at least one historical H1 task partition. Existing checkpoints cannot support a corrected-split H1 verdict; retraining or claim demotion is required."",""materiality"":""high"",""maximum_class_prevalence_deviation"":1.688434845603659e-05,""maximum_moved_retained_row_fraction"":0.22583253956740573,""maximum_partition_fraction_deviation"":4.64985882381308e-05,""minimum_train_membership_jaccard"":0.7297912021252998,""protocol_id"":""NIDS-H1-CORRECTED-SPLIT-PREFLIGHT-20260717-v1"",""removed_row_fraction"":0.006263147748564317,""training_performed"":false,""usability_status"":""Pass""}"

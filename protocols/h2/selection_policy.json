@@ -1,0 +1,23 @@
+{
+  "protocol_id": "NIDS-H2H3-CONFIRM-20260713-v2",
+  "policy_version": "H2-3SEED-20260713-v2",
+  "seeds": [42, 123, 2024],
+  "targets": ["CICIDS2018", "BoT-IoT", "ToN-IoT"],
+  "models": ["RandomForest", "MLP"],
+  "model_parameters_sha256": "bb84f0e5921d0bda796cb2096e891184b4fec4b389e2f3feaccf99f16fdc709c",
+  "model_factory_sha256": "0301479b5ec16882100cd3d82f1f90225905ee4a05113f1dcc81bb83cc11bc5a",
+  "min_mean_mcc_delta": 0.0,
+  "min_mean_binary_f1_delta": 0.0,
+  "max_mean_fnr_delta": 0.01,
+  "development_required_positive_seed_fraction": 1.0,
+  "random_replicates_per_seed": 20,
+  "final_required_positive_seeds": 3,
+  "final_required_seed_count": 3,
+  "tie_break": [
+    "mean_mcc_delta",
+    "mean_binary_f1_delta",
+    "mean_fnr_delta",
+    "strategy_order"
+  ],
+  "verdict_rule": "shift_guided_repair requires mean MCC and Binary-F1 deltas >= 0, mean FNR increase <= 0.01, and MCC/Binary-F1 improvements in all 3 seeds versus both E2 and the within-seed median of exactly 20 matched random masks"
+}

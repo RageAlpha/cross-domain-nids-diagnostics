@@ -1,0 +1,5 @@
+filename,role,sha256,provider_doi,redistributed
+NF-UNSW-NB15-v3.csv,fixed_labelled_source,4ebb97bd74412d566137d95a6fc3ffd8f374f1cf8cfe204d007848e7a668f9b5,10.48610/6E0EDA1,no
+NF-CICIDS2018-v3.csv,target,242a6971cc801eae621b1fc4d966db2cd0af9cc866805f36a6fc5d0058dfbb74,10.48610/ECE9B83,no
+NF-BoT-IoT-v3.csv,target,8bde1f6f1c8bc59dcb49828fb5b9d65c0b63e06d92b2b9f15b37159e923009ea,10.48610/73C4EBC,no
+NF-ToN-IoT-v3.csv,target,53ec8f468a43ede9b1536fabc0390af2fa33ab4312b23ce4d864f186a4651f78,10.48610/44D7C5E,no

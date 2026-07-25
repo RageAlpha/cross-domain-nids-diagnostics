@@ -1,0 +1,4 @@
+target,performance_passed,mechanism_passed_parent_frozen,complement_final_verdict,parent_final_verdict,final_verdict_changed,mean_delta_MCC,mean_delta_Attack-class Binary-F1,mean_delta_FPR,coverage_pass,mcc_positive_seeds,binary_f1_positive_seeds,mean_delta_fnr,mcc_seed_gate,binary_f1_seed_gate,fnr_mean_gate
+BoT-IoT,False,False,Fail,Fail,False,-0.004887162025152789,-0.0375400697720966,-0.011439226331790092,True,1,1,0.01987528976716124,False,False,False
+CICIDS2018,False,False,Fail,Fail,False,-0.058600133690895895,-0.09573004762641563,-0.18368427186629951,True,2,1,0.25701246853282983,False,False,False
+ToN-IoT,False,True,Fail,Fail,False,-0.44216247894715704,-0.5336372686593108,-0.04306322863957537,True,0,0,0.5601929477127278,False,False,False

@@ -1,0 +1,142 @@
+{
+  "protocol_id": "NIDS-H2H3-CONFIRM-20260713-v2",
+  "held_out_target": "CICIDS2018",
+  "model": "RandomForest",
+  "development_targets": [
+    "BoT-IoT",
+    "ToN-IoT"
+  ],
+  "policy": {
+    "protocol_id": "NIDS-H2H3-CONFIRM-20260713-v2",
+    "policy_version": "H2-3SEED-20260713-v2",
+    "seeds": [
+      42,
+      123,
+      2024
+    ],
+    "targets": [
+      "CICIDS2018",
+      "BoT-IoT",
+      "ToN-IoT"
+    ],
+    "models": [
+      "RandomForest",
+      "MLP"
+    ],
+    "model_parameters_sha256": "bb84f0e5921d0bda796cb2096e891184b4fec4b389e2f3feaccf99f16fdc709c",
+    "model_factory_sha256": "0301479b5ec16882100cd3d82f1f90225905ee4a05113f1dcc81bb83cc11bc5a",
+    "min_mean_mcc_delta": 0.0,
+    "min_mean_binary_f1_delta": 0.0,
+    "max_mean_fnr_delta": 0.01,
+    "development_required_positive_seed_fraction": 1.0,
+    "random_replicates_per_seed": 20,
+    "final_required_positive_seeds": 3,
+    "final_required_seed_count": 3,
+    "tie_break": [
+      "mean_mcc_delta",
+      "mean_binary_f1_delta",
+      "mean_fnr_delta",
+      "strategy_order"
+    ],
+    "verdict_rule": "shift_guided_repair requires mean MCC and Binary-F1 deltas >= 0, mean FNR increase <= 0.01, and MCC/Binary-F1 improvements in all 3 seeds versus both E2 and the within-seed median of exactly 20 matched random masks"
+  },
+  "policy_hash": "8a14d941760e996bc12012801a1117568852d4bf6839e9698a7e4aa71a2090fc",
+  "development_deltas": [
+    {
+      "filtering_strategy": "none",
+      "mean_mcc_delta": 0.0,
+      "mean_binary_f1_delta": 0.0,
+      "mean_fnr_delta": 0.0,
+      "positive_mcc_seeds": 0,
+      "positive_binary_f1_seeds": 0,
+      "seed_count": 3,
+      "eligible": false
+    },
+    {
+      "filtering_strategy": "remove_corr_gt_0.98",
+      "mean_mcc_delta": 0.01987596148505241,
+      "mean_binary_f1_delta": 0.057531361006511406,
+      "mean_fnr_delta": -0.0770508372687936,
+      "positive_mcc_seeds": 2,
+      "positive_binary_f1_seeds": 2,
+      "seed_count": 3,
+      "eligible": false
+    },
+    {
+      "filtering_strategy": "remove_exact_duplicates",
+      "mean_mcc_delta": -0.009459520729789096,
+      "mean_binary_f1_delta": -0.020392030491049328,
+      "mean_fnr_delta": 0.00815047208428953,
+      "positive_mcc_seeds": 1,
+      "positive_binary_f1_seeds": 2,
+      "seed_count": 3,
+      "eligible": false
+    },
+    {
+      "filtering_strategy": "remove_shift_top10",
+      "mean_mcc_delta": -0.4413517678784303,
+      "mean_binary_f1_delta": -0.10742674744560389,
+      "mean_fnr_delta": -0.0008011409950670345,
+      "positive_mcc_seeds": 0,
+      "positive_binary_f1_seeds": 0,
+      "seed_count": 3,
+      "eligible": false
+    },
+    {
+      "filtering_strategy": "remove_shift_top15",
+      "mean_mcc_delta": -0.416906053617647,
+      "mean_binary_f1_delta": -0.08402078448974244,
+      "mean_fnr_delta": -0.031932328323214736,
+      "positive_mcc_seeds": 0,
+      "positive_binary_f1_seeds": 0,
+      "seed_count": 3,
+      "eligible": false
+    },
+    {
+      "filtering_strategy": "remove_shift_top3",
+      "mean_mcc_delta": -0.4139550139835433,
+      "mean_binary_f1_delta": -0.08521875878546742,
+      "mean_fnr_delta": -0.02606349069306596,
+      "positive_mcc_seeds": 0,
+      "positive_binary_f1_seeds": 0,
+      "seed_count": 3,
+      "eligible": false
+    },
+    {
+      "filtering_strategy": "remove_shift_top5",
+      "mean_mcc_delta": -0.4246443523523144,
+      "mean_binary_f1_delta": -0.09424578419727418,
+      "mean_fnr_delta": -0.009841268904947964,
+      "positive_mcc_seeds": 0,
+      "positive_binary_f1_seeds": 0,
+      "seed_count": 3,
+      "eligible": false
+    },
+    {
+      "filtering_strategy": "remove_shift_top5_plus_corr_gt_0.98",
+      "mean_mcc_delta": -0.4190723833231544,
+      "mean_binary_f1_delta": -0.07142827613935356,
+      "mean_fnr_delta": -0.04285580781902961,
+      "positive_mcc_seeds": 0,
+      "positive_binary_f1_seeds": 0,
+      "seed_count": 3,
+      "eligible": false
+    }
+  ],
+  "selected_strategy": "none",
+  "held_out_removed_features_by_seed": {
+    "42": [],
+    "123": [],
+    "2024": []
+  },
+  "mask_hashes_by_seed": {
+    "42": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "123": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "2024": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  },
+  "development_input_hashes": {
+    "BoT-IoT": "425ecf00b1241db0eec32f63b75face699013f217a1e39fbdfc67610c40886df",
+    "ToN-IoT": "43e61b77f6ce83da0a2578eb663d2f945dfda89bd0def9a777ea298da0de2e9d"
+  },
+  "held_out_metrics_loaded": false
+}
