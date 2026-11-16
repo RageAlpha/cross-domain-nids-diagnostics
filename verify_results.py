@@ -410,14 +410,19 @@ def main() -> int:
         "H2 selection locks": check_h2_selection_locks,
         "release manifest": check_release_manifest,
         "H1": check_h1,
-        "H2": check_h2,
-        "H3": check_h3,
+        "historical H2": check_h2,
+        "historical H3": check_h3,
         "Oracle": check_oracle,
         "Calibration": check_calibration,
     }
     for name, check in checks.items():
         check()
         print(f"PASS {name}")
+    from experiments.revision.common import verify as verify_inputs
+    from experiments.revision.evidence import verify as verify_revision
+    verify_inputs(raw=False)
+    revision = verify_revision()
+    print(f"PASS current revision: {revision['checks']} numerical checks")
     if args.check_git_inventory:
         check_git_inventory()
         print("PASS Git tracked-file inventory")

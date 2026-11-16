@@ -1,0 +1,143 @@
+{
+  "status": "complete",
+  "device": "cuda",
+  "gpu": "NVIDIA GeForce RTX 5070",
+  "source_split_seed": 42,
+  "source_train_membership_hash": "395ed3b895d32e4f44f936c6f9e73d92f02c840461ff91665cba26b804331f25",
+  "preprocessor_sha256": "4427305bc08a132fca6c5fdb29b10ceabd5193841a494f27e642a8e36bf0ad54",
+  "batch_size": 4096,
+  "batch_count": 16,
+  "coefficient_rule": "0.1 * median(task backbone gradient norm / alignment backbone gradient norm)",
+  "coefficient_schedule": "coefficient_max * epoch_index / 39",
+  "mmd_kernel": "mean of three RBF kernels; sigma_squared factors 0.5, 1, 2",
+  "mmd_bandwidth_rule": "median positive pairwise squared distance on 512 source + 512 target initial representations",
+  "target_detection_labels_read": false,
+  "zero_checks": [
+    {
+      "target": "CICIDS2018",
+      "seed": 42,
+      "method": "coral",
+      "one_step_state_equals_dann_zero": true
+    },
+    {
+      "target": "CICIDS2018",
+      "seed": 42,
+      "method": "mmd",
+      "one_step_state_equals_dann_zero": true
+    },
+    {
+      "target": "CICIDS2018",
+      "seed": 123,
+      "method": "coral",
+      "one_step_state_equals_dann_zero": true
+    },
+    {
+      "target": "CICIDS2018",
+      "seed": 123,
+      "method": "mmd",
+      "one_step_state_equals_dann_zero": true
+    },
+    {
+      "target": "CICIDS2018",
+      "seed": 2024,
+      "method": "coral",
+      "one_step_state_equals_dann_zero": true
+    },
+    {
+      "target": "CICIDS2018",
+      "seed": 2024,
+      "method": "mmd",
+      "one_step_state_equals_dann_zero": true
+    },
+    {
+      "target": "BoT-IoT",
+      "seed": 42,
+      "method": "coral",
+      "one_step_state_equals_dann_zero": true
+    },
+    {
+      "target": "BoT-IoT",
+      "seed": 42,
+      "method": "mmd",
+      "one_step_state_equals_dann_zero": true
+    },
+    {
+      "target": "BoT-IoT",
+      "seed": 123,
+      "method": "coral",
+      "one_step_state_equals_dann_zero": true
+    },
+    {
+      "target": "BoT-IoT",
+      "seed": 123,
+      "method": "mmd",
+      "one_step_state_equals_dann_zero": true
+    },
+    {
+      "target": "BoT-IoT",
+      "seed": 2024,
+      "method": "coral",
+      "one_step_state_equals_dann_zero": true
+    },
+    {
+      "target": "BoT-IoT",
+      "seed": 2024,
+      "method": "mmd",
+      "one_step_state_equals_dann_zero": true
+    },
+    {
+      "target": "ToN-IoT",
+      "seed": 42,
+      "method": "coral",
+      "one_step_state_equals_dann_zero": true
+    },
+    {
+      "target": "ToN-IoT",
+      "seed": 42,
+      "method": "mmd",
+      "one_step_state_equals_dann_zero": true
+    },
+    {
+      "target": "ToN-IoT",
+      "seed": 123,
+      "method": "coral",
+      "one_step_state_equals_dann_zero": true
+    },
+    {
+      "target": "ToN-IoT",
+      "seed": 123,
+      "method": "mmd",
+      "one_step_state_equals_dann_zero": true
+    },
+    {
+      "target": "ToN-IoT",
+      "seed": 2024,
+      "method": "coral",
+      "one_step_state_equals_dann_zero": true
+    },
+    {
+      "target": "ToN-IoT",
+      "seed": 2024,
+      "method": "mmd",
+      "one_step_state_equals_dann_zero": true
+    }
+  ],
+  "target_sample_ids_hashes": {
+    "CICIDS2018": {
+      "42": "683832ab1815764dc86bc135e7b65926eb3670673e0608ddbf2dcb286ee5eb1b",
+      "123": "3b9b13c662c34361ddc043b782147159ecfd3dcedaf8e201cd00736ac0c22769",
+      "2024": "e7ccf3d117efcd1fee9fdbd03ec88f801fed18da44885ddf33a545c0a13464d7"
+    },
+    "BoT-IoT": {
+      "42": "c0d7a69b5be916337f18c7c562c2a3008d063cb140223fbe6988c105ed98149e",
+      "123": "81cb8d64421a455b9cfe7558e38d2f58bb71bf73dffd5596b887bc04e1f40bb9",
+      "2024": "dcd4f8b26ce16f95aa6dc315c0512954a84fdcb71067de5cb9f4070930c978af"
+    },
+    "ToN-IoT": {
+      "42": "299467496f757f8da6dcf2744237b83dc19ceadcbba0731b7949dd29feded240",
+      "123": "6062f7235154162702cc4141b2c423e84298576be77332b6f3e215e73eef8526",
+      "2024": "93e1d11153ea1d2c8d5eb494ec131252301e0ce52d18f52d3ac0b76e7dc95953"
+    }
+  },
+  "source_code_sha256": "c9e1f2fa1f2f8493ec113f2d494bd8cc13b8601c0783932813becb85749e49d9"
+}

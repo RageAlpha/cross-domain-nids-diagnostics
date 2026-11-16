@@ -1,0 +1,32 @@
+{
+  "protocol_id": "KBS-R1-CORRECTED-20261111-v1",
+  "policy_version": "phase2-v1",
+  "seeds": [
+    42,
+    123,
+    2024
+  ],
+  "targets": [
+    "CICIDS2018",
+    "BoT-IoT",
+    "ToN-IoT"
+  ],
+  "models": [
+    "RandomForest",
+    "MLP"
+  ],
+  "min_mean_mcc_delta": 0.0,
+  "min_mean_binary_f1_delta": 0.0,
+  "max_mean_fnr_delta": 0.01,
+  "development_required_positive_seed_fraction": 1.0,
+  "random_replicates_per_seed": 10,
+  "final_required_positive_seeds": 3,
+  "final_required_seed_count": 3,
+  "tie_break": [
+    "mean_mcc_delta",
+    "mean_binary_f1_delta",
+    "mean_fnr_delta",
+    "strategy_order"
+  ],
+  "verdict_rule": "shift_guided_repair requires mean MCC and Binary-F1 deltas >= 0, mean FNR increase <= 0.01, and MCC/Binary-F1 improvements in all 3 seeds versus both E2 and the within-seed median of exactly 10 matched random masks"
+}

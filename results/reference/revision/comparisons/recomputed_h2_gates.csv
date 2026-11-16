@@ -1,0 +1,13 @@
+method,target,model,selection,status,full_gate,random_gate,joint_gate,mask_count_per_seed
+mRMR,CICIDS2018,RandomForest,none,not_applicable_abstention,,,,10
+mRMR,CICIDS2018,MLP,none,not_applicable_abstention,,,,10
+mRMR,BoT-IoT,RandomForest,none,not_applicable_abstention,,,,10
+mRMR,BoT-IoT,MLP,remove10,complete,False,False,False,10
+mRMR,ToN-IoT,RandomForest,none,not_applicable_abstention,,,,10
+mRMR,ToN-IoT,MLP,none,not_applicable_abstention,,,,10
+shift_budget,CICIDS2018,RandomForest,none,not_applicable_abstention,,,,10
+shift_budget,CICIDS2018,MLP,none,not_applicable_abstention,,,,10
+shift_budget,BoT-IoT,RandomForest,none,not_applicable_abstention,,,,10
+shift_budget,BoT-IoT,MLP,none,not_applicable_abstention,,,,10
+shift_budget,ToN-IoT,RandomForest,none,not_applicable_abstention,,,,10
+shift_budget,ToN-IoT,MLP,remove10,complete,False,False,False,10

@@ -1,42 +1,38 @@
-# Reproducibility limits and intentionally excluded files
+# Reproducibility scope
 
-## Included
+Quick verification checks numerical reference evidence, frozen inputs and release
+hashes. Synthetic tests exercise training, paired controls, source validation,
+selection isolation, interrupted recovery and rejection of incomplete evidence.
+These checks are distinct from full retraining.
 
-- Final H1, H2, H3, target-oracle, and calibration code paths.
-- Frozen policies, H2 selection locks, and all 12 fixed partition maps.
-- Compact per-seed/summary result tables under `results/reference/`.
-- Final Figure 2 and Figure 3 plotting code, inputs, and reference PDFs.
-- Dataset checksums, 49-feature schema, and model parameter dictionaries.
+Full revision execution requires provider CSVs, the pinned environment and CUDA.
+H3 adapts to a fixed 5% target sample and evaluates the entire target file,
+including adaptation rows. The readout is target-supervised and post-hoc.
 
-## Intentionally excluded
+Returned execution-review tables supply the new compact references. Their
+arithmetic is independently checked by `experiments/revision/evidence.py`.
+Original full result trees, checkpoints, prediction streams and current selection
+locks are not included; fresh execution generates them. Archived review statuses
+are provenance, not a new validation of absent checkpoints. This packaging task
+did not rerun the full experiments.
 
-- Raw datasets: redistribution is governed by the data providers.
-- Historical H1/E2 estimator templates: about 360 MB of joblib/pickle objects.
-  They are not required: H1 and H2 now construct the same estimator classes
-  directly from the released parameter dictionaries.
-- H3 checkpoints and per-row predictions: the historical tree is about
-  23.7 GB. They are unnecessary for checking manuscript values but are needed
-  to rerun the archived complement analysis without retraining.
-- Oracle fitted models: about 142 MB; the code and fixed split maps are enough
-  to retrain them from raw data.
-- Calibration per-row predictions: compact ECE/Brier outputs are included;
-  exact row-level recalculation requires regenerated or separately deposited
-  predictions.
-- Historical manifests, command logs, completion markers, repeated
-  `formal_run_final` trees, review reports, old figure variants, and unrelated
-  experiment scripts.
+Historical H2/H3 summaries, locks and commands retain the original 20-mask protocol.
+They must not be reported as corrected 10-mask results. The sensitivity runner
+requires historical execution products as well as the new stages. The historical
+gate grid can also be checked directly from compact deltas without training.
 
-## Known portability boundaries
+Historical H3 complement recalculation needs regenerated or separately deposited
+predictions. Fresh calibration inference needs fitted H1 models. Historical
+source-class confusion is contextual; its original fitted models and predictions
+are not included. Supplementary historical plots can be regenerated from the compact count and
+shift tables; their visual styling is not claimed to be identical to the manuscript.
 
-Repository inputs, Oracle manifests, and public runner defaults now use
-repository-relative paths. H1/H2 training no longer loads historical estimator
-templates. Raw provider data are still required for retraining. CUDA is
-required for formal H1 execution and strongly recommended for H3, which also
-supports the slower `--cpu` mode. Full H3 complement recalculation still needs
-retrained or separately deposited predictions.
+Dependencies pin direct versions, not all transitive packages, GPU drivers or
+CUDA builds. Formal revision experiments ran on a separate host. Local checks do
+not establish cross-hardware bitwise equivalence. Figure numbers are validated;
+PDF bytes and typography can vary by renderer.
 
-The package supports manuscript-number verification immediately. Full
-retraining additionally requires provider data and suitable hardware.
-
-The dependency files pin direct dependencies only. They do not constitute a
-complete transitive, CUDA-runtime, driver, or platform lock.
+Release changes reorganize imports and paths, extract helpers, construct models
+from matching parameter dictionaries, refit source preprocessing on frozen rows,
+translate public text and create fresh run manifests. Archived hashes are not
+rewritten to claim that the execution code is unchanged.

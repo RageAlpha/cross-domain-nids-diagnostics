@@ -1,0 +1,10 @@
+training_seed,criterion,shared_groups,train_rows_in_overlap,test_rows_in_overlap,train_rows,test_rows
+42,exact_parsed_nonlabel_row,0,0,0,14000,6000
+42,normalized_nonlabel_row,0,0,0,14000,6000
+42,timestamped_session,0,0,0,14000,6000
+123,exact_parsed_nonlabel_row,0,0,0,14000,6000
+123,normalized_nonlabel_row,0,0,0,14000,6000
+123,timestamped_session,0,0,0,14000,6000
+2024,exact_parsed_nonlabel_row,0,0,0,14000,6000
+2024,normalized_nonlabel_row,0,0,0,14000,6000
+2024,timestamped_session,0,0,0,14000,6000

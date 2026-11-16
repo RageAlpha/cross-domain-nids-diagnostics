@@ -1,0 +1,10 @@
+{
+  "repository": "https://github.com/yandex-research/rtdl-revisiting-models",
+  "commit": "e3ed46cac38568785289d8fa16b8cfa585bde27e",
+  "files": {
+    "rtdl_revisiting_models.py": "ca7cef3b44cd54b1aeb51f2cc733bef01fbfe3eff00b5c2bd28ca4b4db6b01b2",
+    "LICENSE": "35381b68041ebc3408e1b76ab24ce5eed1f7ea93afd62d109ffdabf1b0daa324",
+    "README.md": "106285b6ce0a24d3be9d09461db6b20037fa6723bcb193ce922dbffb9c7cec4f",
+    "pyproject.toml": "47691e63ed5bb88cb88ca189d593c8007e07a3719c7fee7c4c16562a65faafe3"
+  }
+}

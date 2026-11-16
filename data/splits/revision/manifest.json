@@ -1,0 +1,119 @@
+{
+  "protocol_id": "KBS-R1-CORRECTED-20261111-v1",
+  "source_origin": "independent corrected reconstruction; historical H1 membership unavailable",
+  "source_original_rows": 2365424,
+  "source_retained_rows": 2350609,
+  "source_removed_duplicates": 14815,
+  "session_groups": 2341343,
+  "mixed_label_session_groups": 0,
+  "source_group_fields_missing": 0,
+  "session_columns": [
+    "FLOW_START_MILLISECONDS",
+    "FLOW_END_MILLISECONDS",
+    "IPV4_SRC_ADDR",
+    "L4_SRC_PORT",
+    "IPV4_DST_ADDR",
+    "L4_DST_PORT",
+    "PROTOCOL"
+  ],
+  "split_codes": {
+    "train": 0,
+    "validation": 1,
+    "test": 2
+  },
+  "seeds": [
+    42,
+    123,
+    2024
+  ],
+  "deduplication": "normalized complete source row, all 55 columns, first original row retained",
+  "group_allocation": "PCG64 seed shuffle within benign/attack/mixed strata; nearest cumulative-row 70% and 80% boundaries",
+  "identity_method": "paired uint64 pandas fingerprints, shared canonical numeric dtypes",
+  "exact_row_definition": "53 parsed nonlabel fields before cleaning; numeric spelling differences are parsed to the same value",
+  "targets": [
+    {
+      "target": "CICIDS2018",
+      "evaluation_rows": 20115529,
+      "adaptation_rows_per_seed": 1005776,
+      "adaptation_in_evaluation": true,
+      "missing_session_fields": 0,
+      "target_detection_labels_read": false,
+      "audit_seconds": 196.3919492999994
+    },
+    {
+      "target": "BoT-IoT",
+      "evaluation_rows": 16933808,
+      "adaptation_rows_per_seed": 846690,
+      "adaptation_in_evaluation": true,
+      "missing_session_fields": 0,
+      "target_detection_labels_read": false,
+      "audit_seconds": 178.01338479999686
+    },
+    {
+      "target": "ToN-IoT",
+      "evaluation_rows": 27520260,
+      "adaptation_rows_per_seed": 1376013,
+      "adaptation_in_evaluation": true,
+      "missing_session_fields": 0,
+      "target_detection_labels_read": false,
+      "audit_seconds": 252.1889033000043
+    }
+  ],
+  "data_files": [
+    {
+      "path": "data/raw/NF-UNSW-NB15-v3.csv",
+      "sha256": "4ebb97bd74412d566137d95a6fc3ffd8f374f1cf8cfe204d007848e7a668f9b5",
+      "bytes": 577360958
+    },
+    {
+      "path": "data/raw/NF-CICIDS2018-v3.csv",
+      "sha256": "242a6971cc801eae621b1fc4d966db2cd0af9cc866805f36a6fc5d0058dfbb74",
+      "bytes": 4222783755
+    },
+    {
+      "path": "data/raw/NF-BoT-IoT-v3.csv",
+      "sha256": "8bde1f6f1c8bc59dcb49828fb5b9d65c0b63e06d92b2b9f15b37159e923009ea",
+      "bytes": 3817527532
+    },
+    {
+      "path": "data/raw/NF-ToN-IoT-v3.csv",
+      "sha256": "53ec8f468a43ede9b1536fabc0390af2fa33ab4312b23ce4d864f186a4651f78",
+      "bytes": 5302886266
+    }
+  ],
+  "source_code_sha256": "a9ceec6c643e73e42028491d122be2b8746a691021b34c7d3f5d54feb26d79fe",
+  "elapsed_seconds": 675.4515888999958,
+  "status": "complete",
+  "artifacts": {
+    "alignment_calibration.json": "20bcded387a129cb992c4232fab4de60151183f41fbc6110de315f33c83a9434",
+    "alignment_calibration_batches.csv": "911d3e63d387c3e7d9a87265ac0b3a62900dac6d235bca57811c0a53eb1fc654",
+    "alignment_coefficients.csv": "5ecd9eb9d96ca31f54363e3b2e067bfaf35cb4554fcf598c6b9e6a9350344c02",
+    "BoT-IoT_adaptation_seed123.npz": "3dcb8d6dbe3b58714e7bbe7c6e240d325a1982b2df7a1494d27d5643cccce596",
+    "BoT-IoT_adaptation_seed2024.npz": "ac1bfeb760ed93a14b16af3901a51cf5cf571ecae3fadf5afb9fb87f623297cc",
+    "BoT-IoT_adaptation_seed42.npz": "5222bfd71e3a4b29d52c3568d06e2991466a9c0eb0467db691fc407a69fccb58",
+    "BoT-IoT_calibration_seed123.npz": "ca7893fc56be3f4592e8fa1a647d2581680494e3b69ba5af720221efd38c3dc2",
+    "BoT-IoT_calibration_seed2024.npz": "cc0d88657fc892ef52ffbe10c6ab87ba977c64a6edd797f9633a3c577c2e6b53",
+    "BoT-IoT_calibration_seed42.npz": "b92164db7564072293951942a4cc8cf262c95030b4f8755820e527e6ca8504ad",
+    "CICIDS2018_adaptation_seed123.npz": "afad7caed6b4277772a9cc25253be76896b8e4c2aa0960e07134a4776b219cb2",
+    "CICIDS2018_adaptation_seed2024.npz": "acb088732c96adda6ec3ccf93902f4f48780bfda1f82ebc7bbfbb15fa3210178",
+    "CICIDS2018_adaptation_seed42.npz": "be3f7b6e21337de6cd9427ff888fbadfdbafe92a05d33300fa74caa857a87584",
+    "CICIDS2018_calibration_seed123.npz": "f7167a97d065cdefd958637c3711d25b9d0a425b300c9761b0b1fa4f64ab1f56",
+    "CICIDS2018_calibration_seed2024.npz": "f42f6c85bb0fc28750f82ef3c8ef8430f9230b8507d1fa7a3f47887fc47fff40",
+    "CICIDS2018_calibration_seed42.npz": "856f405b7150841bd8525707eaf65077f7441aea5660bbb1c55aaaac26070bfa",
+    "formal_matrix.csv": "4cbd959f4e9a6ed1cf6432c64bb49b0a1456ff22e8ef75ab80081fa035e620bf",
+    "random_masks.json": "6c2ec15b673374f1aeb17011d5bb963e1a47fe2738abb267a99d08748069f0fa",
+    "source_partition_overlap.csv": "d7a7430b977cf82e5c5c46c4a83fa6ad603fe7e2022f34b5e666dba6a8f16042",
+    "source_seed123.npz": "967c3db58b7f25e8a4e82c23bfea8cc7a7c69ff05ce176dba550c8735982f23b",
+    "source_seed2024.npz": "dce4d3c17135fafe557e49741e31253f3c0151f341bc1c43c0cc3b3bc40584f9",
+    "source_seed42.npz": "23076187a31295326cbe2ec91819263b45069e2f81828b49148d32f5bdf7b88a",
+    "source_split_summary.csv": "f1892a3df1d32f48540ae76d668bb97b7915f334b8e2f6ca5a7685479e4f5927",
+    "source_target_overlap.csv": "5a8661fe3565741f61158cf4ad3d55d2076f835dddfbbe29c7cffd7b7126bb01",
+    "ToN-IoT_adaptation_seed123.npz": "e65a3adb705bdb21329ca8129308adb60f374836ab2094d2203e0ed7cb862cbf",
+    "ToN-IoT_adaptation_seed2024.npz": "fa49ceabb67a858a7ffde56a5cb9abe0558ce548391ade843729fd47cbb8c108",
+    "ToN-IoT_adaptation_seed42.npz": "ff405c55c4f50668132c5b2c622089599d5cb916694b2f5896d638c1cd6b9da7",
+    "ToN-IoT_calibration_seed123.npz": "97c9e90f165679e08fcb9a212e5ea5667222e2e8e2686980705fdd9f51a76692",
+    "ToN-IoT_calibration_seed2024.npz": "8e4169b89dad0bc8f37e270f8a302238ee59251fb5926e4321da59e86301022f",
+    "ToN-IoT_calibration_seed42.npz": "ed265825eb5ccd995212fd46d636a11b1ee6809a8d77d0fc0e7c54e3ee5d92ce"
+  },
+  "release_note": "Curated frozen inputs; serialized preprocessor and deduplication scratch arrays are regenerated from raw data."
+}

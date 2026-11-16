@@ -1,0 +1,40 @@
+check,status
+completion_inputs_code_and_references,passed
+coral/CICIDS2018/seed42,passed
+coral/CICIDS2018/seed123,passed
+coral/CICIDS2018/seed2024,passed
+coral/BoT-IoT/seed42,passed
+coral/BoT-IoT/seed123,passed
+coral/BoT-IoT/seed2024,passed
+coral/ToN-IoT/seed42,passed
+coral/ToN-IoT/seed123,passed
+coral/ToN-IoT/seed2024,passed
+coral: coverage_and_analysis,passed
+mmd/CICIDS2018/seed42,passed
+mmd/CICIDS2018/seed123,passed
+mmd/CICIDS2018/seed2024,passed
+mmd/BoT-IoT/seed42,passed
+mmd/BoT-IoT/seed123,passed
+mmd/BoT-IoT/seed2024,passed
+mmd/ToN-IoT/seed42,passed
+mmd/ToN-IoT/seed123,passed
+mmd/ToN-IoT/seed2024,passed
+mmd: coverage_and_analysis,passed
+FT/ToN-IoT/seed42,passed
+FT/ToN-IoT/seed123,passed
+FT/ToN-IoT/seed2024,passed
+FT: coverage_and_analysis,passed
+BN/ToN-IoT/seed42,passed
+BN/ToN-IoT/seed123,passed
+BN/ToN-IoT/seed2024,passed
+BN: coverage_and_analysis,passed
+weight/ToN-IoT/seed42,passed
+weight/ToN-IoT/seed123,passed
+weight/ToN-IoT/seed2024,passed
+weight: coverage_and_analysis,passed
+mRMR: fixed_selection_and_controls,passed
+shift_budget: fixed_selection_and_controls,passed
+48_fixed_fits_and_evaluation_coverage,passed
+49_feature_mapping,passed
+unfinished_artifacts,passed
+inputs_unchanged_during_review,passed

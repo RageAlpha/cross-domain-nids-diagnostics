@@ -33,6 +33,9 @@ jobs:
           python run_oracle.py dry-run
           python run_calibration.py --help
           python experiments/h2/compute_feature_shift.py --help
+          python run_revision.py plan
+          python run_revision.py verify
+          python figures/scripts/plot_revision_figures.py
       - name: Check relocation from a foreign working directory
         working-directory: ${{ runner.temp }}
         run: |

@@ -1,0 +1,1885 @@
+{
+  "features": [
+    "L4_SRC_PORT",
+    "L4_DST_PORT",
+    "PROTOCOL",
+    "L7_PROTO",
+    "IN_BYTES",
+    "IN_PKTS",
+    "OUT_BYTES",
+    "OUT_PKTS",
+    "TCP_FLAGS",
+    "CLIENT_TCP_FLAGS",
+    "SERVER_TCP_FLAGS",
+    "FLOW_DURATION_MILLISECONDS",
+    "DURATION_IN",
+    "DURATION_OUT",
+    "MIN_TTL",
+    "MAX_TTL",
+    "LONGEST_FLOW_PKT",
+    "SHORTEST_FLOW_PKT",
+    "MIN_IP_PKT_LEN",
+    "MAX_IP_PKT_LEN",
+    "SRC_TO_DST_SECOND_BYTES",
+    "DST_TO_SRC_SECOND_BYTES",
+    "RETRANSMITTED_IN_BYTES",
+    "RETRANSMITTED_IN_PKTS",
+    "RETRANSMITTED_OUT_BYTES",
+    "RETRANSMITTED_OUT_PKTS",
+    "SRC_TO_DST_AVG_THROUGHPUT",
+    "DST_TO_SRC_AVG_THROUGHPUT",
+    "NUM_PKTS_UP_TO_128_BYTES",
+    "NUM_PKTS_128_TO_256_BYTES",
+    "NUM_PKTS_256_TO_512_BYTES",
+    "NUM_PKTS_512_TO_1024_BYTES",
+    "NUM_PKTS_1024_TO_1514_BYTES",
+    "TCP_WIN_MAX_IN",
+    "TCP_WIN_MAX_OUT",
+    "ICMP_TYPE",
+    "ICMP_IPV4_TYPE",
+    "DNS_QUERY_ID",
+    "DNS_QUERY_TYPE",
+    "DNS_TTL_ANSWER",
+    "FTP_COMMAND_RET_CODE",
+    "SRC_TO_DST_IAT_MIN",
+    "SRC_TO_DST_IAT_MAX",
+    "SRC_TO_DST_IAT_AVG",
+    "SRC_TO_DST_IAT_STDDEV",
+    "DST_TO_SRC_IAT_MIN",
+    "DST_TO_SRC_IAT_MAX",
+    "DST_TO_SRC_IAT_AVG",
+    "DST_TO_SRC_IAT_STDDEV"
+  ],
+  "masks": [
+    {
+      "seed": 42,
+      "k": 3,
+      "replicate": 0,
+      "removed": [
+        "DST_TO_SRC_AVG_THROUGHPUT",
+        "TCP_FLAGS",
+        "TCP_WIN_MAX_IN"
+      ]
+    },
+    {
+      "seed": 42,
+      "k": 3,
+      "replicate": 1,
+      "removed": [
+        "IN_BYTES",
+        "NUM_PKTS_1024_TO_1514_BYTES",
+        "SRC_TO_DST_SECOND_BYTES"
+      ]
+    },
+    {
+      "seed": 42,
+      "k": 3,
+      "replicate": 2,
+      "removed": [
+        "CLIENT_TCP_FLAGS",
+        "MAX_IP_PKT_LEN",
+        "TCP_WIN_MAX_IN"
+      ]
+    },
+    {
+      "seed": 42,
+      "k": 3,
+      "replicate": 3,
+      "removed": [
+        "DNS_QUERY_TYPE",
+        "L7_PROTO",
+        "MIN_IP_PKT_LEN"
+      ]
+    },
+    {
+      "seed": 42,
+      "k": 3,
+      "replicate": 4,
+      "removed": [
+        "FTP_COMMAND_RET_CODE",
+        "TCP_WIN_MAX_IN",
+        "TCP_WIN_MAX_OUT"
+      ]
+    },
+    {
+      "seed": 42,
+      "k": 3,
+      "replicate": 5,
+      "removed": [
+        "MAX_TTL",
+        "NUM_PKTS_1024_TO_1514_BYTES",
+        "SRC_TO_DST_SECOND_BYTES"
+      ]
+    },
+    {
+      "seed": 42,
+      "k": 3,
+      "replicate": 6,
+      "removed": [
+        "DURATION_IN",
+        "RETRANSMITTED_OUT_BYTES",
+        "SHORTEST_FLOW_PKT"
+      ]
+    },
+    {
+      "seed": 42,
+      "k": 3,
+      "replicate": 7,
+      "removed": [
+        "IN_BYTES",
+        "MIN_IP_PKT_LEN",
+        "NUM_PKTS_128_TO_256_BYTES"
+      ]
+    },
+    {
+      "seed": 42,
+      "k": 3,
+      "replicate": 8,
+      "removed": [
+        "DST_TO_SRC_IAT_MAX",
+        "MAX_TTL",
+        "TCP_WIN_MAX_OUT"
+      ]
+    },
+    {
+      "seed": 42,
+      "k": 3,
+      "replicate": 9,
+      "removed": [
+        "DST_TO_SRC_IAT_AVG",
+        "L4_SRC_PORT",
+        "NUM_PKTS_UP_TO_128_BYTES"
+      ]
+    },
+    {
+      "seed": 42,
+      "k": 5,
+      "replicate": 0,
+      "removed": [
+        "ICMP_IPV4_TYPE",
+        "LONGEST_FLOW_PKT",
+        "RETRANSMITTED_OUT_BYTES",
+        "SERVER_TCP_FLAGS",
+        "SRC_TO_DST_AVG_THROUGHPUT"
+      ]
+    },
+    {
+      "seed": 42,
+      "k": 5,
+      "replicate": 1,
+      "removed": [
+        "DST_TO_SRC_IAT_STDDEV",
+        "IN_BYTES",
+        "SHORTEST_FLOW_PKT",
+        "SRC_TO_DST_IAT_STDDEV",
+        "SRC_TO_DST_SECOND_BYTES"
+      ]
+    },
+    {
+      "seed": 42,
+      "k": 5,
+      "replicate": 2,
+      "removed": [
+        "ICMP_IPV4_TYPE",
+        "L7_PROTO",
+        "NUM_PKTS_256_TO_512_BYTES",
+        "NUM_PKTS_UP_TO_128_BYTES",
+        "TCP_FLAGS"
+      ]
+    },
+    {
+      "seed": 42,
+      "k": 5,
+      "replicate": 3,
+      "removed": [
+        "DST_TO_SRC_IAT_MAX",
+        "ICMP_IPV4_TYPE",
+        "IN_BYTES",
+        "MIN_IP_PKT_LEN",
+        "RETRANSMITTED_OUT_PKTS"
+      ]
+    },
+    {
+      "seed": 42,
+      "k": 5,
+      "replicate": 4,
+      "removed": [
+        "DST_TO_SRC_IAT_AVG",
+        "MIN_IP_PKT_LEN",
+        "OUT_PKTS",
+        "RETRANSMITTED_OUT_PKTS",
+        "SERVER_TCP_FLAGS"
+      ]
+    },
+    {
+      "seed": 42,
+      "k": 5,
+      "replicate": 5,
+      "removed": [
+        "MAX_IP_PKT_LEN",
+        "NUM_PKTS_1024_TO_1514_BYTES",
+        "NUM_PKTS_256_TO_512_BYTES",
+        "SRC_TO_DST_IAT_MIN",
+        "SRC_TO_DST_SECOND_BYTES"
+      ]
+    },
+    {
+      "seed": 42,
+      "k": 5,
+      "replicate": 6,
+      "removed": [
+        "DNS_QUERY_TYPE",
+        "DURATION_IN",
+        "NUM_PKTS_128_TO_256_BYTES",
+        "PROTOCOL",
+        "SRC_TO_DST_IAT_STDDEV"
+      ]
+    },
+    {
+      "seed": 42,
+      "k": 5,
+      "replicate": 7,
+      "removed": [
+        "DST_TO_SRC_IAT_MAX",
+        "DURATION_IN",
+        "ICMP_TYPE",
+        "SRC_TO_DST_IAT_MIN",
+        "TCP_WIN_MAX_IN"
+      ]
+    },
+    {
+      "seed": 42,
+      "k": 5,
+      "replicate": 8,
+      "removed": [
+        "DST_TO_SRC_IAT_STDDEV",
+        "ICMP_TYPE",
+        "IN_PKTS",
+        "L7_PROTO",
+        "NUM_PKTS_256_TO_512_BYTES"
+      ]
+    },
+    {
+      "seed": 42,
+      "k": 5,
+      "replicate": 9,
+      "removed": [
+        "DST_TO_SRC_IAT_AVG",
+        "DURATION_OUT",
+        "NUM_PKTS_256_TO_512_BYTES",
+        "SRC_TO_DST_IAT_MAX",
+        "SRC_TO_DST_IAT_STDDEV"
+      ]
+    },
+    {
+      "seed": 42,
+      "k": 10,
+      "replicate": 0,
+      "removed": [
+        "DNS_TTL_ANSWER",
+        "DST_TO_SRC_SECOND_BYTES",
+        "DURATION_IN",
+        "FLOW_DURATION_MILLISECONDS",
+        "FTP_COMMAND_RET_CODE",
+        "L7_PROTO",
+        "PROTOCOL",
+        "RETRANSMITTED_OUT_PKTS",
+        "SHORTEST_FLOW_PKT",
+        "TCP_WIN_MAX_IN"
+      ]
+    },
+    {
+      "seed": 42,
+      "k": 10,
+      "replicate": 1,
+      "removed": [
+        "DNS_QUERY_TYPE",
+        "FLOW_DURATION_MILLISECONDS",
+        "IN_PKTS",
+        "NUM_PKTS_1024_TO_1514_BYTES",
+        "NUM_PKTS_128_TO_256_BYTES",
+        "NUM_PKTS_256_TO_512_BYTES",
+        "RETRANSMITTED_IN_BYTES",
+        "SRC_TO_DST_AVG_THROUGHPUT",
+        "SRC_TO_DST_IAT_MIN",
+        "SRC_TO_DST_IAT_STDDEV"
+      ]
+    },
+    {
+      "seed": 42,
+      "k": 10,
+      "replicate": 2,
+      "removed": [
+        "DNS_TTL_ANSWER",
+        "ICMP_TYPE",
+        "LONGEST_FLOW_PKT",
+        "MIN_IP_PKT_LEN",
+        "NUM_PKTS_512_TO_1024_BYTES",
+        "NUM_PKTS_UP_TO_128_BYTES",
+        "PROTOCOL",
+        "RETRANSMITTED_IN_BYTES",
+        "SRC_TO_DST_AVG_THROUGHPUT",
+        "SRC_TO_DST_SECOND_BYTES"
+      ]
+    },
+    {
+      "seed": 42,
+      "k": 10,
+      "replicate": 3,
+      "removed": [
+        "DST_TO_SRC_IAT_MIN",
+        "FLOW_DURATION_MILLISECONDS",
+        "FTP_COMMAND_RET_CODE",
+        "ICMP_IPV4_TYPE",
+        "ICMP_TYPE",
+        "IN_BYTES",
+        "L4_SRC_PORT",
+        "LONGEST_FLOW_PKT",
+        "OUT_BYTES",
+        "TCP_FLAGS"
+      ]
+    },
+    {
+      "seed": 42,
+      "k": 10,
+      "replicate": 4,
+      "removed": [
+        "DST_TO_SRC_AVG_THROUGHPUT",
+        "DST_TO_SRC_IAT_STDDEV",
+        "DURATION_OUT",
+        "FLOW_DURATION_MILLISECONDS",
+        "FTP_COMMAND_RET_CODE",
+        "L4_SRC_PORT",
+        "MAX_IP_PKT_LEN",
+        "MAX_TTL",
+        "NUM_PKTS_1024_TO_1514_BYTES",
+        "SRC_TO_DST_IAT_MIN"
+      ]
+    },
+    {
+      "seed": 42,
+      "k": 10,
+      "replicate": 5,
+      "removed": [
+        "CLIENT_TCP_FLAGS",
+        "DURATION_OUT",
+        "FTP_COMMAND_RET_CODE",
+        "IN_BYTES",
+        "NUM_PKTS_128_TO_256_BYTES",
+        "NUM_PKTS_UP_TO_128_BYTES",
+        "PROTOCOL",
+        "RETRANSMITTED_OUT_PKTS",
+        "SRC_TO_DST_IAT_MAX",
+        "SRC_TO_DST_IAT_STDDEV"
+      ]
+    },
+    {
+      "seed": 42,
+      "k": 10,
+      "replicate": 6,
+      "removed": [
+        "DNS_QUERY_ID",
+        "DST_TO_SRC_IAT_AVG",
+        "DST_TO_SRC_IAT_MIN",
+        "ICMP_IPV4_TYPE",
+        "IN_BYTES",
+        "IN_PKTS",
+        "MIN_IP_PKT_LEN",
+        "NUM_PKTS_128_TO_256_BYTES",
+        "SRC_TO_DST_IAT_STDDEV",
+        "TCP_WIN_MAX_OUT"
+      ]
+    },
+    {
+      "seed": 42,
+      "k": 10,
+      "replicate": 7,
+      "removed": [
+        "DST_TO_SRC_AVG_THROUGHPUT",
+        "DST_TO_SRC_IAT_MAX",
+        "FLOW_DURATION_MILLISECONDS",
+        "L7_PROTO",
+        "MIN_TTL",
+        "NUM_PKTS_1024_TO_1514_BYTES",
+        "RETRANSMITTED_OUT_BYTES",
+        "SRC_TO_DST_AVG_THROUGHPUT",
+        "SRC_TO_DST_IAT_AVG",
+        "SRC_TO_DST_IAT_MIN"
+      ]
+    },
+    {
+      "seed": 42,
+      "k": 10,
+      "replicate": 8,
+      "removed": [
+        "CLIENT_TCP_FLAGS",
+        "DNS_TTL_ANSWER",
+        "DST_TO_SRC_IAT_STDDEV",
+        "L4_DST_PORT",
+        "L7_PROTO",
+        "MIN_IP_PKT_LEN",
+        "NUM_PKTS_128_TO_256_BYTES",
+        "SRC_TO_DST_IAT_MAX",
+        "SRC_TO_DST_IAT_STDDEV",
+        "TCP_WIN_MAX_OUT"
+      ]
+    },
+    {
+      "seed": 42,
+      "k": 10,
+      "replicate": 9,
+      "removed": [
+        "DNS_QUERY_ID",
+        "DST_TO_SRC_AVG_THROUGHPUT",
+        "DST_TO_SRC_IAT_MAX",
+        "ICMP_TYPE",
+        "LONGEST_FLOW_PKT",
+        "NUM_PKTS_128_TO_256_BYTES",
+        "RETRANSMITTED_OUT_PKTS",
+        "SHORTEST_FLOW_PKT",
+        "SRC_TO_DST_AVG_THROUGHPUT",
+        "TCP_WIN_MAX_OUT"
+      ]
+    },
+    {
+      "seed": 42,
+      "k": 15,
+      "replicate": 0,
+      "removed": [
+        "CLIENT_TCP_FLAGS",
+        "DST_TO_SRC_IAT_MAX",
+        "DST_TO_SRC_IAT_MIN",
+        "ICMP_TYPE",
+        "IN_PKTS",
+        "MAX_IP_PKT_LEN",
+        "MAX_TTL",
+        "NUM_PKTS_UP_TO_128_BYTES",
+        "SRC_TO_DST_AVG_THROUGHPUT",
+        "SRC_TO_DST_IAT_AVG",
+        "SRC_TO_DST_IAT_MAX",
+        "SRC_TO_DST_IAT_MIN",
+        "SRC_TO_DST_IAT_STDDEV",
+        "SRC_TO_DST_SECOND_BYTES",
+        "TCP_FLAGS"
+      ]
+    },
+    {
+      "seed": 42,
+      "k": 15,
+      "replicate": 1,
+      "removed": [
+        "DNS_QUERY_TYPE",
+        "DST_TO_SRC_IAT_STDDEV",
+        "DST_TO_SRC_SECOND_BYTES",
+        "LONGEST_FLOW_PKT",
+        "MAX_IP_PKT_LEN",
+        "NUM_PKTS_1024_TO_1514_BYTES",
+        "NUM_PKTS_256_TO_512_BYTES",
+        "OUT_BYTES",
+        "RETRANSMITTED_IN_BYTES",
+        "RETRANSMITTED_IN_PKTS",
+        "SERVER_TCP_FLAGS",
+        "SRC_TO_DST_IAT_MAX",
+        "SRC_TO_DST_IAT_STDDEV",
+        "SRC_TO_DST_SECOND_BYTES",
+        "TCP_WIN_MAX_OUT"
+      ]
+    },
+    {
+      "seed": 42,
+      "k": 15,
+      "replicate": 2,
+      "removed": [
+        "CLIENT_TCP_FLAGS",
+        "DNS_QUERY_TYPE",
+        "DST_TO_SRC_AVG_THROUGHPUT",
+        "DST_TO_SRC_IAT_MIN",
+        "DURATION_IN",
+        "IN_PKTS",
+        "LONGEST_FLOW_PKT",
+        "MIN_TTL",
+        "NUM_PKTS_256_TO_512_BYTES",
+        "NUM_PKTS_512_TO_1024_BYTES",
+        "OUT_BYTES",
+        "OUT_PKTS",
+        "PROTOCOL",
+        "RETRANSMITTED_IN_BYTES",
+        "TCP_WIN_MAX_OUT"
+      ]
+    },
+    {
+      "seed": 42,
+      "k": 15,
+      "replicate": 3,
+      "removed": [
+        "DST_TO_SRC_AVG_THROUGHPUT",
+        "DST_TO_SRC_IAT_MAX",
+        "DST_TO_SRC_IAT_STDDEV",
+        "DST_TO_SRC_SECOND_BYTES",
+        "DURATION_OUT",
+        "FLOW_DURATION_MILLISECONDS",
+        "ICMP_TYPE",
+        "L4_DST_PORT",
+        "NUM_PKTS_1024_TO_1514_BYTES",
+        "NUM_PKTS_128_TO_256_BYTES",
+        "NUM_PKTS_UP_TO_128_BYTES",
+        "SHORTEST_FLOW_PKT",
+        "SRC_TO_DST_IAT_AVG",
+        "SRC_TO_DST_IAT_STDDEV",
+        "SRC_TO_DST_SECOND_BYTES"
+      ]
+    },
+    {
+      "seed": 42,
+      "k": 15,
+      "replicate": 4,
+      "removed": [
+        "DNS_QUERY_TYPE",
+        "DST_TO_SRC_IAT_MIN",
+        "DST_TO_SRC_IAT_STDDEV",
+        "DURATION_OUT",
+        "FLOW_DURATION_MILLISECONDS",
+        "IN_PKTS",
+        "MAX_IP_PKT_LEN",
+        "MAX_TTL",
+        "MIN_TTL",
+        "NUM_PKTS_128_TO_256_BYTES",
+        "NUM_PKTS_UP_TO_128_BYTES",
+        "OUT_PKTS",
+        "RETRANSMITTED_IN_PKTS",
+        "SRC_TO_DST_IAT_AVG",
+        "SRC_TO_DST_IAT_STDDEV"
+      ]
+    },
+    {
+      "seed": 42,
+      "k": 15,
+      "replicate": 5,
+      "removed": [
+        "DNS_QUERY_ID",
+        "DNS_QUERY_TYPE",
+        "DNS_TTL_ANSWER",
+        "DST_TO_SRC_IAT_STDDEV",
+        "DST_TO_SRC_SECOND_BYTES",
+        "LONGEST_FLOW_PKT",
+        "MAX_IP_PKT_LEN",
+        "MIN_IP_PKT_LEN",
+        "MIN_TTL",
+        "NUM_PKTS_256_TO_512_BYTES",
+        "SHORTEST_FLOW_PKT",
+        "SRC_TO_DST_IAT_AVG",
+        "SRC_TO_DST_IAT_MIN",
+        "SRC_TO_DST_IAT_STDDEV",
+        "TCP_FLAGS"
+      ]
+    },
+    {
+      "seed": 42,
+      "k": 15,
+      "replicate": 6,
+      "removed": [
+        "CLIENT_TCP_FLAGS",
+        "DNS_QUERY_ID",
+        "DST_TO_SRC_IAT_STDDEV",
+        "ICMP_IPV4_TYPE",
+        "IN_PKTS",
+        "L4_SRC_PORT",
+        "L7_PROTO",
+        "MAX_IP_PKT_LEN",
+        "MAX_TTL",
+        "MIN_IP_PKT_LEN",
+        "NUM_PKTS_256_TO_512_BYTES",
+        "RETRANSMITTED_IN_PKTS",
+        "SRC_TO_DST_IAT_STDDEV",
+        "SRC_TO_DST_SECOND_BYTES",
+        "TCP_WIN_MAX_IN"
+      ]
+    },
+    {
+      "seed": 42,
+      "k": 15,
+      "replicate": 7,
+      "removed": [
+        "DST_TO_SRC_IAT_MIN",
+        "DURATION_OUT",
+        "FLOW_DURATION_MILLISECONDS",
+        "FTP_COMMAND_RET_CODE",
+        "L7_PROTO",
+        "LONGEST_FLOW_PKT",
+        "MIN_TTL",
+        "NUM_PKTS_256_TO_512_BYTES",
+        "RETRANSMITTED_IN_PKTS",
+        "RETRANSMITTED_OUT_PKTS",
+        "SRC_TO_DST_IAT_AVG",
+        "SRC_TO_DST_IAT_MAX",
+        "SRC_TO_DST_SECOND_BYTES",
+        "TCP_WIN_MAX_IN",
+        "TCP_WIN_MAX_OUT"
+      ]
+    },
+    {
+      "seed": 42,
+      "k": 15,
+      "replicate": 8,
+      "removed": [
+        "DST_TO_SRC_IAT_MAX",
+        "DST_TO_SRC_IAT_MIN",
+        "DURATION_IN",
+        "L7_PROTO",
+        "LONGEST_FLOW_PKT",
+        "MAX_IP_PKT_LEN",
+        "MIN_IP_PKT_LEN",
+        "OUT_PKTS",
+        "RETRANSMITTED_OUT_BYTES",
+        "SHORTEST_FLOW_PKT",
+        "SRC_TO_DST_IAT_MAX",
+        "SRC_TO_DST_IAT_MIN",
+        "SRC_TO_DST_SECOND_BYTES",
+        "TCP_WIN_MAX_IN",
+        "TCP_WIN_MAX_OUT"
+      ]
+    },
+    {
+      "seed": 42,
+      "k": 15,
+      "replicate": 9,
+      "removed": [
+        "DNS_QUERY_TYPE",
+        "DST_TO_SRC_SECOND_BYTES",
+        "ICMP_IPV4_TYPE",
+        "L4_SRC_PORT",
+        "MIN_IP_PKT_LEN",
+        "MIN_TTL",
+        "NUM_PKTS_1024_TO_1514_BYTES",
+        "NUM_PKTS_128_TO_256_BYTES",
+        "NUM_PKTS_256_TO_512_BYTES",
+        "NUM_PKTS_UP_TO_128_BYTES",
+        "OUT_BYTES",
+        "PROTOCOL",
+        "RETRANSMITTED_OUT_BYTES",
+        "SERVER_TCP_FLAGS",
+        "SHORTEST_FLOW_PKT"
+      ]
+    },
+    {
+      "seed": 123,
+      "k": 3,
+      "replicate": 0,
+      "removed": [
+        "DNS_TTL_ANSWER",
+        "FLOW_DURATION_MILLISECONDS",
+        "RETRANSMITTED_OUT_PKTS"
+      ]
+    },
+    {
+      "seed": 123,
+      "k": 3,
+      "replicate": 1,
+      "removed": [
+        "DST_TO_SRC_IAT_AVG",
+        "IN_BYTES",
+        "RETRANSMITTED_IN_BYTES"
+      ]
+    },
+    {
+      "seed": 123,
+      "k": 3,
+      "replicate": 2,
+      "removed": [
+        "DST_TO_SRC_IAT_STDDEV",
+        "DURATION_IN",
+        "SERVER_TCP_FLAGS"
+      ]
+    },
+    {
+      "seed": 123,
+      "k": 3,
+      "replicate": 3,
+      "removed": [
+        "CLIENT_TCP_FLAGS",
+        "L7_PROTO",
+        "NUM_PKTS_256_TO_512_BYTES"
+      ]
+    },
+    {
+      "seed": 123,
+      "k": 3,
+      "replicate": 4,
+      "removed": [
+        "DST_TO_SRC_SECOND_BYTES",
+        "NUM_PKTS_1024_TO_1514_BYTES",
+        "SRC_TO_DST_IAT_MAX"
+      ]
+    },
+    {
+      "seed": 123,
+      "k": 3,
+      "replicate": 5,
+      "removed": [
+        "DNS_QUERY_TYPE",
+        "ICMP_IPV4_TYPE",
+        "OUT_BYTES"
+      ]
+    },
+    {
+      "seed": 123,
+      "k": 3,
+      "replicate": 6,
+      "removed": [
+        "OUT_PKTS",
+        "RETRANSMITTED_OUT_BYTES",
+        "SRC_TO_DST_SECOND_BYTES"
+      ]
+    },
+    {
+      "seed": 123,
+      "k": 3,
+      "replicate": 7,
+      "removed": [
+        "DURATION_OUT",
+        "SHORTEST_FLOW_PKT",
+        "TCP_FLAGS"
+      ]
+    },
+    {
+      "seed": 123,
+      "k": 3,
+      "replicate": 8,
+      "removed": [
+        "NUM_PKTS_128_TO_256_BYTES",
+        "RETRANSMITTED_OUT_PKTS",
+        "TCP_FLAGS"
+      ]
+    },
+    {
+      "seed": 123,
+      "k": 3,
+      "replicate": 9,
+      "removed": [
+        "FTP_COMMAND_RET_CODE",
+        "L4_SRC_PORT",
+        "SRC_TO_DST_IAT_MIN"
+      ]
+    },
+    {
+      "seed": 123,
+      "k": 5,
+      "replicate": 0,
+      "removed": [
+        "DST_TO_SRC_AVG_THROUGHPUT",
+        "MIN_TTL",
+        "OUT_BYTES",
+        "RETRANSMITTED_IN_BYTES",
+        "TCP_FLAGS"
+      ]
+    },
+    {
+      "seed": 123,
+      "k": 5,
+      "replicate": 1,
+      "removed": [
+        "MAX_TTL",
+        "MIN_IP_PKT_LEN",
+        "NUM_PKTS_256_TO_512_BYTES",
+        "RETRANSMITTED_OUT_PKTS",
+        "TCP_FLAGS"
+      ]
+    },
+    {
+      "seed": 123,
+      "k": 5,
+      "replicate": 2,
+      "removed": [
+        "FTP_COMMAND_RET_CODE",
+        "ICMP_IPV4_TYPE",
+        "IN_BYTES",
+        "RETRANSMITTED_IN_BYTES",
+        "TCP_WIN_MAX_IN"
+      ]
+    },
+    {
+      "seed": 123,
+      "k": 5,
+      "replicate": 3,
+      "removed": [
+        "FLOW_DURATION_MILLISECONDS",
+        "IN_PKTS",
+        "LONGEST_FLOW_PKT",
+        "SRC_TO_DST_AVG_THROUGHPUT",
+        "SRC_TO_DST_IAT_AVG"
+      ]
+    },
+    {
+      "seed": 123,
+      "k": 5,
+      "replicate": 4,
+      "removed": [
+        "FLOW_DURATION_MILLISECONDS",
+        "ICMP_IPV4_TYPE",
+        "L4_DST_PORT",
+        "L4_SRC_PORT",
+        "SERVER_TCP_FLAGS"
+      ]
+    },
+    {
+      "seed": 123,
+      "k": 5,
+      "replicate": 5,
+      "removed": [
+        "DNS_QUERY_ID",
+        "DST_TO_SRC_AVG_THROUGHPUT",
+        "MAX_IP_PKT_LEN",
+        "NUM_PKTS_512_TO_1024_BYTES",
+        "SRC_TO_DST_AVG_THROUGHPUT"
+      ]
+    },
+    {
+      "seed": 123,
+      "k": 5,
+      "replicate": 6,
+      "removed": [
+        "DST_TO_SRC_SECOND_BYTES",
+        "FTP_COMMAND_RET_CODE",
+        "MAX_TTL",
+        "NUM_PKTS_1024_TO_1514_BYTES",
+        "RETRANSMITTED_OUT_BYTES"
+      ]
+    },
+    {
+      "seed": 123,
+      "k": 5,
+      "replicate": 7,
+      "removed": [
+        "DST_TO_SRC_IAT_AVG",
+        "IN_BYTES",
+        "MAX_IP_PKT_LEN",
+        "NUM_PKTS_512_TO_1024_BYTES",
+        "RETRANSMITTED_OUT_BYTES"
+      ]
+    },
+    {
+      "seed": 123,
+      "k": 5,
+      "replicate": 8,
+      "removed": [
+        "DST_TO_SRC_IAT_MAX",
+        "L4_SRC_PORT",
+        "NUM_PKTS_128_TO_256_BYTES",
+        "PROTOCOL",
+        "RETRANSMITTED_OUT_PKTS"
+      ]
+    },
+    {
+      "seed": 123,
+      "k": 5,
+      "replicate": 9,
+      "removed": [
+        "L4_SRC_PORT",
+        "L7_PROTO",
+        "MAX_IP_PKT_LEN",
+        "MIN_TTL",
+        "NUM_PKTS_1024_TO_1514_BYTES"
+      ]
+    },
+    {
+      "seed": 123,
+      "k": 10,
+      "replicate": 0,
+      "removed": [
+        "DNS_QUERY_ID",
+        "FLOW_DURATION_MILLISECONDS",
+        "L4_DST_PORT",
+        "MIN_IP_PKT_LEN",
+        "NUM_PKTS_128_TO_256_BYTES",
+        "OUT_PKTS",
+        "RETRANSMITTED_IN_PKTS",
+        "RETRANSMITTED_OUT_PKTS",
+        "SRC_TO_DST_IAT_AVG",
+        "TCP_FLAGS"
+      ]
+    },
+    {
+      "seed": 123,
+      "k": 10,
+      "replicate": 1,
+      "removed": [
+        "DST_TO_SRC_AVG_THROUGHPUT",
+        "DST_TO_SRC_IAT_AVG",
+        "DST_TO_SRC_IAT_MIN",
+        "DST_TO_SRC_IAT_STDDEV",
+        "DURATION_IN",
+        "FTP_COMMAND_RET_CODE",
+        "MAX_TTL",
+        "NUM_PKTS_1024_TO_1514_BYTES",
+        "OUT_BYTES",
+        "SRC_TO_DST_AVG_THROUGHPUT"
+      ]
+    },
+    {
+      "seed": 123,
+      "k": 10,
+      "replicate": 2,
+      "removed": [
+        "CLIENT_TCP_FLAGS",
+        "DNS_TTL_ANSWER",
+        "DST_TO_SRC_IAT_MAX",
+        "DST_TO_SRC_IAT_MIN",
+        "DURATION_IN",
+        "L4_SRC_PORT",
+        "LONGEST_FLOW_PKT",
+        "MIN_TTL",
+        "SRC_TO_DST_IAT_STDDEV",
+        "TCP_WIN_MAX_IN"
+      ]
+    },
+    {
+      "seed": 123,
+      "k": 10,
+      "replicate": 3,
+      "removed": [
+        "CLIENT_TCP_FLAGS",
+        "DNS_QUERY_ID",
+        "DST_TO_SRC_AVG_THROUGHPUT",
+        "DST_TO_SRC_IAT_MIN",
+        "IN_BYTES",
+        "NUM_PKTS_1024_TO_1514_BYTES",
+        "OUT_PKTS",
+        "SRC_TO_DST_IAT_AVG",
+        "TCP_WIN_MAX_IN",
+        "TCP_WIN_MAX_OUT"
+      ]
+    },
+    {
+      "seed": 123,
+      "k": 10,
+      "replicate": 4,
+      "removed": [
+        "DNS_TTL_ANSWER",
+        "DST_TO_SRC_IAT_AVG",
+        "DST_TO_SRC_IAT_MAX",
+        "DURATION_IN",
+        "ICMP_IPV4_TYPE",
+        "IN_BYTES",
+        "IN_PKTS",
+        "MAX_IP_PKT_LEN",
+        "SERVER_TCP_FLAGS",
+        "SRC_TO_DST_IAT_AVG"
+      ]
+    },
+    {
+      "seed": 123,
+      "k": 10,
+      "replicate": 5,
+      "removed": [
+        "DST_TO_SRC_IAT_MIN",
+        "DST_TO_SRC_SECOND_BYTES",
+        "MAX_IP_PKT_LEN",
+        "MIN_IP_PKT_LEN",
+        "NUM_PKTS_256_TO_512_BYTES",
+        "NUM_PKTS_UP_TO_128_BYTES",
+        "OUT_PKTS",
+        "RETRANSMITTED_OUT_BYTES",
+        "SHORTEST_FLOW_PKT",
+        "SRC_TO_DST_IAT_AVG"
+      ]
+    },
+    {
+      "seed": 123,
+      "k": 10,
+      "replicate": 6,
+      "removed": [
+        "DNS_QUERY_ID",
+        "DURATION_OUT",
+        "FTP_COMMAND_RET_CODE",
+        "ICMP_IPV4_TYPE",
+        "L4_DST_PORT",
+        "NUM_PKTS_UP_TO_128_BYTES",
+        "RETRANSMITTED_OUT_BYTES",
+        "RETRANSMITTED_OUT_PKTS",
+        "SRC_TO_DST_AVG_THROUGHPUT",
+        "TCP_FLAGS"
+      ]
+    },
+    {
+      "seed": 123,
+      "k": 10,
+      "replicate": 7,
+      "removed": [
+        "DNS_QUERY_TYPE",
+        "DNS_TTL_ANSWER",
+        "DST_TO_SRC_AVG_THROUGHPUT",
+        "DST_TO_SRC_IAT_STDDEV",
+        "MAX_IP_PKT_LEN",
+        "MIN_IP_PKT_LEN",
+        "SERVER_TCP_FLAGS",
+        "SHORTEST_FLOW_PKT",
+        "SRC_TO_DST_IAT_AVG",
+        "SRC_TO_DST_IAT_MIN"
+      ]
+    },
+    {
+      "seed": 123,
+      "k": 10,
+      "replicate": 8,
+      "removed": [
+        "DST_TO_SRC_AVG_THROUGHPUT",
+        "FTP_COMMAND_RET_CODE",
+        "NUM_PKTS_1024_TO_1514_BYTES",
+        "NUM_PKTS_UP_TO_128_BYTES",
+        "PROTOCOL",
+        "SRC_TO_DST_IAT_MAX",
+        "SRC_TO_DST_IAT_MIN",
+        "SRC_TO_DST_IAT_STDDEV",
+        "TCP_WIN_MAX_IN",
+        "TCP_WIN_MAX_OUT"
+      ]
+    },
+    {
+      "seed": 123,
+      "k": 10,
+      "replicate": 9,
+      "removed": [
+        "DURATION_IN",
+        "ICMP_IPV4_TYPE",
+        "NUM_PKTS_1024_TO_1514_BYTES",
+        "NUM_PKTS_128_TO_256_BYTES",
+        "NUM_PKTS_512_TO_1024_BYTES",
+        "RETRANSMITTED_IN_PKTS",
+        "RETRANSMITTED_OUT_BYTES",
+        "SRC_TO_DST_IAT_MAX",
+        "SRC_TO_DST_SECOND_BYTES",
+        "TCP_WIN_MAX_OUT"
+      ]
+    },
+    {
+      "seed": 123,
+      "k": 15,
+      "replicate": 0,
+      "removed": [
+        "DNS_QUERY_TYPE",
+        "DST_TO_SRC_IAT_MAX",
+        "DST_TO_SRC_IAT_MIN",
+        "DST_TO_SRC_SECOND_BYTES",
+        "ICMP_IPV4_TYPE",
+        "ICMP_TYPE",
+        "IN_BYTES",
+        "L4_DST_PORT",
+        "MAX_TTL",
+        "NUM_PKTS_128_TO_256_BYTES",
+        "NUM_PKTS_256_TO_512_BYTES",
+        "NUM_PKTS_512_TO_1024_BYTES",
+        "RETRANSMITTED_OUT_PKTS",
+        "SHORTEST_FLOW_PKT",
+        "SRC_TO_DST_IAT_AVG"
+      ]
+    },
+    {
+      "seed": 123,
+      "k": 15,
+      "replicate": 1,
+      "removed": [
+        "CLIENT_TCP_FLAGS",
+        "DST_TO_SRC_IAT_AVG",
+        "DST_TO_SRC_SECOND_BYTES",
+        "FTP_COMMAND_RET_CODE",
+        "ICMP_IPV4_TYPE",
+        "ICMP_TYPE",
+        "L4_SRC_PORT",
+        "MIN_IP_PKT_LEN",
+        "MIN_TTL",
+        "NUM_PKTS_1024_TO_1514_BYTES",
+        "NUM_PKTS_128_TO_256_BYTES",
+        "NUM_PKTS_256_TO_512_BYTES",
+        "NUM_PKTS_512_TO_1024_BYTES",
+        "PROTOCOL",
+        "RETRANSMITTED_OUT_PKTS"
+      ]
+    },
+    {
+      "seed": 123,
+      "k": 15,
+      "replicate": 2,
+      "removed": [
+        "CLIENT_TCP_FLAGS",
+        "DNS_QUERY_ID",
+        "DNS_TTL_ANSWER",
+        "DST_TO_SRC_AVG_THROUGHPUT",
+        "DST_TO_SRC_IAT_MIN",
+        "DST_TO_SRC_IAT_STDDEV",
+        "DST_TO_SRC_SECOND_BYTES",
+        "ICMP_IPV4_TYPE",
+        "LONGEST_FLOW_PKT",
+        "NUM_PKTS_128_TO_256_BYTES",
+        "OUT_PKTS",
+        "RETRANSMITTED_IN_PKTS",
+        "RETRANSMITTED_OUT_PKTS",
+        "SRC_TO_DST_IAT_MAX",
+        "TCP_WIN_MAX_OUT"
+      ]
+    },
+    {
+      "seed": 123,
+      "k": 15,
+      "replicate": 3,
+      "removed": [
+        "CLIENT_TCP_FLAGS",
+        "DST_TO_SRC_SECOND_BYTES",
+        "DURATION_OUT",
+        "IN_BYTES",
+        "L7_PROTO",
+        "NUM_PKTS_1024_TO_1514_BYTES",
+        "NUM_PKTS_128_TO_256_BYTES",
+        "OUT_PKTS",
+        "PROTOCOL",
+        "RETRANSMITTED_IN_PKTS",
+        "RETRANSMITTED_OUT_BYTES",
+        "SERVER_TCP_FLAGS",
+        "SHORTEST_FLOW_PKT",
+        "SRC_TO_DST_IAT_AVG",
+        "SRC_TO_DST_IAT_MIN"
+      ]
+    },
+    {
+      "seed": 123,
+      "k": 15,
+      "replicate": 4,
+      "removed": [
+        "DNS_QUERY_ID",
+        "DNS_QUERY_TYPE",
+        "DNS_TTL_ANSWER",
+        "DST_TO_SRC_SECOND_BYTES",
+        "IN_PKTS",
+        "L4_DST_PORT",
+        "L4_SRC_PORT",
+        "MAX_IP_PKT_LEN",
+        "NUM_PKTS_1024_TO_1514_BYTES",
+        "NUM_PKTS_256_TO_512_BYTES",
+        "OUT_PKTS",
+        "RETRANSMITTED_OUT_PKTS",
+        "SRC_TO_DST_AVG_THROUGHPUT",
+        "TCP_WIN_MAX_IN",
+        "TCP_WIN_MAX_OUT"
+      ]
+    },
+    {
+      "seed": 123,
+      "k": 15,
+      "replicate": 5,
+      "removed": [
+        "DST_TO_SRC_IAT_MAX",
+        "DST_TO_SRC_IAT_MIN",
+        "DST_TO_SRC_IAT_STDDEV",
+        "FLOW_DURATION_MILLISECONDS",
+        "IN_PKTS",
+        "NUM_PKTS_1024_TO_1514_BYTES",
+        "NUM_PKTS_UP_TO_128_BYTES",
+        "OUT_PKTS",
+        "RETRANSMITTED_IN_BYTES",
+        "RETRANSMITTED_IN_PKTS",
+        "RETRANSMITTED_OUT_PKTS",
+        "SRC_TO_DST_IAT_MAX",
+        "SRC_TO_DST_IAT_MIN",
+        "TCP_FLAGS",
+        "TCP_WIN_MAX_IN"
+      ]
+    },
+    {
+      "seed": 123,
+      "k": 15,
+      "replicate": 6,
+      "removed": [
+        "CLIENT_TCP_FLAGS",
+        "DNS_QUERY_TYPE",
+        "DST_TO_SRC_AVG_THROUGHPUT",
+        "DST_TO_SRC_IAT_MIN",
+        "FLOW_DURATION_MILLISECONDS",
+        "ICMP_IPV4_TYPE",
+        "ICMP_TYPE",
+        "IN_BYTES",
+        "IN_PKTS",
+        "L7_PROTO",
+        "NUM_PKTS_128_TO_256_BYTES",
+        "OUT_BYTES",
+        "RETRANSMITTED_IN_BYTES",
+        "RETRANSMITTED_IN_PKTS",
+        "SRC_TO_DST_IAT_STDDEV"
+      ]
+    },
+    {
+      "seed": 123,
+      "k": 15,
+      "replicate": 7,
+      "removed": [
+        "DNS_QUERY_TYPE",
+        "DST_TO_SRC_IAT_AVG",
+        "DST_TO_SRC_IAT_MAX",
+        "DST_TO_SRC_IAT_MIN",
+        "DST_TO_SRC_IAT_STDDEV",
+        "IN_BYTES",
+        "L4_DST_PORT",
+        "LONGEST_FLOW_PKT",
+        "MAX_IP_PKT_LEN",
+        "NUM_PKTS_1024_TO_1514_BYTES",
+        "NUM_PKTS_512_TO_1024_BYTES",
+        "OUT_BYTES",
+        "PROTOCOL",
+        "SRC_TO_DST_SECOND_BYTES",
+        "TCP_FLAGS"
+      ]
+    },
+    {
+      "seed": 123,
+      "k": 15,
+      "replicate": 8,
+      "removed": [
+        "CLIENT_TCP_FLAGS",
+        "DNS_TTL_ANSWER",
+        "DST_TO_SRC_IAT_MIN",
+        "DURATION_OUT",
+        "FLOW_DURATION_MILLISECONDS",
+        "FTP_COMMAND_RET_CODE",
+        "ICMP_TYPE",
+        "IN_BYTES",
+        "IN_PKTS",
+        "LONGEST_FLOW_PKT",
+        "NUM_PKTS_512_TO_1024_BYTES",
+        "SRC_TO_DST_IAT_AVG",
+        "SRC_TO_DST_IAT_MIN",
+        "SRC_TO_DST_IAT_STDDEV",
+        "TCP_WIN_MAX_IN"
+      ]
+    },
+    {
+      "seed": 123,
+      "k": 15,
+      "replicate": 9,
+      "removed": [
+        "DNS_QUERY_ID",
+        "DNS_QUERY_TYPE",
+        "DNS_TTL_ANSWER",
+        "L4_DST_PORT",
+        "L4_SRC_PORT",
+        "MAX_IP_PKT_LEN",
+        "MIN_IP_PKT_LEN",
+        "MIN_TTL",
+        "NUM_PKTS_128_TO_256_BYTES",
+        "PROTOCOL",
+        "RETRANSMITTED_IN_BYTES",
+        "SHORTEST_FLOW_PKT",
+        "SRC_TO_DST_IAT_MAX",
+        "SRC_TO_DST_IAT_STDDEV",
+        "TCP_FLAGS"
+      ]
+    },
+    {
+      "seed": 2024,
+      "k": 3,
+      "replicate": 0,
+      "removed": [
+        "ICMP_IPV4_TYPE",
+        "LONGEST_FLOW_PKT",
+        "MAX_IP_PKT_LEN"
+      ]
+    },
+    {
+      "seed": 2024,
+      "k": 3,
+      "replicate": 1,
+      "removed": [
+        "FLOW_DURATION_MILLISECONDS",
+        "MIN_IP_PKT_LEN",
+        "OUT_PKTS"
+      ]
+    },
+    {
+      "seed": 2024,
+      "k": 3,
+      "replicate": 2,
+      "removed": [
+        "CLIENT_TCP_FLAGS",
+        "ICMP_IPV4_TYPE",
+        "RETRANSMITTED_OUT_PKTS"
+      ]
+    },
+    {
+      "seed": 2024,
+      "k": 3,
+      "replicate": 3,
+      "removed": [
+        "DURATION_IN",
+        "ICMP_IPV4_TYPE",
+        "L4_SRC_PORT"
+      ]
+    },
+    {
+      "seed": 2024,
+      "k": 3,
+      "replicate": 4,
+      "removed": [
+        "IN_BYTES",
+        "OUT_PKTS",
+        "RETRANSMITTED_OUT_BYTES"
+      ]
+    },
+    {
+      "seed": 2024,
+      "k": 3,
+      "replicate": 5,
+      "removed": [
+        "DST_TO_SRC_IAT_STDDEV",
+        "MIN_IP_PKT_LEN",
+        "SRC_TO_DST_IAT_MIN"
+      ]
+    },
+    {
+      "seed": 2024,
+      "k": 3,
+      "replicate": 6,
+      "removed": [
+        "DURATION_OUT",
+        "SRC_TO_DST_IAT_MIN",
+        "TCP_FLAGS"
+      ]
+    },
+    {
+      "seed": 2024,
+      "k": 3,
+      "replicate": 7,
+      "removed": [
+        "ICMP_IPV4_TYPE",
+        "ICMP_TYPE",
+        "SERVER_TCP_FLAGS"
+      ]
+    },
+    {
+      "seed": 2024,
+      "k": 3,
+      "replicate": 8,
+      "removed": [
+        "DST_TO_SRC_IAT_MIN",
+        "IN_BYTES",
+        "SRC_TO_DST_SECOND_BYTES"
+      ]
+    },
+    {
+      "seed": 2024,
+      "k": 3,
+      "replicate": 9,
+      "removed": [
+        "MIN_IP_PKT_LEN",
+        "RETRANSMITTED_IN_BYTES",
+        "SRC_TO_DST_IAT_MAX"
+      ]
+    },
+    {
+      "seed": 2024,
+      "k": 5,
+      "replicate": 0,
+      "removed": [
+        "DNS_QUERY_ID",
+        "DNS_TTL_ANSWER",
+        "L7_PROTO",
+        "NUM_PKTS_1024_TO_1514_BYTES",
+        "SERVER_TCP_FLAGS"
+      ]
+    },
+    {
+      "seed": 2024,
+      "k": 5,
+      "replicate": 1,
+      "removed": [
+        "DNS_TTL_ANSWER",
+        "DST_TO_SRC_IAT_AVG",
+        "LONGEST_FLOW_PKT",
+        "OUT_BYTES",
+        "TCP_FLAGS"
+      ]
+    },
+    {
+      "seed": 2024,
+      "k": 5,
+      "replicate": 2,
+      "removed": [
+        "CLIENT_TCP_FLAGS",
+        "DST_TO_SRC_IAT_MAX",
+        "DURATION_OUT",
+        "L4_DST_PORT",
+        "NUM_PKTS_UP_TO_128_BYTES"
+      ]
+    },
+    {
+      "seed": 2024,
+      "k": 5,
+      "replicate": 3,
+      "removed": [
+        "DURATION_OUT",
+        "ICMP_TYPE",
+        "IN_PKTS",
+        "NUM_PKTS_128_TO_256_BYTES",
+        "RETRANSMITTED_OUT_BYTES"
+      ]
+    },
+    {
+      "seed": 2024,
+      "k": 5,
+      "replicate": 4,
+      "removed": [
+        "DST_TO_SRC_IAT_STDDEV",
+        "DST_TO_SRC_SECOND_BYTES",
+        "DURATION_OUT",
+        "ICMP_IPV4_TYPE",
+        "RETRANSMITTED_OUT_BYTES"
+      ]
+    },
+    {
+      "seed": 2024,
+      "k": 5,
+      "replicate": 5,
+      "removed": [
+        "DST_TO_SRC_AVG_THROUGHPUT",
+        "MAX_IP_PKT_LEN",
+        "RETRANSMITTED_OUT_BYTES",
+        "SRC_TO_DST_AVG_THROUGHPUT",
+        "TCP_WIN_MAX_OUT"
+      ]
+    },
+    {
+      "seed": 2024,
+      "k": 5,
+      "replicate": 6,
+      "removed": [
+        "DNS_QUERY_TYPE",
+        "DST_TO_SRC_SECOND_BYTES",
+        "ICMP_IPV4_TYPE",
+        "OUT_BYTES",
+        "RETRANSMITTED_IN_PKTS"
+      ]
+    },
+    {
+      "seed": 2024,
+      "k": 5,
+      "replicate": 7,
+      "removed": [
+        "ICMP_IPV4_TYPE",
+        "L4_SRC_PORT",
+        "NUM_PKTS_128_TO_256_BYTES",
+        "OUT_PKTS",
+        "SRC_TO_DST_IAT_AVG"
+      ]
+    },
+    {
+      "seed": 2024,
+      "k": 5,
+      "replicate": 8,
+      "removed": [
+        "DNS_QUERY_ID",
+        "DST_TO_SRC_IAT_MAX",
+        "FTP_COMMAND_RET_CODE",
+        "OUT_PKTS",
+        "TCP_WIN_MAX_IN"
+      ]
+    },
+    {
+      "seed": 2024,
+      "k": 5,
+      "replicate": 9,
+      "removed": [
+        "DST_TO_SRC_IAT_MIN",
+        "MAX_TTL",
+        "NUM_PKTS_512_TO_1024_BYTES",
+        "SRC_TO_DST_IAT_MIN",
+        "SRC_TO_DST_IAT_STDDEV"
+      ]
+    },
+    {
+      "seed": 2024,
+      "k": 10,
+      "replicate": 0,
+      "removed": [
+        "DST_TO_SRC_IAT_AVG",
+        "DST_TO_SRC_IAT_STDDEV",
+        "DURATION_OUT",
+        "ICMP_TYPE",
+        "IN_PKTS",
+        "L4_SRC_PORT",
+        "NUM_PKTS_1024_TO_1514_BYTES",
+        "SRC_TO_DST_IAT_AVG",
+        "SRC_TO_DST_IAT_MIN",
+        "TCP_WIN_MAX_IN"
+      ]
+    },
+    {
+      "seed": 2024,
+      "k": 10,
+      "replicate": 1,
+      "removed": [
+        "DNS_QUERY_ID",
+        "ICMP_TYPE",
+        "MAX_TTL",
+        "MIN_TTL",
+        "NUM_PKTS_1024_TO_1514_BYTES",
+        "NUM_PKTS_256_TO_512_BYTES",
+        "NUM_PKTS_512_TO_1024_BYTES",
+        "NUM_PKTS_UP_TO_128_BYTES",
+        "OUT_BYTES",
+        "SRC_TO_DST_IAT_MAX"
+      ]
+    },
+    {
+      "seed": 2024,
+      "k": 10,
+      "replicate": 2,
+      "removed": [
+        "DST_TO_SRC_IAT_STDDEV",
+        "FLOW_DURATION_MILLISECONDS",
+        "IN_PKTS",
+        "MAX_IP_PKT_LEN",
+        "MIN_IP_PKT_LEN",
+        "NUM_PKTS_1024_TO_1514_BYTES",
+        "OUT_PKTS",
+        "RETRANSMITTED_OUT_BYTES",
+        "SHORTEST_FLOW_PKT",
+        "SRC_TO_DST_IAT_AVG"
+      ]
+    },
+    {
+      "seed": 2024,
+      "k": 10,
+      "replicate": 3,
+      "removed": [
+        "CLIENT_TCP_FLAGS",
+        "DNS_QUERY_ID",
+        "DST_TO_SRC_IAT_MAX",
+        "DST_TO_SRC_IAT_STDDEV",
+        "FLOW_DURATION_MILLISECONDS",
+        "L4_SRC_PORT",
+        "OUT_PKTS",
+        "RETRANSMITTED_IN_BYTES",
+        "TCP_FLAGS",
+        "TCP_WIN_MAX_OUT"
+      ]
+    },
+    {
+      "seed": 2024,
+      "k": 10,
+      "replicate": 4,
+      "removed": [
+        "DNS_QUERY_TYPE",
+        "DNS_TTL_ANSWER",
+        "DURATION_OUT",
+        "FLOW_DURATION_MILLISECONDS",
+        "L4_SRC_PORT",
+        "MIN_IP_PKT_LEN",
+        "NUM_PKTS_1024_TO_1514_BYTES",
+        "NUM_PKTS_512_TO_1024_BYTES",
+        "OUT_BYTES",
+        "SRC_TO_DST_SECOND_BYTES"
+      ]
+    },
+    {
+      "seed": 2024,
+      "k": 10,
+      "replicate": 5,
+      "removed": [
+        "DST_TO_SRC_AVG_THROUGHPUT",
+        "DST_TO_SRC_SECOND_BYTES",
+        "MAX_TTL",
+        "MIN_IP_PKT_LEN",
+        "NUM_PKTS_256_TO_512_BYTES",
+        "NUM_PKTS_512_TO_1024_BYTES",
+        "NUM_PKTS_UP_TO_128_BYTES",
+        "PROTOCOL",
+        "SRC_TO_DST_IAT_MAX",
+        "TCP_FLAGS"
+      ]
+    },
+    {
+      "seed": 2024,
+      "k": 10,
+      "replicate": 6,
+      "removed": [
+        "CLIENT_TCP_FLAGS",
+        "DNS_TTL_ANSWER",
+        "DST_TO_SRC_AVG_THROUGHPUT",
+        "L4_SRC_PORT",
+        "NUM_PKTS_1024_TO_1514_BYTES",
+        "OUT_PKTS",
+        "RETRANSMITTED_OUT_PKTS",
+        "SRC_TO_DST_IAT_STDDEV",
+        "SRC_TO_DST_SECOND_BYTES",
+        "TCP_WIN_MAX_IN"
+      ]
+    },
+    {
+      "seed": 2024,
+      "k": 10,
+      "replicate": 7,
+      "removed": [
+        "DST_TO_SRC_IAT_STDDEV",
+        "DST_TO_SRC_SECOND_BYTES",
+        "NUM_PKTS_256_TO_512_BYTES",
+        "NUM_PKTS_UP_TO_128_BYTES",
+        "OUT_BYTES",
+        "OUT_PKTS",
+        "PROTOCOL",
+        "RETRANSMITTED_IN_PKTS",
+        "SERVER_TCP_FLAGS",
+        "SRC_TO_DST_IAT_AVG"
+      ]
+    },
+    {
+      "seed": 2024,
+      "k": 10,
+      "replicate": 8,
+      "removed": [
+        "DNS_QUERY_ID",
+        "DST_TO_SRC_IAT_MIN",
+        "LONGEST_FLOW_PKT",
+        "MAX_TTL",
+        "NUM_PKTS_256_TO_512_BYTES",
+        "RETRANSMITTED_IN_BYTES",
+        "RETRANSMITTED_IN_PKTS",
+        "RETRANSMITTED_OUT_PKTS",
+        "SRC_TO_DST_IAT_STDDEV",
+        "TCP_WIN_MAX_OUT"
+      ]
+    },
+    {
+      "seed": 2024,
+      "k": 10,
+      "replicate": 9,
+      "removed": [
+        "DNS_TTL_ANSWER",
+        "DST_TO_SRC_IAT_STDDEV",
+        "FLOW_DURATION_MILLISECONDS",
+        "L4_SRC_PORT",
+        "MAX_TTL",
+        "MIN_IP_PKT_LEN",
+        "NUM_PKTS_128_TO_256_BYTES",
+        "NUM_PKTS_512_TO_1024_BYTES",
+        "RETRANSMITTED_IN_BYTES",
+        "RETRANSMITTED_OUT_PKTS"
+      ]
+    },
+    {
+      "seed": 2024,
+      "k": 15,
+      "replicate": 0,
+      "removed": [
+        "DNS_QUERY_ID",
+        "DST_TO_SRC_IAT_AVG",
+        "DURATION_OUT",
+        "IN_BYTES",
+        "L4_SRC_PORT",
+        "L7_PROTO",
+        "NUM_PKTS_128_TO_256_BYTES",
+        "NUM_PKTS_256_TO_512_BYTES",
+        "NUM_PKTS_UP_TO_128_BYTES",
+        "PROTOCOL",
+        "SERVER_TCP_FLAGS",
+        "SHORTEST_FLOW_PKT",
+        "SRC_TO_DST_IAT_MAX",
+        "SRC_TO_DST_IAT_STDDEV",
+        "TCP_FLAGS"
+      ]
+    },
+    {
+      "seed": 2024,
+      "k": 15,
+      "replicate": 1,
+      "removed": [
+        "DNS_QUERY_ID",
+        "DST_TO_SRC_IAT_MIN",
+        "FLOW_DURATION_MILLISECONDS",
+        "FTP_COMMAND_RET_CODE",
+        "ICMP_IPV4_TYPE",
+        "IN_BYTES",
+        "L4_DST_PORT",
+        "L4_SRC_PORT",
+        "L7_PROTO",
+        "LONGEST_FLOW_PKT",
+        "MAX_TTL",
+        "PROTOCOL",
+        "RETRANSMITTED_OUT_BYTES",
+        "SHORTEST_FLOW_PKT",
+        "TCP_WIN_MAX_IN"
+      ]
+    },
+    {
+      "seed": 2024,
+      "k": 15,
+      "replicate": 2,
+      "removed": [
+        "CLIENT_TCP_FLAGS",
+        "DNS_TTL_ANSWER",
+        "DST_TO_SRC_AVG_THROUGHPUT",
+        "DST_TO_SRC_SECOND_BYTES",
+        "DURATION_OUT",
+        "ICMP_TYPE",
+        "L7_PROTO",
+        "NUM_PKTS_1024_TO_1514_BYTES",
+        "RETRANSMITTED_IN_BYTES",
+        "RETRANSMITTED_OUT_BYTES",
+        "SERVER_TCP_FLAGS",
+        "SRC_TO_DST_IAT_AVG",
+        "SRC_TO_DST_IAT_MIN",
+        "SRC_TO_DST_SECOND_BYTES",
+        "TCP_FLAGS"
+      ]
+    },
+    {
+      "seed": 2024,
+      "k": 15,
+      "replicate": 3,
+      "removed": [
+        "DST_TO_SRC_IAT_MIN",
+        "DST_TO_SRC_IAT_STDDEV",
+        "ICMP_IPV4_TYPE",
+        "ICMP_TYPE",
+        "IN_BYTES",
+        "LONGEST_FLOW_PKT",
+        "MIN_IP_PKT_LEN",
+        "NUM_PKTS_512_TO_1024_BYTES",
+        "OUT_BYTES",
+        "SERVER_TCP_FLAGS",
+        "SHORTEST_FLOW_PKT",
+        "SRC_TO_DST_IAT_MAX",
+        "SRC_TO_DST_IAT_MIN",
+        "TCP_FLAGS",
+        "TCP_WIN_MAX_IN"
+      ]
+    },
+    {
+      "seed": 2024,
+      "k": 15,
+      "replicate": 4,
+      "removed": [
+        "DNS_TTL_ANSWER",
+        "DST_TO_SRC_IAT_STDDEV",
+        "DURATION_OUT",
+        "FLOW_DURATION_MILLISECONDS",
+        "ICMP_TYPE",
+        "L4_SRC_PORT",
+        "L7_PROTO",
+        "NUM_PKTS_128_TO_256_BYTES",
+        "OUT_PKTS",
+        "RETRANSMITTED_OUT_BYTES",
+        "RETRANSMITTED_OUT_PKTS",
+        "SERVER_TCP_FLAGS",
+        "SHORTEST_FLOW_PKT",
+        "TCP_FLAGS",
+        "TCP_WIN_MAX_IN"
+      ]
+    },
+    {
+      "seed": 2024,
+      "k": 15,
+      "replicate": 5,
+      "removed": [
+        "DNS_TTL_ANSWER",
+        "DST_TO_SRC_SECOND_BYTES",
+        "ICMP_IPV4_TYPE",
+        "IN_BYTES",
+        "L4_DST_PORT",
+        "L7_PROTO",
+        "LONGEST_FLOW_PKT",
+        "NUM_PKTS_128_TO_256_BYTES",
+        "NUM_PKTS_512_TO_1024_BYTES",
+        "NUM_PKTS_UP_TO_128_BYTES",
+        "OUT_PKTS",
+        "SERVER_TCP_FLAGS",
+        "SRC_TO_DST_AVG_THROUGHPUT",
+        "SRC_TO_DST_IAT_MAX",
+        "SRC_TO_DST_IAT_MIN"
+      ]
+    },
+    {
+      "seed": 2024,
+      "k": 15,
+      "replicate": 6,
+      "removed": [
+        "CLIENT_TCP_FLAGS",
+        "DNS_QUERY_ID",
+        "DNS_TTL_ANSWER",
+        "FLOW_DURATION_MILLISECONDS",
+        "ICMP_TYPE",
+        "L4_DST_PORT",
+        "L4_SRC_PORT",
+        "MAX_IP_PKT_LEN",
+        "NUM_PKTS_256_TO_512_BYTES",
+        "NUM_PKTS_UP_TO_128_BYTES",
+        "PROTOCOL",
+        "RETRANSMITTED_IN_PKTS",
+        "RETRANSMITTED_OUT_BYTES",
+        "SERVER_TCP_FLAGS",
+        "SRC_TO_DST_IAT_MAX"
+      ]
+    },
+    {
+      "seed": 2024,
+      "k": 15,
+      "replicate": 7,
+      "removed": [
+        "DNS_QUERY_ID",
+        "DST_TO_SRC_AVG_THROUGHPUT",
+        "DST_TO_SRC_IAT_AVG",
+        "DST_TO_SRC_IAT_MIN",
+        "FLOW_DURATION_MILLISECONDS",
+        "FTP_COMMAND_RET_CODE",
+        "ICMP_TYPE",
+        "IN_BYTES",
+        "L7_PROTO",
+        "LONGEST_FLOW_PKT",
+        "NUM_PKTS_1024_TO_1514_BYTES",
+        "NUM_PKTS_128_TO_256_BYTES",
+        "SRC_TO_DST_SECOND_BYTES",
+        "TCP_FLAGS",
+        "TCP_WIN_MAX_IN"
+      ]
+    },
+    {
+      "seed": 2024,
+      "k": 15,
+      "replicate": 8,
+      "removed": [
+        "DST_TO_SRC_AVG_THROUGHPUT",
+        "DST_TO_SRC_IAT_MIN",
+        "DST_TO_SRC_IAT_STDDEV",
+        "FLOW_DURATION_MILLISECONDS",
+        "FTP_COMMAND_RET_CODE",
+        "ICMP_IPV4_TYPE",
+        "L4_DST_PORT",
+        "LONGEST_FLOW_PKT",
+        "NUM_PKTS_128_TO_256_BYTES",
+        "NUM_PKTS_512_TO_1024_BYTES",
+        "NUM_PKTS_UP_TO_128_BYTES",
+        "RETRANSMITTED_OUT_BYTES",
+        "SERVER_TCP_FLAGS",
+        "SRC_TO_DST_AVG_THROUGHPUT",
+        "TCP_WIN_MAX_OUT"
+      ]
+    },
+    {
+      "seed": 2024,
+      "k": 15,
+      "replicate": 9,
+      "removed": [
+        "DST_TO_SRC_IAT_MAX",
+        "DST_TO_SRC_SECOND_BYTES",
+        "DURATION_OUT",
+        "FLOW_DURATION_MILLISECONDS",
+        "IN_PKTS",
+        "L4_SRC_PORT",
+        "MAX_IP_PKT_LEN",
+        "MIN_IP_PKT_LEN",
+        "NUM_PKTS_128_TO_256_BYTES",
+        "NUM_PKTS_512_TO_1024_BYTES",
+        "RETRANSMITTED_IN_BYTES",
+        "RETRANSMITTED_IN_PKTS",
+        "SHORTEST_FLOW_PKT",
+        "TCP_FLAGS",
+        "TCP_WIN_MAX_OUT"
+      ]
+    }
+  ]
+}
