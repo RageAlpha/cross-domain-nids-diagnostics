@@ -959,35 +959,6 @@ def domain_discriminability(source_emb, target_emb, seed):
     }
 
 
-def save_embedding_plot(source_emb, target_emb, output_path, seed):
-    """Save a deterministic t-SNE projection colored by domain."""
-    import matplotlib.pyplot as plt
-
-    n = min(len(source_emb), len(target_emb), 5000)
-    rng = np.random.default_rng(seed)
-    source_idx = rng.choice(len(source_emb), size=n, replace=False)
-    target_idx = rng.choice(len(target_emb), size=n, replace=False)
-    X = np.vstack([source_emb[source_idx], target_emb[target_idx]])
-    y = np.concatenate([np.zeros(n), np.ones(n)])
-    from sklearn.manifold import TSNE
-
-    reducer = TSNE(
-        n_components=2,
-        random_state=seed,
-        init="pca",
-        learning_rate="auto",
-    )
-    coords = reducer.fit_transform(X)
-    title = "t-SNE by domain"
-
-    plt.figure(figsize=(7, 5))
-    plt.scatter(coords[y == 0, 0], coords[y == 0, 1], s=4, alpha=0.35, label="source")
-    plt.scatter(coords[y == 1, 0], coords[y == 1, 1], s=4, alpha=0.35, label="target")
-    plt.title(title)
-    plt.legend()
-    plt.tight_layout()
-    plt.savefig(output_path, dpi=200)
-    plt.close()
 
 
 def write_config(output_dir, config):
@@ -1099,8 +1070,6 @@ def run_variant(target_dataset, dataset_path, variant, variant_spec, args, run_s
     )
     source_emb, source_labels, source_sample_ids = source_embeddings(torch, model, device, data)
     domain_metrics = domain_discriminability(source_emb, target_emb, run_seed)
-    fig_path = output_dir / "figures" / f"umap_{variant}_UNSW_to_{target_dataset}_seed{run_seed}.png"
-    save_embedding_plot(source_emb, target_emb, fig_path, run_seed)
 
     embedding_source = {
         "h3_mlp": "standard_binary_MLP_embedding",
@@ -1459,7 +1428,7 @@ def main():
         )
     )
     guard_output_dir(output_dir)
-    for subdir in ["predictions", "figures", "logs", "configs", "embeddings"]:
+    for subdir in ["predictions", "logs", "configs", "embeddings"]:
         (output_dir / subdir).mkdir(parents=True, exist_ok=True)
 
     all_results = []

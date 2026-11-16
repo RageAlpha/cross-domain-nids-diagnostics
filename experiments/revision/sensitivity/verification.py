@@ -18,7 +18,7 @@ def code_fingerprint():
 def environment():
     return {'python':sys.version,'platform':platform.platform(),
             'packages':{name:importlib.metadata.version(name) for name in
-                        ('torch','numpy','pandas','scipy','scikit-learn','joblib','matplotlib','xgboost')},
+                        ('torch','numpy','pandas','scipy','scikit-learn','joblib','xgboost')},
             'cuda':torch.version.cuda,'gpu':torch.cuda.get_device_name(0) if torch.cuda.is_available() else None,
             'tf32':torch.backends.cuda.matmul.allow_tf32,'threads':torch.get_num_threads()}
 

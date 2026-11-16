@@ -1,5 +1,0 @@
-variant,evaluation,MCC,Attack-class Binary-F1,FNR,aggregation
-H3-C0,target_supervised_linear_readout,0.8111867166971917,0.8866817088149926,0.09346398662504034,equal-weight mean over three training seeds
-H3-C0,transferred_source_head,0.6788255537150376,0.7952626461289672,0.25063715526321134,equal-weight mean over three training seeds
-H3-C1,target_supervised_linear_readout,0.7614357729952469,0.8547704060485556,0.14771489839395743,equal-weight mean over three training seeds
-H3-C1,transferred_source_head,0.3137757590637202,0.33769175642921057,0.7752630108998918,equal-weight mean over three training seeds

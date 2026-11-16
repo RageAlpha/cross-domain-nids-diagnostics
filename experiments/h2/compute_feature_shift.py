@@ -1290,87 +1290,6 @@ def write_sanity_report(
         json.dump(checks, f, indent=2)
 
 
-def write_figures(
-    summary: pd.DataFrame,
-    family_summary: pd.DataFrame,
-    importance_shift: pd.DataFrame,
-    removed_overlap: pd.DataFrame,
-    output_dir: Path,
-) -> None:
-    try:
-        import matplotlib.pyplot as plt
-    except ImportError:
-        print_flush("[FeatureShift] matplotlib unavailable; skipping figures.")
-        return
-
-    targets = sorted(summary["target_dataset"].unique())
-    fig, axes = plt.subplots(1, len(targets), figsize=(6 * len(targets), 5), squeeze=False)
-    for ax, target in zip(axes[0], targets):
-        top = summary[summary["target_dataset"].eq(target)].sort_values("jsd_mean", ascending=False).head(10)
-        ax.barh(top["feature"], top["jsd_mean"])
-        ax.invert_yaxis()
-        ax.set_title(target)
-        ax.set_xlabel("JSD mean")
-    fig.tight_layout()
-    fig.savefig(output_dir / "fig_feature_shift_top10_jsd_features_by_target.png", dpi=200)
-    plt.close(fig)
-
-    heatmap_data = family_summary.pivot(
-        index="feature_family",
-        columns="target_dataset",
-        values="mean_jsd",
-    ).fillna(0)
-    fig, ax = plt.subplots(figsize=(8, max(4, 0.45 * len(heatmap_data))))
-    image = ax.imshow(heatmap_data.values, aspect="auto")
-    ax.set_xticks(np.arange(len(heatmap_data.columns)), labels=heatmap_data.columns, rotation=30, ha="right")
-    ax.set_yticks(np.arange(len(heatmap_data.index)), labels=heatmap_data.index)
-    ax.set_title("Feature family mean JSD")
-    fig.colorbar(image, ax=ax, label="mean JSD")
-    fig.tight_layout()
-    fig.savefig(output_dir / "fig_feature_shift_feature_family_jsd_heatmap.png", dpi=200)
-    plt.close(fig)
-
-    if not importance_shift.empty:
-        fig, axes = plt.subplots(1, len(targets), figsize=(6 * len(targets), 5), squeeze=False)
-        for ax, target in zip(axes[0], targets):
-            data = importance_shift[importance_shift["target_dataset"].eq(target)]
-            families = sorted(data["feature_family"].dropna().unique())
-            for family in families:
-                subset = data[data["feature_family"].eq(family)]
-                ax.scatter(subset["rf_importance"], subset["jsd"], label=family, alpha=0.75)
-            ax.set_title(target)
-            ax.set_xlabel("RF importance")
-            ax.set_ylabel("JSD")
-        axes[0][-1].legend(loc="best", fontsize=8)
-        fig.tight_layout()
-        fig.savefig(output_dir / "fig_feature_shift_importance_vs_jsd_by_target.png", dpi=200)
-        plt.close(fig)
-
-    if not removed_overlap.empty:
-        plot_df = removed_overlap[
-            [
-                "target_dataset",
-                "filtering_strategy",
-                "mean_removed_jsd",
-                "mean_all_features_jsd",
-                "mean_removed_abs_standard_smd",
-                "mean_all_features_abs_standard_smd",
-            ]
-        ].copy()
-        grouped = plot_df.groupby("target_dataset").mean(numeric_only=True).reset_index()
-        x = np.arange(len(grouped))
-        width = 0.2
-        fig, ax = plt.subplots(figsize=(9, 5))
-        ax.bar(x - width * 1.5, grouped["mean_removed_jsd"], width, label="removed JSD")
-        ax.bar(x - width * 0.5, grouped["mean_all_features_jsd"], width, label="all JSD")
-        ax.bar(x + width * 0.5, grouped["mean_removed_abs_standard_smd"], width, label="removed abs SMD")
-        ax.bar(x + width * 1.5, grouped["mean_all_features_abs_standard_smd"], width, label="all abs SMD")
-        ax.set_xticks(x, grouped["target_dataset"])
-        ax.set_title("Removed features vs all features")
-        ax.legend(fontsize=8)
-        fig.tight_layout()
-        fig.savefig(output_dir / "fig_feature_shift_removed_vs_all_shift.png", dpi=200)
-        plt.close(fig)
 
 
 def parse_args() -> argparse.Namespace:
@@ -1401,7 +1320,6 @@ def parse_args() -> argparse.Namespace:
         default="results/generated/h1/multiseed/feature_filtering",
     )
     parser.add_argument("--rf-importance-path", default="")
-    parser.add_argument("--skip-figures", action="store_true")
     parser.add_argument(
         "--only-precheck",
         action="store_true",
@@ -1490,8 +1408,6 @@ def run_feature_shift(args: argparse.Namespace) -> None:
     write_metadata(args, feature_columns, output_dir)
     write_sanity_report(long_df, feature_columns, args, output_dir)
 
-    if not args.skip_figures:
-        write_figures(summary, family_summary, importance_shift, removed_overlap, output_dir)
 
     print_flush(f"[FeatureShift] Complete. Outputs saved under: {output_dir}")
 

@@ -111,7 +111,7 @@ def readout_and_reporting(args,root):
     assert len(result)==12 and result.fit_converged.all()
     audit=pd.read_csv(args.output_root/'readout/overlap_audit.csv')
     assert len(audit)==9 and (audit.shared_groups==0).all()
-    # Build explicit artificial summaries to exercise the full report/plot path.
+    # Build explicit artificial summaries to exercise the full table aggregation and completion path.
     for alpha,base in [(1,args.phase2),(.1,args.output_root/'strength/alpha0.1'),(.5,args.output_root/'strength/alpha0.5')]:
         for target in common.TARGETS:
             for seed in common.SEEDS:
@@ -140,6 +140,7 @@ def readout_and_reporting(args,root):
     complete=read_json(args.output_root/'PHASE4_COMPLETE.json')
     assert complete['fixed_matrix_cells']==138
     assert complete['random_reused_fits']==60 and complete['random_new_fits']==60
-    assert len(list((args.output_root/'figures').glob('*.png')))==5
+    assert not list(args.output_root.rglob('*.png'))
+    assert not list(args.output_root.rglob('*.pdf'))
     assert 'seed' not in pd.read_csv(args.output_root/'strength/seed_means.csv').columns
-    return {'posthoc_readout_end_to_end_group_audit':True,'138_cell_summary_figures_and_completion':True}
+    return {'posthoc_readout_end_to_end_group_audit':True,'138_cell_summary_tables_and_completion':True}

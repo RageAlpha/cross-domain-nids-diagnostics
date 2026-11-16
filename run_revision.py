@@ -32,10 +32,8 @@ def main():
         if forwarded:
             parser.error('Verify does not accept stage arguments')
         from experiments.revision.common import verify
-        from experiments.revision.evidence import verify as verify_evidence
         verify(raw=False)
-        print(json.dumps(verify_evidence(), indent=2))
-        print('PASS corrected revision frozen inputs and numerical evidence; no retraining')
+        print('PASS corrected revision frozen inputs; no training started')
         return
     if not args.execute:
         parser.error('Use --execute to run a stage; plan and verify are safe without it')

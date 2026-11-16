@@ -118,7 +118,6 @@ def run_feature_shift(args: argparse.Namespace) -> None:
         "--seeds", *map(str, SEEDS), "--targets", *TARGETS,
         "--n-bins", "50", "--bin-strategy", "quantile", "--top-k", "15",
         "--chunk-size", str(args.chunk_size), "--output-dir", str(shift_dir / "raw_feature_shift"),
-        "--skip-figures",
     ]
     if args.print_command_only:
         print(subprocess.list2cmdline(command))

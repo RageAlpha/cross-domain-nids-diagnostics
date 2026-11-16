@@ -147,7 +147,6 @@ def lock_inputs(args: argparse.Namespace) -> dict[str, Any]:
     for role, path in (
         ("frozen_policy", args.policy),
         ("audit_source", Path(__file__).resolve()),
-        ("audit_tests", REPOSITORY_ROOT / "tests" / "test_oracle_audit.py"),
     ):
         records.append(file_record(path, role))
 

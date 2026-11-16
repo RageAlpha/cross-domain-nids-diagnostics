@@ -82,7 +82,6 @@ def lock_execution(args: argparse.Namespace) -> dict[str, Any]:
         (HERE / "run_target_oracle.py").resolve(),
         (HERE / "finalize_results.py").resolve(),
         (REPOSITORY_ROOT / "src" / "cross_domain_nids" / "oracle_split_audit.py").resolve(),
-        (REPOSITORY_ROOT / "tests" / "test_oracle_splits.py").resolve(),
     ]
     records = []
     for path in sources:

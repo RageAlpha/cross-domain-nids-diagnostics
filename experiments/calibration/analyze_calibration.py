@@ -756,46 +756,6 @@ def add_delta_warnings(metric_row: dict, tolerance: float = 1e-6) -> dict:
     return metric_row
 
 
-def write_reliability_plot(bins: pd.DataFrame, combo: Combo, plot_dir: Path) -> Path | None:
-    valid = bins[bins["n_samples"] > 0].copy()
-    if valid.empty:
-        return None
-
-    try:
-        import matplotlib
-
-        matplotlib.use("Agg")
-        import matplotlib.pyplot as plt
-    except ImportError:
-        print_flush("matplotlib is not available; skipping reliability plot.")
-        return None
-
-    plot_dir.mkdir(parents=True, exist_ok=True)
-    path = plot_dir / f"{combo_slug(combo)}__reliability.png"
-
-    fig, ax = plt.subplots(figsize=(5.5, 5.0))
-    ax.plot([0, 1], [0, 1], linestyle="--", color="black", linewidth=1.0, label="perfect")
-    ax.plot(
-        valid["mean_p_attack"],
-        valid["empirical_attack_rate"],
-        marker="o",
-        linewidth=1.8,
-        label="observed",
-    )
-    ax.set_xlim(0, 1)
-    ax.set_ylim(0, 1)
-    ax.set_xlabel("Mean predicted p_attack")
-    ax.set_ylabel("Empirical attack rate")
-    ax.set_title(
-        f"{combo.experiment} {combo.model} {combo.target_dataset}\n"
-        f"{combo.filtering_strategy}, seed={combo.seed}"
-    )
-    ax.grid(True, alpha=0.25)
-    ax.legend(loc="best")
-    fig.tight_layout()
-    fig.savefig(path, dpi=160)
-    plt.close(fig)
-    return path
 
 
 def merge_existing_output(
@@ -887,7 +847,6 @@ def parse_args():
     )
     parser.add_argument("--chunk-size", type=int, default=STRESS_B_CHUNK_SIZE)
     parser.add_argument("--n-bins", type=int, default=15)
-    parser.add_argument("--no-plots", action="store_true")
     parser.add_argument(
         "--skip-unsw",
         action="store_true",
@@ -928,7 +887,6 @@ def main() -> None:
     )
     output_dir.mkdir(parents=True, exist_ok=True)
     bin_dir = output_dir / "bin_level"
-    plot_dir = output_dir / "reliability_plots"
 
     combos = load_combos(args, repo_root)
     if not combos:
@@ -970,10 +928,6 @@ def main() -> None:
             per_combo_path = bin_dir / f"{combo_slug(combo)}__bins.csv"
             per_combo_path.parent.mkdir(parents=True, exist_ok=True)
             bins.to_csv(per_combo_path, index=False)
-            if not args.no_plots:
-                plot_path = write_reliability_plot(bins, combo, plot_dir)
-                if plot_path is not None and metric_row:
-                    metric_row["reliability_plot"] = str(plot_path)
             bin_frames.append(bins)
 
     log_path = output_dir / "calibration_run_log.csv"

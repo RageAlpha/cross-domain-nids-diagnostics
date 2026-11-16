@@ -1,18 +1,9 @@
-"""Auditable tables and ordinary matplotlib PDF/PNG figures."""
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
+"""Aggregate sensitivity metrics and validate completed experiment coverage."""
 import pandas as pd
 from experiments.revision import common
 from .design import read_json, matrix
 
 
-def save(fig,path):
-    path.parent.mkdir(parents=True,exist_ok=True)
-    fig.savefig(path.with_suffix('.png'),dpi=180,bbox_inches='tight')
-    fig.savefig(path.with_suffix('.pdf'),bbox_inches='tight')
-    plt.close(fig)
 
 
 def strength_summary(args):
@@ -47,42 +38,16 @@ def strength_summary(args):
     metrics=['MCC','Attack-class Binary-F1','FNR','delta_MCC','delta_Attack-class Binary-F1','delta_FNR','delta_MMD','delta_domain_discriminability']
     mean=frame.groupby(['target','alpha'],as_index=False)[metrics].mean()
     common.atomic_csv(mean,args.output_root/'strength/seed_means.csv')
-    for target,group in frame.groupby('target'):
-        fig,axes=plt.subplots(1,3,figsize=(12,3.5))
-        for ax,metric in zip(axes,metrics[:3]):
-            for seed,g in group.groupby('seed'):
-                g=g.sort_values('alpha');ax.plot(g.alpha,g[metric],marker='o',label=str(seed))
-            ax.set(xlabel='DANN alpha',ylabel=metric,title=target);ax.legend(title='Training seed')
-        fig.tight_layout();save(fig,args.output_root/'figures'/f'strength_{target}')
     return frame
 
 
 def finish(args):
     strength=strength_summary(args)
     random=pd.read_csv(args.output_root/'random_size/per_mask.csv')
-    grid=pd.read_csv(args.output_root/'gates/grid.csv')
     expected=set(matrix().run_id)
     actual=set(strength[strength.alpha.isin([.1,.5])].run_id)|set(random.run_id)
     if len(strength)!=36 or len(random)!=120 or actual!=expected:
         raise ValueError('Final Phase 4 coverage does not match the fixed matrix')
-    fig,axes=plt.subplots(1,3,figsize=(12,3.5))
-    for ax,metric in zip(axes,('mcc','binary_f1','fnr')):
-        for index,(seed,group) in enumerate(random.groupby('seed')):
-            x=group.k.to_numpy()+(.18*(index-1))
-            ax.scatter(x,group['delta_'+metric],s=13,alpha=.6,label=str(seed))
-            med=group.groupby('k')['delta_'+metric].median();ax.plot(med.index,med.values,alpha=.6)
-        ax.axhline(0,color='black',lw=.7);ax.set(xlabel='Removed features',ylabel='Delta '+metric,xticks=[3,5,10,15]);ax.legend()
-    fig.tight_layout();save(fig,args.output_root/'figures/random_size')
-    for key,g in grid.groupby(['analysis_version','method']):
-        labels=[];values=[]
-        for item,part in g.groupby(['target','model']):
-            ordered=part.sort_values(['fnr_tolerance','seed_rule'])
-            labels.append('/'.join(item));values.append(ordered.joint_pass.map({True:1,False:0,'True':1,'False':0}).to_numpy(dtype=float))
-        fig,ax=plt.subplots(figsize=(10,max(2,len(labels)*.5)))
-        ax.imshow(np.asarray(values),vmin=0,vmax=1,cmap='RdYlGn',aspect='auto')
-        columns=ordered.apply(lambda r:f'{r.fnr_tolerance:g}\n{r.seed_rule}',axis=1).tolist()
-        ax.set(yticks=range(len(labels)),yticklabels=labels,xticks=range(12),xticklabels=columns,title=' / '.join(key)+' (blank = abstained)')
-        ax.tick_params(axis='x',labelsize=6);fig.tight_layout();save(fig,args.output_root/'figures'/('_'.join(key)+'_gates'))
     readout=pd.read_csv(args.output_root/'readout/per_seed_metrics.csv')
     if len(readout)!=12:
         raise ValueError('Readout requires 3 seeds x 2 variants x 2 evaluation heads')

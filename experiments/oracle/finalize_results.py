@@ -70,7 +70,6 @@ def build_release_manifest(args: argparse.Namespace) -> None:
         HERE / "run_target_oracle.py",
         HERE / "finalize_results.py",
         REPOSITORY_ROOT / "src" / "cross_domain_nids" / "oracle_split_audit.py",
-        REPOSITORY_ROOT / "tests" / "test_oracle_splits.py",
     ):
         rows.append({
             "role": "frozen_source",

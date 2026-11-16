@@ -32,7 +32,7 @@ def check(args):
     lock={'protocol_id':common.PROTOCOL_ID,'phase3_code':code,'phase2_input_lock':common.hash_file(args.phase2/'INPUT_LOCK.json')}
     common.write_immutable_json(args.output_root/'INPUT_LOCK.json',lock)
     common.atomic_write_json(args.output_root/'environment.json',{'python':sys.version,'torch':torch.__version__,
-        'packages':{name:importlib.metadata.version(name) for name in ('numpy','pandas','scipy','joblib','xgboost','matplotlib')},
+        'packages':{name:importlib.metadata.version(name) for name in ('numpy','pandas','scipy','joblib','xgboost')},
         'sklearn':sklearn.__version__,'cuda':torch.cuda.is_available(),'gpu':torch.cuda.get_device_name(0) if torch.cuda.is_available() else None})
     policy=json.loads((common.ROOT/'protocols/revision/h2.json').read_text())
     common.write_immutable_json(args.output_root/'h2_policy.json',policy)
@@ -105,11 +105,6 @@ def summary(args):
     review=pd.DataFrame(rows)
     review['conclusion_impact']='Assess against the manuscript: retained/strengthened/weakened/insufficient evidence'
     common.atomic_csv(review,args.output_root/'conclusion_review.csv')
-    from experiments.revision.reporting import paired_figure
-    for method in METHODS:
-        frame=pd.read_csv(args.output_root/method/'h3/analysis/paired_per_seed.csv')
-        paired_figure(frame,['target'],[('delta_MCC','MCC delta'),('delta_Attack-class Binary-F1','Binary F1 delta'),('delta_FNR','FNR delta')],
-                      args.output_root/f'{method}_paired',f'{method}: nonzero - zero')
     common.atomic_write_json(args.output_root/'PHASE3_COMPLETE.json',{'protocol_id':common.PROTOCOL_ID,'status':'complete','fixed_fits':48,
         'conclusion_review_required':True,'random_fit_registry_locations':['mRMR/h2/random/run_registry.json','shift_budget/h2/random/run_registry.json']})
 

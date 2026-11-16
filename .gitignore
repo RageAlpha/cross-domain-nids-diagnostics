@@ -28,7 +28,7 @@ env/
 *.ckpt
 *.onnx
 
-# Fresh experiment outputs; compact reference results remain tracked
+# Fresh experiment outputs
 /results/generated/**
 !/results/generated/.gitkeep
 /figures/generated/**

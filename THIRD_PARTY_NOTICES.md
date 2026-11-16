@@ -11,4 +11,4 @@ The project-specific FT wrapper and stable optimizer ordering are separate, in
 `experiments/revision/estimators.py` and `experiments/revision/comparisons/paired.py`.
 
 Installed packages retain their own licenses. External NF-UQ-NIDS-v3 datasets are
-not redistributed. Obtain them from the provider under its terms; see `data/README.md`.
+not redistributed. Obtain them from the provider under its terms; see the data section in `README.md`.

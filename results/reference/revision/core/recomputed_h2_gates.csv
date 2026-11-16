@@ -1,7 +1,0 @@
-target,model,selection,full_gate,random_gate,verdict,positive_mcc_seeds,positive_f1_seeds,mean_delta_fnr
-CICIDS2018,RandomForest,none,False,False,not_supported,0,0,0.0
-CICIDS2018,MLP,none,False,False,not_supported,0,0,0.0
-BoT-IoT,RandomForest,none,False,False,not_supported,0,0,0.0
-BoT-IoT,MLP,none,False,False,not_supported,0,0,0.0
-ToN-IoT,RandomForest,remove_corr_gt_0.98,False,False,not_supported,2,2,0.019797050335789657
-ToN-IoT,MLP,remove_shift_top10,False,False,not_supported,0,0,0.1908216712220163
