@@ -1,7 +1,7 @@
 """Frozen LOTO selection and verdicts applied to corrected-split candidates."""
 from experiments.h2.run_loto_filtering import *
 from .common import PROTOCOL_ID, source_data, FEATURES
-from experiments.revision.matrix import mask as frozen_random_mask
+from .common import random_mask as frozen_random_mask
 
 def select_one(args: argparse.Namespace, held_out: str, model: str, policy: dict[str, Any]) -> dict[str, Any]:
     development = [target for target in TARGETS if target != held_out]

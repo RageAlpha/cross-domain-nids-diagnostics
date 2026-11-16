@@ -14,7 +14,7 @@ from experiments.h2.run_loto_filtering import (
     normalize_metrics, candidate_target_path, validate_development_cartesian,
 )
 from cross_domain_nids.protocol_utils import deterministic_seed, hash_file, hash_json, atomic_write_json, write_immutable_json
-from experiments.revision.matrix import mask as random_mask
+from .common import random_mask
 from .common import ROOT, PREP, PROTOCOL_ID, SEEDS, TARGETS, TOTALS, FEATURES, source_data, data_path, canonicalize_chunk, atomic_csv
 from . import h2_analysis
 
@@ -208,13 +208,8 @@ def random_controls(args):
         for model, k, target_locks in groups:
             for replicate in range(10):
                 removed = random_mask(FEATURES, seed, k, replicate)
-                fixed = model == 'MLP' and k in (3, 5, 10, 15)
-                run_id = (f'random_size/MLP/k{k}_rep{replicate:02}/ToN-IoT/{seed}' if fixed else
-                          f'random_conditional/{model}/k{k}_rep{replicate:02}/all_targets/{seed}')
+                run_id = f'H2_random/{model}/k{k}_rep{replicate:02}/selected_targets/{seed}'
                 targets = [t for t, _ in target_locks]
-                # A predeclared Phase 4 cell must also retain its ToN evaluation.
-                if fixed and 'ToN-IoT' not in targets:
-                    targets.append('ToN-IoT')
                 rows = evaluate_cached(args, data, seed, model, 'matched_random', removed, targets,
                                        args.output_root / 'fits' / run_id, run_id)
                 for target, lock_hash in target_locks:
@@ -224,8 +219,8 @@ def random_controls(args):
                     path = args.output_root / 'h2/random/batches' / target / model / f'seed{seed}' / f'rep{replicate:02}' / 'random_metrics.csv'
                     atomic_csv(pd.DataFrame([row]), path)
                 registry.append({'run_id': run_id, 'model': model, 'seed': seed, 'k': k, 'replicate': replicate,
-                                 'evaluate_targets': '|'.join(targets), 'predeclared_phase4_reuse': fixed})
+                                 'evaluate_targets': '|'.join(targets)})
         del data
         gc.collect()
     atomic_write_json(args.output_root / 'h2/random/run_registry.json', {'protocol_id': PROTOCOL_ID, 'fits': registry,
-                      'unique_fits': len(registry), 'additional_conditional_fits': sum(not r['predeclared_phase4_reuse'] for r in registry)})
+                      'unique_fits': len(registry)})

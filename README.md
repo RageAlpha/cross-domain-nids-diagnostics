@@ -1,13 +1,18 @@
-# Cross-domain NIDS experiments
+# Cross-domain NIDS: H1, H2 and H3
 
-Experiment code for cross-domain network intrusion detection: H1 formulation
-sensitivity, corrected H2 feature selection and H3 domain alignment, comparison
-methods, sensitivity analysis, target oracle and calibration. SHAP is excluded.
-Runs save models, metrics and completion records under `results/generated/`.
+Code for three main experiments:
 
-## Setup and data
+- **H1:** compare multiclass and binary source-label formulations.
+- **H2:** evaluate feature filtering with leave-one-target-out selection and
+  matched random-deletion controls.
+- **H3:** compare matched DANN models with and without domain loss.
 
-Use Python 3.12.7. Install the direct dependencies:
+H2/H3 use the corrected source partitions. Runs save fitted models, metrics and
+completion records under `results/generated/`.
+
+## Setup
+
+Use Python 3.12.7 and install the pinned direct dependencies:
 
 ```bash
 python -m pip install -r requirements.txt
@@ -15,14 +20,14 @@ python run_revision.py plan
 python run_revision.py verify
 ```
 
-`plan` shows the experiment schedule; `verify` checks the frozen revision inputs.
-Neither command trains models. Formal revision training requires CUDA and the
-provider CSVs. Full execution reads tens of millions of rows and needs substantial
-RAM, storage and runtime. Dependency pins do not lock GPU drivers or all transitive
-packages; results can vary across hardware.
+`plan` shows the H2/H3 schedule. `verify` checks the frozen H2/H3 inputs without
+training. Formal execution requires CUDA and the raw datasets. Full runs process
+tens of millions of rows and need substantial RAM, storage and runtime.
+
+## Data
 
 Download the datasets from the [University of Queensland NIDS dataset page](https://staff.itee.uq.edu.au/marius/NIDS_datasets/)
-and put these files under `data/raw/`:
+and place them under `data/raw/`:
 
 | Provider dataset | Required filename |
 | --- | --- |
@@ -31,125 +36,60 @@ and put these files under `data/raw/`:
 | NF-BoT-IoT-v3 | `NF-BoT-IoT-v3.csv` |
 | NF-ToN-IoT-v3 | `NF-ToN-IoT-v3.csv` |
 
-Check their hashes against `data/dataset_checksums.csv`. Provider terms apply.
-`data/model_hyperparameters.json` specifies model parameters. `data/splits/`
-contains the fixed split maps, masks, coefficients and input checks used by the
-runners. H1, oracle and revision maps are separate and cannot be substituted.
-The two tables in `data/reference_inputs/` are consumed by H1/oracle finalization.
+Execution checks the input hashes recorded in `protocols/h1/training_policy.json`
+and `data/splits/revision/manifest.json`. Provider terms apply to the raw data.
+H1 and H2/H3 use separate fixed partition maps; keep their memberships unchanged.
+Model settings are in `data/model_hyperparameters.json`. H1 finalization also uses
+`data/reference_inputs/h1_historical_results.csv`.
 
-## Corrected H2/H3 and comparisons
-
-Run the stages sequentially. Each stage checks its inputs and runs a bounded
-training check before formal execution:
-
-```bash
-python run_revision.py core check --execute
-python run_revision.py core smoke --execute
-python run_revision.py core run --execute
-python run_revision.py comparisons check --execute
-python run_revision.py comparisons smoke --execute
-python run_revision.py comparisons run --execute
-```
-
-The corrected protocol uses three seeds (42, 123, 2024) and ten random masks per
-seed. H3 adapts to a fixed 5% target sample and evaluates the entire target file,
-including adaptation rows. Comparisons include CORAL, MMD, FT-Transformer,
-BatchNorm, source weighting, mRMR and equal-budget feature shift.
-
-Outputs use `results/generated/revision/core/` and `comparisons/`. Repeat the same
-command after interruption: complete units are checked and reused, and supported
-training resumes at complete epoch boundaries. Code and environment identities
-are locked for each run; start a new output directory after changing the code.
-
-## H1, oracle and calibration
+## H1
 
 ```bash
 python run_h1.py --execute --seed 42
 python run_h1.py --execute --seed 123
 python run_h1.py --execute --seed 2024
 python run_h1.py finalize --execute
-python run_oracle.py run --execute
-python run_oracle.py finalize --execute
-python run_calibration.py --mode full --strict
 ```
 
-H1 includes a Torch MLP and requires CUDA. Calibration uses the fitted H1
-pipelines and raw target CSVs to compute calibration metrics and bin tables.
+H1 fits Random Forest, XGBoost and MLP for both source-label formulations on the
+same corrected memberships. Results are written to `results/generated/h1/`.
 
-## Historical inputs for sensitivity analysis
+## Corrected H2 and H3
 
-Sensitivity analysis compares the corrected gates with the historical 20-mask
-protocol. After H1, regenerate the historical H3 and H2 outputs below, in this
-order. These commands use `results/generated/h2_h3/`; corrected primary results
-come from `run_revision.py core`.
-
-The loops below use PowerShell:
-
-```powershell
-python run_h3.py init --execute
-$targets = @("CICIDS2018", "BoT-IoT", "ToN-IoT")
-$seeds = @(42, 123, 2024)
-foreach ($target in $targets) {
-  foreach ($seed in $seeds) {
-    python run_h3.py pair --target $target --seed $seed --execute
-  }
-}
-foreach ($seed in $seeds) {
-  python run_h3.py s0 --seed $seed --execute
-}
-python run_h3.py analyze --execute
-python run_h2.py shift --execute
-python run_h2.py candidates --execute
-python run_h2.py select --execute
-$models = @("RandomForest", "MLP")
-$starts = @(0, 5, 10, 15)
-foreach ($target in $targets) {
-  foreach ($model in $models) {
-    foreach ($seed in $seeds) {
-      foreach ($start in $starts) {
-        python run_h2.py random-batch --target $target --model $model `
-          --seed $seed --rep-start $start --rep-count 5 --execute
-      }
-    }
-  }
-}
-python run_h2.py analyze --execute
-```
-
-Then run sensitivity experiments:
+Run the input check and bounded training check before formal execution:
 
 ```bash
-python run_revision.py sensitivity check --execute
-python run_revision.py sensitivity smoke --execute
-python run_revision.py sensitivity run --execute
+python run_revision.py core check --execute
+python run_revision.py core smoke --execute
+python run_revision.py core run --execute
 ```
 
-This stage covers gate sensitivity, DANN strength, random deletion size and a
-post-hoc target-supervised readout. Outputs use
-`results/generated/revision/sensitivity/`. The `smoke` modules and their helper
-checks are part of the execution prerequisites.
+The fixed matrix contains 108 H2 candidate fits and 18 matched H3 fits across
+seeds 42, 123 and 2024. H2 also runs ten matched random masks per seed for each
+selected target/model combination. The random controls are part of H2.
+H3 adapts to a fixed 5% target sample and evaluates the full target file,
+including the adaptation rows.
 
-## Rebuild preparation inputs
+Outputs use `results/generated/revision/core/`. Repeating a command verifies and
+reuses completed units; supported training resumes at complete epoch boundaries.
+Code and environment identities are locked for each run. Use a new output
+folder after changing the code.
 
-The fixed inputs are included. To independently regenerate them from provider CSVs:
+Individual core actions are `h2-shift`, `h2-candidates`, `h2-select`, `h2-random`,
+`h2-analyze`, `h3-pair` and `h3-analyze`. `h3-pair` also needs `--target` and
+`--seed`. These actions use the same input and smoke prerequisites.
 
-```bash
-python run_revision.py partitions --execute
-python run_revision.py calibration --execute
-python run_revision.py matrix --execute
-```
+## Files
 
-Outputs go to `results/generated/revision_preparation/`. Compare memberships and
-numerical values with `data/splits/revision/`; container bytes can vary.
+- `run_h1.py`, `run_revision.py`: the two experiment entry points.
+- `experiments/h1/`: H1 execution and shared preprocessing/training helpers.
+- `experiments/h2/`, `experiments/h3/`: shared feature-shift, training and statistical helpers used by corrected H2/H3.
+- `experiments/revision/`: corrected H2/H3 execution and required runtime checks.
+- `src/cross_domain_nids/`: models, preprocessing and run utilities.
+- `protocols/`, `data/`: fixed settings and inputs needed by these experiments.
 
-## Layout and licensing
-
-- `run_*.py`: experiment entry points.
-- `experiments/`: training, evaluation, preparation and execution checks.
-- `src/cross_domain_nids/`: shared models, preprocessing and protocol utilities.
-- `protocols/`: experiment settings and historical selection locks.
-- `data/`: model settings, fixed partitions and required finalization inputs.
-
-See `LICENSE`, `THIRD_PARTY_NOTICES.md` and the retained FT-Transformer vendor
-license for licensing. This cleanup preserves experiment calculations; validation
-uses synthetic runs and input checks, without a full provider-data retraining.
+The experiment settings and retained partition memberships match the preceding
+release. Validation uses bounded synthetic runs and input checks; full provider-data
+training was not rerun for this cleanup. Direct dependency pins do not lock every
+transitive package, GPU driver or hardware-specific behavior. Project code uses
+`LICENSE`; installed dependencies retain their own licenses.

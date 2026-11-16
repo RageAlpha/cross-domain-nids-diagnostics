@@ -1,10 +1,4 @@
-"""Frozen H3 matched DANN-vs-lambda-zero confirmation runner.
-
-The safe default is ``plan``.  Commands that train, evaluate, or write protocol
-state require ``--execute``.  C0 and C1 share source data, target sample,
-initial state, loader-order seeds, optimizer settings, and stopping rule; the
-only intended difference is the domain-loss coefficient schedule.
-"""
+"""Shared training and statistical helpers for corrected H2/H3 experiments."""
 
 from __future__ import annotations
 
@@ -887,43 +881,3 @@ def initialise(args: argparse.Namespace) -> None:
         seeds=SEEDS, targets=list(TARGET_DATASETS), data_paths=data_paths,
         code_paths=protocol_code_paths(),
     )
-
-
-def print_plan(args: argparse.Namespace) -> None:
-    plan = {
-        "protocol_id": PROTOCOL_ID, "execution_order": ["H3", "H2"],
-        "output_root": str(args.output_root), "settings": asdict(H3Settings(chunk_size=args.chunk_size)),
-        "primary_pairs": len(TARGET_DATASETS) * len(SEEDS), "primary_runs": len(TARGET_DATASETS) * len(SEEDS) * 2,
-        "source_only_runs": len(SEEDS), "targets": list(TARGET_DATASETS), "seeds": SEEDS,
-        "safety": "No execution occurs without --execute",
-    }
-    print(json.dumps(plan, indent=2, ensure_ascii=False))
-
-
-def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("command", choices=["plan", "init", "pair", "s0", "analyze"], nargs="?", default="plan")
-    parser.add_argument("--output-root", type=Path, default=PROTOCOL_RESULTS_ROOT)
-    parser.add_argument("--target", choices=list(TARGET_DATASETS), default="CICIDS2018")
-    parser.add_argument("--seed", type=int, choices=SEEDS, default=42)
-    parser.add_argument("--policy", type=Path, default=ROOT / "protocols" / "h3" / "verdict_policy.json")
-    parser.add_argument("--h2-policy", type=Path, default=ROOT / "protocols" / "h2" / "selection_policy.json")
-    parser.add_argument("--chunk-size", type=int, default=STRESS_B_CHUNK_SIZE)
-    parser.add_argument("--cpu", action="store_true")
-    parser.add_argument("--resume", action="store_true")
-    parser.add_argument("--execute", action="store_true")
-    return parser.parse_args()
-
-
-def main() -> None:
-    args = parse_args()
-    args.output_root = args.output_root.resolve()
-    expected_root = PROTOCOL_RESULTS_ROOT.resolve()
-    if args.output_root != expected_root and expected_root not in args.output_root.parents:
-        raise ProtocolError(f"H3 output must remain under {expected_root}; got {args.output_root}")
-    {"plan": print_plan, "init": initialise, "pair": run_pair, "s0": run_source_only,
-     "analyze": analyze}[args.command](args)
-
-
-if __name__ == "__main__":
-    main()

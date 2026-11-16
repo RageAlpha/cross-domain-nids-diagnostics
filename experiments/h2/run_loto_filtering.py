@@ -1,10 +1,4 @@
-"""Frozen H2 LOTO feature-filter confirmation orchestrator.
-
-The default ``plan`` command is non-executing.  Every command that reads full
-data, trains a model, evaluates target labels, or writes frozen state requires
-``--execute``.  Selection reads only the two development-target files and
-writes an immutable lock before any held-out metric file is opened.
-"""
+"""Shared training and statistical helpers for corrected H2/H3 experiments."""
 
 from __future__ import annotations
 
@@ -652,60 +646,3 @@ def analyze(args: argparse.Namespace) -> None:
                          "verdict": "shift_guided_repair" if passed_e2 and passed_random else "regularization_or_feature_sensitivity" if passed_e2 else "not_supported",
                          "beats_e2": passed_e2, "beats_random_median": passed_random, "policy_hash": hash_file(args.policy)})
     pd.DataFrame(verdicts).to_csv(analysis_dir / "verdict_by_target_model.csv", index=False)
-
-
-def print_plan(args: argparse.Namespace) -> None:
-    plan = {
-        "protocol_id": PROTOCOL_ID, "stage": "H2", "output_root": str(args.output_root),
-        "seeds": SEEDS, "targets": TARGETS, "models": MODELS, "strategies": STRATEGIES,
-        "candidate_training_units_optimized": 108, "max_random_training_units": 360,
-        "batch_shape": "target x seed x model x 5 replicates", "safety": "No execution without --execute",
-        "required_external_policy": str(args.policy),
-        "model_construction": "released_parameter_json",
-        "model_parameters": str(args.model_parameters),
-    }
-    print(json.dumps(plan, indent=2, ensure_ascii=False))
-
-
-def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("command", nargs="?", default="plan", choices=["plan", "shift", "candidates", "select", "random-batch", "analyze"])
-    parser.add_argument("--output-root", type=Path, default=PROTOCOL_RESULTS_ROOT)
-    parser.add_argument("--policy", type=Path, default=ROOT / "protocols" / "h2" / "selection_policy.json")
-    parser.add_argument("--h3-policy", type=Path, default=ROOT / "protocols" / "h3" / "verdict_policy.json")
-    parser.add_argument(
-        "--model-parameters",
-        type=Path,
-        default=ROOT / "data" / "model_hyperparameters.json",
-        help="Released estimator parameters; no E2 joblib template is required.",
-    )
-    parser.add_argument("--chunk-size", type=int, default=STRESS_B_CHUNK_SIZE)
-    parser.add_argument("--corr-sample-rows", type=int, default=300_000)
-    parser.add_argument("--seeds", nargs="+", type=int, choices=SEEDS, default=SEEDS)
-    parser.add_argument("--models", nargs="+", choices=MODELS, default=MODELS)
-    parser.add_argument("--target", choices=TARGETS, default="CICIDS2018")
-    parser.add_argument("--model", choices=MODELS, default="MLP")
-    parser.add_argument("--seed", type=int, choices=SEEDS, default=42)
-    parser.add_argument("--rep-start", type=int, default=0)
-    parser.add_argument("--rep-count", type=int, default=5)
-    parser.add_argument("--print-command-only", action="store_true")
-    parser.add_argument("--execute", action="store_true")
-    args = parser.parse_args()
-    if not 0 <= args.rep_start < 20 or args.rep_count <= 0 or args.rep_start + args.rep_count > 20:
-        raise ValueError("Random replicate range must stay within [0, 20)")
-    return args
-
-
-def main() -> None:
-    args = parse_args(); args.output_root = args.output_root.resolve()
-    expected_root = PROTOCOL_RESULTS_ROOT.resolve()
-    if args.output_root != expected_root and expected_root not in args.output_root.parents:
-        raise ProtocolError(f"H2 output must remain under {expected_root}; got {args.output_root}")
-    validate_released_model_inputs(args)
-    actions = {"plan": print_plan, "shift": run_feature_shift, "candidates": run_candidates,
-               "select": select_and_lock, "random-batch": run_random_batch, "analyze": analyze}
-    actions[args.command](args)
-
-
-if __name__ == "__main__":
-    main()

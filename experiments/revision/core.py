@@ -1,4 +1,4 @@
-"""Run only approved Phase 2. Invoke from the transferred project's root."""
+"""Run corrected H2/H3 experiments from the fixed main-experiment inputs."""
 from pathlib import Path
 import argparse
 import copy
@@ -81,7 +81,7 @@ def main():
             return
         smoke_path = args.output_root / 'smoke/SMOKE_PASS.json'
         if not smoke_path.exists():
-            raise ValueError('First run: python experiments/run_revision_phase2.py smoke')
+            raise ValueError('First run: python run_revision.py core smoke --execute')
         passed = json.loads(smoke_path.read_text())
         if passed['input_lock_hash'] != common.hash_file(args.output_root / 'INPUT_LOCK.json'):
             raise ValueError('Smoke check does not match this input lock')

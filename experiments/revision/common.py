@@ -8,8 +8,7 @@ import sys
 import joblib
 import numpy as np
 import pandas as pd
-from experiments.revision.partitions import canonicalize_chunk
-from cross_domain_nids.protocol_utils import hash_file, hash_array, hash_json, atomic_write_json, write_immutable_json
+from cross_domain_nids.protocol_utils import deterministic_seed, hash_file, hash_array, hash_json, atomic_write_json, write_immutable_json
 from experiments.h1.run_multiseed_training import feature_columns_from_frame, build_preprocessor_for_features
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -19,6 +18,22 @@ SEEDS = [42, 123, 2024]
 TARGETS = ['CICIDS2018', 'BoT-IoT', 'ToN-IoT']
 TOTALS = {'CICIDS2018': 20115529, 'BoT-IoT': 16933808, 'ToN-IoT': 27520260}
 FEATURES = json.loads((PREP / 'random_masks.json').read_text())['features']
+
+STRING_COLUMNS = {'IPV4_SRC_ADDR', 'IPV4_DST_ADDR'}
+
+def canonicalize_chunk(frame: pd.DataFrame) -> pd.DataFrame:
+    """Apply cross-file deterministic cleaning without using target labels."""
+    frame = frame.replace([np.inf, -np.inf], np.nan)
+    if "L7_PROTO" in frame.columns:
+        frame["L7_PROTO"] = frame["L7_PROTO"].fillna(0.0).round()
+    for column in STRING_COLUMNS.intersection(frame.columns):
+        frame[column] = frame[column].astype("string").fillna("<NA>").astype(str)
+    return frame
+
+def random_mask(features, seed, k, replicate):
+    generator = np.random.default_rng(deterministic_seed(PROTOCOL_ID, "random_mask", seed, k, replicate))
+    return sorted(generator.choice(features, k, replace=False).tolist())
+
 
 def data_path(name):
     return ROOT / 'data/raw' / f'NF-{name}-v3.csv'
@@ -134,8 +149,8 @@ def verify(root=ROOT, raw=True):
         if len(table) != count or table[column].ne(0).any():
             raise ValueError(f'Partition audit differs: {name}')
     matrix = pd.read_csv(prep / 'formal_matrix.csv')
-    if len(matrix) != 312 or matrix.run_id.nunique() != 312:
-        raise ValueError('Frozen matrix requires 312 unique nominal cells')
+    if len(matrix) != 126 or matrix.run_id.nunique() != 126 or matrix.package.value_counts().to_dict() != {'H2': 108, 'H3': 18}:
+        raise ValueError('Frozen main-experiment matrix requires 108 H2 fits and 18 H3 fits')
 
 
 def verify_and_lock(out):

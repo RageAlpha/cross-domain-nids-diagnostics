@@ -32,4 +32,4 @@ def report(root):
     atomic_write_json(root / 'PHASE2_COMPLETE.json', {'protocol_id': PROTOCOL_ID, 'status': 'complete',
                       'scope': 'Phase 2 H2/H3 and required matched random controls',
                       'fixed_h2_fits': candidates['run_id'].nunique(), 'fixed_h3_fits': paired_metrics['run_id'].nunique(),
-                      'next_stage': 'Review conclusion impact, then implement/run Phase 3 under the approved protocol.'})
+                      'next_stage': 'Inspect the H2/H3 metric tables and verdicts.'})
